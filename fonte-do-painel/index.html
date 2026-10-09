@@ -1,0 +1,722 @@
+
+<style>
+.ib-page{max-width:76rem;margin-inline:auto;font-family:var(--font-anthropic-sans);color:var(--color-fg);font-size:var(--cds-font-size-body);line-height:1.55;display:flex;flex-direction:column;gap:var(--cds-gap-xl);font-variant-numeric:tabular-nums}
+.ib-page .ib-head{display:flex;flex-direction:column;gap:var(--cds-gap-sm)}
+.ib-page .ib-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);line-height:1.15;margin:0;text-wrap:balance}
+.ib-page .ib-lede{margin:0;max-width:70ch;font-size:var(--cds-font-size-heading);line-height:1.45}
+.ib-page .ib-muted{color:var(--color-fg-muted)}
+.ib-page .ib-small{font-size:var(--cds-font-size-caption);line-height:1.5}
+.ib-page .ib-nav{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md)}
+.ib-page .ib-link{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:var(--color-fg);text-decoration:underline;text-decoration-color:var(--color-border-line);text-underline-offset:.2em;cursor:pointer}
+.ib-page .ib-link:hover{text-decoration-color:currentColor}
+.ib-page .ib-link:focus-visible,.ib-page .ib-n:focus-visible{outline:2px solid var(--color-fg);outline-offset:2px;border-radius:2px}
+.ib-page .ib-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--cds-gap-md)}
+.ib-page .ib-tile{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-xs);min-width:0}
+.ib-page .ib-tile-label{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.ib-page .ib-tile-num{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);line-height:1.1;margin:0}
+.ib-page .ib-tile-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.ib-page .ib-sec{display:flex;flex-direction:column;gap:var(--cds-gap-md);scroll-margin-top:var(--cds-pad-lg)}
+.ib-page .ib-h2{font-family:var(--font-anthropic-serif);font-weight:400;font-size:var(--cds-font-size-title);line-height:1.2;margin:0;padding-top:var(--cds-pad-md);border-top:1px solid var(--color-border-line)}
+.ib-page .ib-prose{display:flex;flex-direction:column;gap:var(--cds-gap-sm);max-width:72ch}
+.ib-page .ib-prose p{margin:0}
+.ib-page .ib-prose ul,.ib-page .ib-prose ol{margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:var(--cds-gap-xs)}
+.ib-page .ib-prose b{font-weight:var(--cds-font-weight-medium)}
+.ib-page .ib-h3{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.ib-page .ib-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--cds-gap-md)}
+.ib-page .ib-card{background:var(--color-panel);border:1px solid var(--color-border-line);border-radius:var(--cds-radius);padding:var(--cds-pad-lg);display:flex;flex-direction:column;gap:var(--cds-gap-sm);min-width:0}
+.ib-page .ib-card-title{font-size:var(--cds-font-size-heading);font-weight:var(--cds-font-weight-medium);margin:0}
+.ib-page .ib-card-note{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.ib-page .ib-plot{display:flex;flex-direction:column;gap:var(--cds-gap-xs);min-width:0}
+.ib-page .ib-legend{display:flex;flex-wrap:wrap;gap:var(--cds-gap-xs) var(--cds-gap-md);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ib-page .ib-key{display:inline-flex;align-items:center;gap:.375rem}
+.ib-page .ib-sw{width:.75rem;height:.1875rem;border-radius:2px;flex:none}
+.ib-page .ib-chart{position:relative;min-height:260px;min-width:0}
+.ib-page .ib-chart svg{display:block;overflow:visible}
+.ib-page .ib-tick{font-size:var(--cds-font-size-caption);fill:var(--color-fg-muted)}
+.ib-page .ib-fail{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:.5rem;color:var(--color-fg-muted);font-size:var(--cds-font-size-caption)}
+.ib-page .ib-dot{width:.375rem;height:.375rem;border-radius:50%;background:var(--color-bad)}
+.ib-page .ib-tip{position:absolute;top:0;left:0;background:var(--cds-surface-popover);border:1px solid var(--cds-border);border-radius:var(--cds-radius);box-shadow:var(--cds-shadow-popover);padding:var(--cds-pad-xs) var(--cds-pad-sm);font-size:var(--cds-font-size-caption);pointer-events:none;white-space:nowrap;z-index:2}
+.ib-page .ib-tip-h{color:var(--cds-text-secondary)}
+.ib-page .ib-tip-r{display:flex;align-items:center;gap:.375rem}
+.ib-page .ib-scroll{max-height:28rem;overflow:auto;border-top:1px solid var(--color-border-line)}
+.ib-page .ib-table{border-collapse:collapse;width:100%;font-size:var(--cds-font-size-caption)}
+.ib-page .ib-table th,.ib-page .ib-table td{padding:.375rem .625rem;text-align:right;border-bottom:1px solid var(--color-border-line);white-space:nowrap;font-weight:400}
+.ib-page .ib-table thead th{position:sticky;top:0;background:var(--color-panel);font-weight:var(--cds-font-weight-medium);white-space:normal;vertical-align:bottom;min-width:4.5rem;z-index:1}
+.ib-page .ib-table .ib-l{text-align:left}
+.ib-page .ib-table .ib-wrap{white-space:normal;min-width:12rem}
+.ib-page .ib-sup{font-size:.75em;line-height:0;white-space:nowrap}
+.ib-page .ib-n{appearance:none;background:none;border:0;padding:0 .0625rem;margin:0;font:inherit;color:var(--color-fg-muted);cursor:pointer}
+.ib-page .ib-n:hover{color:var(--color-fg);text-decoration:underline}
+.ib-page .ib-refs{margin:0;padding-left:2rem;display:flex;flex-direction:column;gap:var(--cds-gap-sm);max-width:86ch;font-size:var(--cds-font-size-caption);line-height:1.5}
+.ib-page .ib-refs li{scroll-margin-top:var(--cds-pad-lg);padding:.125rem .25rem;border-radius:var(--cds-radius)}
+.ib-page .ib-refs li.ib-hit{background:var(--color-panel);outline:1px solid var(--color-border-line)}
+.ib-page .ib-url{overflow-wrap:anywhere;color:var(--color-fg-muted)}
+.ib-page [data-dash-source-state=refreshing]{opacity:.5;transition:opacity var(--cds-dur-slow)}
+</style>
+<div class="ib-page">
+<header class="ib-head">
+  <h1 class="ib-title" id="ib-topo">Indicadores do Brasil, 1986–2026</h1>
+  <p class="ib-lede">O IPCA fechou 1993 em <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1993" data-fmt="pct2">—</span>, o pico da série, e acumula <span class="ib-v" data-source="inflacao" data-field="ipca_12m" data-where="ano=2026" data-fmt="pct2">—</span> nos doze meses até agosto de 2026.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup> Em reais de agosto de 2026, o salário mínimo médio passou de <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=1995" data-fmt="brl0">—</span> em 1995 para <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=2025" data-fmt="brl0">—</span> em 2025 (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup></p>
+  <p class="ib-muted ib-small">Séries de inflação, poder de compra, salário mínimo, emprego e câmbio, coletadas em 8 de outubro de 2026 nas bases do IBGE, do Banco Central, do DIEESE e do Banco Mundial. Cada número da página está ligado ao arquivo de dados de onde saiu; as notas entre colchetes levam às referências.</p>
+  <nav class="ib-nav ib-small" aria-label="Seções">
+    <button type="button" class="ib-link" data-goto="ib-inflacao">Inflação</button>
+    <button type="button" class="ib-link" data-goto="ib-poder">Poder de compra</button>
+    <button type="button" class="ib-link" data-goto="ib-salario">Salário mínimo</button>
+    <button type="button" class="ib-link" data-goto="ib-emprego">Emprego</button>
+    <button type="button" class="ib-link" data-goto="ib-moeda">Valor da moeda</button>
+    <button type="button" class="ib-link" data-goto="ib-metodo">Método e limites</button>
+    <button type="button" class="ib-link" data-goto="ib-refs">Referências</button>
+  </nav>
+</header>
+
+<section class="ib-tiles" id="ib-destaques" aria-label="Valores mais recentes">
+  <div class="ib-tile">
+    <p class="ib-tile-label">IPCA em doze meses, até agosto de 2026&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="inflacao" data-field="ipca_12m" data-where="ano=2026" data-fmt="pct2">—</span></p>
+    <p class="ib-tile-sub">Ano de 2025: <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2025" data-fmt="pct2">—</span>. Ano de 1993: <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1993" data-fmt="pct2">—</span>.</p>
+  </div>
+  <div class="ib-tile">
+    <p class="ib-tile-label">Preço, em agosto de 2026, do que custava R$ 100 em julho de 1994&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="inflacao" data-field="cem_reais_jul94" data-where="ano=2026" data-fmt="brl2">—</span></p>
+    <p class="ib-tile-sub">R$ 100 compram hoje o que <span class="ib-v" data-source="inflacao" data-field="poder_compra_jul94" data-where="ano=2026" data-fmt="brl2">—</span> compravam então.</p>
+  </div>
+  <div class="ib-tile">
+    <p class="ib-tile-label">Salário mínimo real, média de janeiro a agosto de 2026&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=2026" data-fmt="brl0">—</span></p>
+    <p class="ib-tile-sub">Média de 2025: <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=2025" data-fmt="brl0">—</span>, <span class="ib-v" data-source="salario_minimo" data-field="var_real" data-where="ano=2025" data-fmt="spct2">—</span> sobre 2024. Valor nominal: <span class="ib-v" data-source="salario_minimo" data-field="sm_nominal_fim" data-where="ano=2026" data-fmt="brl0">—</span>.</p>
+  </div>
+  <div class="ib-tile">
+    <p class="ib-tile-label">Taxa de desocupação, trimestre de junho a agosto de 2026&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-12" aria-label="Referência 12">[12]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="series_mensais" data-field="desocupacao_pnadc_trim_movel" data-where="mes=2026-08" data-fmt="pct1">—</span></p>
+    <p class="ib-tile-sub">Média anual de 2025: <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2025" data-fmt="pct1">—</span>; de 2021: <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2021" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup></p>
+  </div>
+  <div class="ib-tile">
+    <p class="ib-tile-label">Nível da ocupação, trimestre de junho a agosto de 2026&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-12" aria-label="Referência 12">[12]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="series_mensais" data-field="ocupacao_pnadc_trim_movel" data-where="mes=2026-08" data-fmt="pct1">—</span></p>
+    <p class="ib-tile-sub">Média anual de 2025: <span class="ib-v" data-source="emprego" data-field="ocupacao_pnadc" data-where="ano=2025" data-fmt="pct1">—</span>; de 2020: <span class="ib-v" data-source="emprego" data-field="ocupacao_pnadc" data-where="ano=2020" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup></p>
+  </div>
+  <div class="ib-tile">
+    <p class="ib-tile-label">Dólar, taxa média de setembro de 2026&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button></sup></p>
+    <p class="ib-tile-num"><span class="ib-v" data-source="series_mensais" data-field="cambio_medio" data-where="mes=2026-09" data-fmt="brl2">—</span></p>
+    <p class="ib-tile-sub">Média de 2025: <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2025" data-fmt="brl2">—</span>; de 1995: <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=1995" data-fmt="brl2">—</span>.</p>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-inflacao">
+  <h2 class="ib-h2">Inflação</h2>
+  <div class="ib-prose">
+    <p>A inflação oficial é o IPCA, apurado pelo IBGE; a tabela usa a variação acumulada de janeiro a dezembro de cada ano.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup> A taxa anual passou de <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1986" data-fmt="pct2">—</span> em 1986 para <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1989" data-fmt="pct2">—</span> em 1989 e chegou a <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1993" data-fmt="pct2">—</span> em 1993, o maior valor da série. Em 1994, ano de lançamento do real, ainda foi de <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1994" data-fmt="pct2">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup></p>
+    <p>De 1995 em diante, a maior taxa anual foi a de 1995 (<span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1995" data-fmt="pct2">—</span>) e a menor, a de 1998 (<span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=1998" data-fmt="pct2">—</span>). Nesse período ela voltou a dois dígitos em 2002 (<span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2002" data-fmt="pct2">—</span>), 2015 (<span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2015" data-fmt="pct2">—</span>) e 2021 (<span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2021" data-fmt="pct2">—</span>).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup> Em 2025 o IPCA foi de <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2025" data-fmt="pct2">—</span>; em 2026 acumula <span class="ib-v" data-source="inflacao" data-field="ipca" data-where="ano=2026" data-fmt="pct2">—</span> de janeiro a agosto e <span class="ib-v" data-source="inflacao" data-field="ipca_12m" data-where="ano=2026" data-fmt="pct2">—</span> em doze meses.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup></p>
+    <p>O INPC, também do IBGE, é o índice que a lei usa para repor a inflação no salário mínimo.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup> Em 2025 ele variou <span class="ib-v" data-source="inflacao" data-field="inpc" data-where="ano=2025" data-fmt="pct2">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup></p>
+    <p class="ib-muted ib-small">Conferência: as variações mensais do IPCA republicadas pelo Banco Central, compostas ano a ano, reproduzem as taxas anuais do IBGE, salvo arredondamento.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-3" aria-label="Referência 3">[3]</button></sup> As duas bases têm a mesma origem, o IBGE, e por isso não contam como confirmação independente.</p>
+  </div>
+  <div class="ib-grid">
+    <div class="ib-card">
+      <h3 class="ib-card-title">IPCA acumulado no ano, 1986–2025</h3>
+      <p class="ib-card-note">Em % ao ano. Escala logarítmica: cada linha de grade vale dez vezes a anterior.</p>
+      <div class="ib-plot" data-source="inflacao"><div class="ib-chart dash-skeleton" id="ib-c-ipca"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">IPCA acumulado em doze meses, mês a mês, desde 1996</h3>
+      <p class="ib-card-note">Em %. Escala linear.</p>
+      <div class="ib-plot" data-source="series_mensais"><div class="ib-chart dash-skeleton" id="ib-c-ipca12"></div></div>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Inflação ano a ano</h3>
+    <p class="ib-card-note">IPCA e INPC: variação acumulada no período indicado, em %.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup> As duas últimas colunas são cálculo próprio sobre o número-índice do IPCA, com base em junho de 1994.</p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-inflacao" data-source="inflacao" data-row-key="ano">
+        <thead><tr>
+          <th class="ib-l" data-field="ano">Ano</th>
+          <th class="ib-l" data-field="periodo">Período</th>
+          <th data-field="ipca">IPCA (%)</th>
+          <th data-field="inpc">INPC (%)</th>
+          <th data-field="cem_reais_jul94">Preço do que custava R$ 100 em jul/1994</th>
+          <th data-field="poder_compra_jul94">O que R$ 100 compram, em reais de jul/1994</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-poder">
+  <h2 class="ib-h2">Poder de compra</h2>
+  <div class="ib-prose">
+    <p>Poder de compra depende de quem compra. Seguem três medidas: a da moeda, a do salário mínimo e a do rendimento médio do trabalho.</p>
+    <p><b>Da moeda.</b> Pelo número-índice do IPCA, o que custava R$ 100 em julho de 1994 custava <span class="ib-v" data-source="inflacao" data-field="cem_reais_jul94" data-where="ano=2026" data-fmt="brl2">—</span> em agosto de 2026. Visto pelo outro lado, R$ 100 compram hoje o que <span class="ib-v" data-source="inflacao" data-field="poder_compra_jul94" data-where="ano=2026" data-fmt="brl2">—</span> compravam no lançamento do real (cálculo próprio sobre o índice do IBGE).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup> Antes disso a conta perde sentido prático: entre janeiro de 1986 e junho de 1994 o índice foi multiplicado por cerca de <span class="ib-v" data-source="multiplicacao_precos" data-field="fator" data-where="periodo=1986-1994" data-fmt="milhoes">—</span> (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button></sup></p>
+    <p><b>Do salário mínimo.</b> O DIEESE estima todo mês o “salário mínimo necessário”, valor que cobriria as despesas de um trabalhador e de sua família, calculado a partir do custo da cesta básica.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button><button type="button" class="ib-n" data-goto="ib-ref-7" aria-label="Referência 7">[7]</button></sup> Em 1995 esse valor equivalia, em média, a <span class="ib-v" data-source="salario_minimo" data-field="razao_necessario" data-where="ano=1995" data-fmt="num2">—</span> salários mínimos oficiais; em 2018, a <span class="ib-v" data-source="salario_minimo" data-field="razao_necessario" data-where="ano=2018" data-fmt="num2">—</span>, o menor quociente anual da série; em 2022, a <span class="ib-v" data-source="salario_minimo" data-field="razao_necessario" data-where="ano=2022" data-fmt="num2">—</span>; em 2025, a <span class="ib-v" data-source="salario_minimo" data-field="razao_necessario" data-where="ano=2025" data-fmt="num2">—</span> (médias anuais calculadas por mim sobre a tabela mensal do DIEESE).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-7" aria-label="Referência 7">[7]</button></sup> Na cidade de São Paulo, o salário mínimo comprava em média <span class="ib-v" data-source="salario_minimo" data-field="cestas_basicas_sp" data-where="ano=2019" data-fmt="num2">—</span> cestas básicas em 2019, <span class="ib-v" data-source="salario_minimo" data-field="cestas_basicas_sp" data-where="ano=2022" data-fmt="num2">—</span> em 2022 e <span class="ib-v" data-source="salario_minimo" data-field="cestas_basicas_sp" data-where="ano=2025" data-fmt="num2">—</span> em 2025, segundo o DIEESE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup></p>
+    <p class="ib-muted ib-small">O DIEESE é um órgão intersindical, dirigido por sindicatos de trabalhadores.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup> O “salário mínimo necessário” é uma estimativa com metodologia própria, não uma estatística oficial.</p>
+    <p><b>Do rendimento do trabalho.</b> O rendimento médio real habitual de quem trabalha, medido pela PNAD Contínua, foi de <span class="ib-v" data-source="emprego" data-field="rendimento_real_pnadc" data-where="ano=2012" data-fmt="brl0">—</span> em 2012, <span class="ib-v" data-source="emprego" data-field="rendimento_real_pnadc" data-where="ano=2022" data-fmt="brl0">—</span> em 2022, o menor valor da série, e <span class="ib-v" data-source="emprego" data-field="rendimento_real_pnadc" data-where="ano=2025" data-fmt="brl0">—</span> em 2025, o maior.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup> Os valores reais parecem estar a preços de 2025, porque naquele ano o valor real e o nominal quase coincidem (<span class="ib-v" data-source="emprego" data-field="rendimento_real_pnadc" data-where="ano=2025" data-fmt="brl0">—</span> e <span class="ib-v" data-source="emprego" data-field="rendimento_nominal_pnadc" data-where="ano=2025" data-fmt="brl0">—</span>); essa leitura é inferência minha a partir da tabela.</p>
+  </div>
+  <div class="ib-grid">
+    <div class="ib-card">
+      <h3 class="ib-card-title">Quanto R$ 100 compram, em reais de julho de 1994</h3>
+      <p class="ib-card-note">Posição em dezembro de cada ano; em 2026, agosto. Cálculo próprio sobre o IPCA.</p>
+      <div class="ib-plot" data-source="inflacao"><div class="ib-chart dash-skeleton" id="ib-c-poder"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">Salários mínimos necessários para cobrir o “mínimo necessário” do DIEESE</h3>
+      <p class="ib-card-note">Quociente médio do ano. Quanto menor, maior o poder de compra do salário mínimo.</p>
+      <div class="ib-plot" data-source="salario_minimo"><div class="ib-chart dash-skeleton" id="ib-c-razao"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">Rendimento médio real do trabalho, 2012–2025</h3>
+      <p class="ib-card-note">PNAD Contínua, em reais por mês. O eixo não começa em zero.</p>
+      <div class="ib-plot" data-source="emprego"><div class="ib-chart dash-skeleton" id="ib-c-rend"></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-salario">
+  <h2 class="ib-h2">Salário mínimo</h2>
+  <div class="ib-prose">
+    <p>O valor nominal vem da tabela de vigências do DIEESE até janeiro de 1990 e da série do Banco Central a partir de fevereiro de 1990.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup> Para comparar épocas, cada valor mensal foi convertido a reais pelas paridades legais, corrigido pelo INPC até agosto de 2026 e depois reduzido à média do ano (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup></p>
+    <p><b>Valor real.</b> Nessa medida, o salário mínimo médio valia <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=1986" data-fmt="brl0">—</span> em 1986, caiu a <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=1990" data-fmt="brl0">—</span> em 1990, o piso da série, e estava em <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=1994" data-fmt="brl0">—</span> em 1994. Em 2025 a média foi de <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=2025" data-fmt="brl0">—</span>; de janeiro a agosto de 2026, <span class="ib-v" data-source="salario_minimo" data-field="sm_real_medio" data-where="ano=2026" data-fmt="brl0">—</span>.</p>
+    <p><b>Aumento real a cada reajuste.</b> A tabela do DIEESE traz, para cada reajuste, a variação nominal, o INPC e o aumento real.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup> Os valores se reproduzem quando se toma o INPC acumulado desde o reajuste anterior (verificação minha). Por essa tabela, os maiores ganhos reais desde 2003 foram os de abril de 2006 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=abr/2006" data-fmt="pct2">—</span>), maio de 2005 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=mai/2005" data-fmt="pct2">—</span>) e janeiro de 2012 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2012" data-fmt="pct2">—</span>); houve perda real em janeiro de 2017 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2017" data-fmt="pct2">—</span>), janeiro de 2018 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2018" data-fmt="pct2">—</span>), janeiro de 2020 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2020" data-fmt="pct2">—</span>) e maio de 2023 (<span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=mai/2023" data-fmt="pct2">—</span>).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup></p>
+    <p>A tabela do DIEESE começa em 2003. Para 1995–2002 apliquei o mesmo método: o reajuste de maio de 1995 dá ganho real de <span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=mai/1995" data-fmt="pct2">—</span> e o de maio de 1996, variação real de <span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=mai/1996" data-fmt="pct2">—</span> (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup> Refeita com os dados do IBGE, a conta reproduz a tabela do DIEESE, salvo arredondamento, em todas as linhas comparáveis menos a de janeiro de 2026; a coluna “recalculado” mostra o resultado.</p>
+    <p><b>Janeiro de 2026 tem dois números.</b> A nota do DIEESE, de 22 de dezembro de 2025, registra aumento real de <span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2026" data-fmt="pct2">—</span>; foi escrita antes de o INPC de dezembro ser divulgado.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup> Com o INPC de janeiro a dezembro de 2025 já fechado (<span class="ib-v" data-source="inflacao" data-field="inpc" data-where="ano=2025" data-fmt="pct2">—</span>), o mesmo cálculo dá <span class="ib-v" data-source="reajustes" data-field="aumento_real_recalculado" data-where="reajuste=jan/2026" data-fmt="pct2">—</span> (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup> Pela lei de valorização, o reajuste soma à inflação o crescimento do PIB de dois anos antes, limitado pelo teto de despesas do regime fiscal.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup></p>
+    <p>Antes de 1994 o “aumento real por reajuste” deixa de fazer sentido: o salário mínimo era corrigido quase todo mês e perdia valor entre uma correção e a seguinte. Para esse período a medida utilizável é a média anual real.</p>
+  </div>
+  <div class="ib-grid">
+    <div class="ib-card">
+      <h3 class="ib-card-title">Salário mínimo real, média anual, 1986–2026</h3>
+      <p class="ib-card-note">Em reais de agosto de 2026, corrigido pelo INPC. Em 2026, média de janeiro a agosto. Cálculo próprio.</p>
+      <div class="ib-plot" data-source="salario_minimo"><div class="ib-chart dash-skeleton" id="ib-c-smreal"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">Aumento real a cada reajuste, 1995–2026</h3>
+      <p class="ib-card-note">Em %, contra o INPC acumulado desde o reajuste anterior.</p>
+      <div class="ib-plot" data-source="reajustes"><div class="ib-legend" id="ib-l-reaj"></div><div class="ib-chart dash-skeleton" id="ib-c-reaj"></div></div>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Salário mínimo ano a ano</h3>
+    <p class="ib-card-note">Valor nominal em vigor no último mês do período, na moeda da época.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup> Valor real e variação: cálculo próprio.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup> Quociente e cestas básicas: DIEESE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button><button type="button" class="ib-n" data-goto="ib-ref-7" aria-label="Referência 7">[7]</button></sup></p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-sm" data-source="salario_minimo" data-row-key="ano">
+        <thead><tr>
+          <th class="ib-l" data-field="ano">Ano</th>
+          <th class="ib-l" data-field="periodo">Período</th>
+          <th class="ib-l" data-field="moeda">Moeda</th>
+          <th data-field="sm_nominal_fim">Valor nominal no fim do período</th>
+          <th data-field="sm_real_medio">Valor real médio (R$ de ago/2026)</th>
+          <th data-field="var_real">Variação real sobre o ano anterior (%)</th>
+          <th data-field="razao_necessario">Salário necessário ÷ salário mínimo</th>
+          <th data-field="cestas_basicas_sp">Cestas básicas por salário mínimo (São Paulo)</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Reajustes desde o Plano Real</h3>
+    <p class="ib-card-note">De 2003 em diante, valores publicados pelo DIEESE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup> De 1995 a 2002 e na coluna “recalculado”, cálculo próprio com o mesmo método.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup> Em 2011 o DIEESE trata os dois valores do ano como um só reajuste em janeiro, por isso 2011 e 2012 não têm recálculo.</p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-reaj" data-source="reajustes" data-row-key="reajuste">
+        <thead><tr>
+          <th class="ib-l" data-field="reajuste">Reajuste</th>
+          <th data-field="sm_novo">Novo valor (R$)</th>
+          <th data-field="reajuste_nominal">Reajuste nominal (%)</th>
+          <th data-field="inpc">INPC do período (%)</th>
+          <th data-field="aumento_real">Aumento real (%)</th>
+          <th class="ib-l" data-field="origem">Origem</th>
+          <th data-field="aumento_real_recalculado">Aumento real recalculado (%)</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-emprego">
+  <h2 class="ib-h2">Emprego</h2>
+  <div class="ib-prose">
+    <p>Não existe uma série única de emprego para 1986–2026. O IBGE usou três pesquisas, com cobertura e conceitos diferentes, e os níveis de uma não se comparam aos de outra:</p>
+    <ul>
+      <li>Pesquisa Mensal de Emprego, metodologia antiga, até dezembro de 2002: seis regiões metropolitanas (Recife, Salvador, Belo Horizonte, Rio de Janeiro, São Paulo e Porto Alegre), pessoas de 15 anos ou mais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-8" aria-label="Referência 8">[8]</button><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button></sup></li>
+      <li>Pesquisa Mensal de Emprego, metodologia nova, de março de 2002 a fevereiro de 2016: as mesmas seis regiões, pessoas de 10 anos ou mais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button></sup></li>
+      <li>PNAD Contínua, desde 2012: Brasil inteiro, pessoas de 14 anos ou mais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup></li>
+    </ul>
+    <p><b>Taxa de desemprego.</b> Na PME antiga a média anual foi de <span class="ib-v" data-source="emprego" data-field="desemprego_pme_antiga" data-where="ano=1986" data-fmt="pct2">—</span> em 1986, <span class="ib-v" data-source="emprego" data-field="desemprego_pme_antiga" data-where="ano=1989" data-fmt="pct2">—</span> em 1989, a menor, e <span class="ib-v" data-source="emprego" data-field="desemprego_pme_antiga" data-where="ano=1998" data-fmt="pct2">—</span> em 1998, a maior (médias calculadas por mim sobre a série mensal).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-8" aria-label="Referência 8">[8]</button></sup> Na PME nova, <span class="ib-v" data-source="emprego" data-field="desocupacao_pme_nova" data-where="ano=2003" data-fmt="pct2">—</span> em 2003 e <span class="ib-v" data-source="emprego" data-field="desocupacao_pme_nova" data-where="ano=2014" data-fmt="pct2">—</span> em 2014.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button></sup> Na PNAD Contínua, <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2012" data-fmt="pct1">—</span> em 2012, <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2021" data-fmt="pct1">—</span> em 2021, o pico, e <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2025" data-fmt="pct1">—</span> em 2025, o menor valor anual da pesquisa.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button><button type="button" class="ib-n" data-goto="ib-ref-13" aria-label="Referência 13">[13]</button></sup> No trimestre de junho a agosto de 2026 a taxa foi de <span class="ib-v" data-source="series_mensais" data-field="desocupacao_pnadc_trim_movel" data-where="mes=2026-08" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-12" aria-label="Referência 12">[12]</button></sup></p>
+    <p>Onde duas pesquisas coexistem, elas divergem: para 2014 a PME nova dá <span class="ib-v" data-source="emprego" data-field="desocupacao_pme_nova" data-where="ano=2014" data-fmt="pct2">—</span> e a PNAD Contínua, <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2014" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup> Emendar as três séries como se fossem uma produziria quedas e saltos que não ocorreram.</p>
+    <p><b>Taxa de emprego.</b> O IBGE chama de nível da ocupação a parcela ocupada da população em idade de trabalhar.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-13" aria-label="Referência 13">[13]</button></sup> Na PNAD Contínua ele foi de <span class="ib-v" data-source="emprego" data-field="ocupacao_pnadc" data-where="ano=2012" data-fmt="pct1">—</span> em 2012, <span class="ib-v" data-source="emprego" data-field="ocupacao_pnadc" data-where="ano=2020" data-fmt="pct1">—</span> em 2020 e <span class="ib-v" data-source="emprego" data-field="ocupacao_pnadc" data-where="ano=2025" data-fmt="pct1">—</span> em 2025; no trimestre de junho a agosto de 2026, <span class="ib-v" data-source="series_mensais" data-field="ocupacao_pnadc_trim_movel" data-where="mes=2026-08" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button><button type="button" class="ib-n" data-goto="ib-ref-12" aria-label="Referência 12">[12]</button></sup> Na PME nova, <span class="ib-v" data-source="emprego" data-field="ocupacao_pme_nova" data-where="ano=2003" data-fmt="pct2">—</span> em 2003 e <span class="ib-v" data-source="emprego" data-field="ocupacao_pme_nova" data-where="ano=2012" data-fmt="pct2">—</span> em 2012.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button></sup> Para a PME antiga dividi os ocupados pela população de 15 anos ou mais: <span class="ib-v" data-source="emprego" data-field="ocupacao_pme_antiga" data-where="ano=1991" data-fmt="pct2">—</span> em 1991 e <span class="ib-v" data-source="emprego" data-field="ocupacao_pme_antiga" data-where="ano=2002" data-fmt="pct2">—</span> em 2002 (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button></sup> Para 1986–1990 não encontrei série de nível da ocupação.</p>
+    <p><b>Série com método único.</b> As estimativas modeladas da OIT, distribuídas pelo Banco Mundial, cobrem 1991–2025: relação entre emprego e população de 15 anos ou mais de <span class="ib-v" data-source="emprego" data-field="emprego_pop_oit" data-where="ano=1991" data-fmt="pct2">—</span> em 1991 e <span class="ib-v" data-source="emprego" data-field="emprego_pop_oit" data-where="ano=2025" data-fmt="pct2">—</span> em 2025; desemprego de <span class="ib-v" data-source="emprego" data-field="desemprego_oit" data-where="ano=1991" data-fmt="pct2">—</span> e <span class="ib-v" data-source="emprego" data-field="desemprego_oit" data-where="ano=2025" data-fmt="pct2">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-14" aria-label="Referência 14">[14]</button></sup> São estimativas de modelo, não a apuração do IBGE, e diferem dela: para 2025, <span class="ib-v" data-source="emprego" data-field="desemprego_oit" data-where="ano=2025" data-fmt="pct2">—</span> contra <span class="ib-v" data-source="emprego" data-field="desocupacao_pnadc" data-where="ano=2025" data-fmt="pct1">—</span>.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button><button type="button" class="ib-n" data-goto="ib-ref-14" aria-label="Referência 14">[14]</button></sup></p>
+  </div>
+  <div class="ib-grid">
+    <div class="ib-card">
+      <h3 class="ib-card-title">Taxa de desemprego, por pesquisa</h3>
+      <p class="ib-card-note">Média anual, em % da força de trabalho. Cada linha é uma pesquisa; as quebras são de método, não do mercado.</p>
+      <div class="ib-plot" data-source="emprego"><div class="ib-legend" id="ib-l-desemp"></div><div class="ib-chart dash-skeleton" id="ib-c-desemp"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">Taxa de emprego, por pesquisa</h3>
+      <p class="ib-card-note">Ocupados em % da população em idade de trabalhar, média anual. O eixo não começa em zero.</p>
+      <div class="ib-plot" data-source="emprego"><div class="ib-legend" id="ib-l-ocup"></div><div class="ib-chart dash-skeleton" id="ib-c-ocup"></div></div>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Emprego ano a ano</h3>
+    <p class="ib-card-note">Em %, exceto o rendimento, em reais por mês. PME antiga: desemprego aberto na semana;&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-8" aria-label="Referência 8">[8]</button></sup> nível da ocupação por cálculo próprio, com média de onze meses em 2000, porque agosto não consta nas tabelas do IBGE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button></sup> PME nova e PNAD Contínua: IBGE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup> OIT: estimativas de modelo.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-14" aria-label="Referência 14">[14]</button></sup></p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-emprego" data-source="emprego" data-row-key="ano">
+        <thead><tr>
+          <th class="ib-l" data-field="ano">Ano</th>
+          <th data-field="desemprego_pme_antiga">Desemprego, PME antiga</th>
+          <th data-field="ocupacao_pme_antiga">Ocupação, PME antiga</th>
+          <th data-field="desocupacao_pme_nova">Desocupação, PME nova</th>
+          <th data-field="ocupacao_pme_nova">Ocupação, PME nova</th>
+          <th data-field="desocupacao_pnadc">Desocupação, PNAD Contínua</th>
+          <th data-field="ocupacao_pnadc">Nível da ocupação, PNAD Contínua</th>
+          <th data-field="emprego_pop_oit">Emprego/população, OIT</th>
+          <th data-field="desemprego_oit">Desemprego, OIT</th>
+          <th data-field="rendimento_real_pnadc">Rendimento real, PNAD Contínua (R$)</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-moeda">
+  <h2 class="ib-h2">Valor da moeda</h2>
+  <div class="ib-prose">
+    <p><b>Trocas de moeda.</b> Em 1986 o cruzeiro deu lugar ao cruzado; até 1994 vieram o cruzado novo, outro cruzeiro, o cruzeiro real e o real. A tabela ao fim desta seção reproduz as paridades legais compiladas pelo Museu de Valores do Banco Central.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup> Encadeadas, elas permitem expressar em reais qualquer valor antigo; é essa a conversão usada nas colunas “em reais” desta página (cálculo próprio).</p>
+    <p><b>Câmbio nominal.</b> A taxa média anual de venda do dólar foi de <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=1995" data-fmt="brl4">—</span> em 1995, <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2002" data-fmt="brl4">—</span> em 2002, <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2011" data-fmt="brl4">—</span> em 2011, <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2021" data-fmt="brl4">—</span> em 2021 e <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2025" data-fmt="brl4">—</span> em 2025.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button></sup> De janeiro a setembro de 2026 a média das taxas mensais é <span class="ib-v" data-source="cambio" data-field="cambio_medio" data-where="ano=2026" data-fmt="brl4">—</span> (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button></sup></p>
+    <p>Antes de 1994 as taxas estão na moeda de cada época. Convertidas a reais, a variação anual do câmbio médio chegou a <span class="ib-v" data-source="cambio" data-field="variacao" data-where="ano=1990" data-fmt="pct1">—</span> em 1990, a maior da série (cálculo próprio).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup></p>
+    <p><b>Câmbio real efetivo.</b> O Banco Central publica um “índice da taxa de câmbio real efetiva (IPCA)”, com base em junho de 1994.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-16" aria-label="Referência 16">[16]</button></sup> Pelo nome, é uma taxa ponderada por parceiros comerciais e deflacionada pelo IPCA; não consultei a nota metodológica da série. Médias anuais: <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=1988" data-fmt="num1">—</span> em 1988, <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=1997" data-fmt="num1">—</span> em 1997, a menor, <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=2003" data-fmt="num1">—</span> em 2003, <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=2011" data-fmt="num1">—</span> em 2011, <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=2021" data-fmt="num1">—</span> em 2021, a maior, e <span class="ib-v" data-source="cambio" data-field="cambio_real_efetivo" data-where="ano=2025" data-fmt="num1">—</span> em 2025 (médias calculadas por mim sobre a série mensal).&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-16" aria-label="Referência 16">[16]</button></sup> O índice sobe nos anos de desvalorização do real, como 1999 e 2020; concluo daí que valores maiores indicam moeda mais depreciada. É inferência minha.</p>
+    <p><b>Divergência entre fontes.</b> O Banco Mundial publica a taxa oficial de todos os anos já em reais. De 1995 em diante ela praticamente coincide com a do Banco Central; para 1986–1993 fica acima da série do Banco Central convertida pelas paridades legais: em 1993, <span class="ib-v" data-source="cambio" data-field="cambio_reais_banco_mundial" data-where="ano=1993" data-fmt="num4">—</span> contra <span class="ib-v" data-source="cambio" data-field="cambio_medio_reais" data-where="ano=1993" data-fmt="num4">—</span> real por dólar.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button><button type="button" class="ib-n" data-goto="ib-ref-18" aria-label="Referência 18">[18]</button></sup> Não identifiquei a causa. Uso o Banco Central, que é a fonte primária da taxa.</p>
+  </div>
+  <div class="ib-grid">
+    <div class="ib-card">
+      <h3 class="ib-card-title">Dólar, taxa média anual, 1994–2026</h3>
+      <p class="ib-card-note">Reais por dólar, venda. Em 2026, média de janeiro a setembro.</p>
+      <div class="ib-plot" data-source="cambio"><div class="ib-chart dash-skeleton" id="ib-c-cambio"></div></div>
+    </div>
+    <div class="ib-card">
+      <h3 class="ib-card-title">Câmbio real efetivo, média anual, 1988–2026</h3>
+      <p class="ib-card-note">Índice do Banco Central, junho de 1994 = 100. Em 2026, média de janeiro a julho.</p>
+      <div class="ib-plot" data-source="cambio"><div class="ib-chart dash-skeleton" id="ib-c-reer"></div></div>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Câmbio ano a ano</h3>
+    <p class="ib-card-note">Taxas de venda do dólar na moeda em vigor no fim de cada ano.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button></sup> “Em reais” e “variação”: cálculo próprio pelas paridades legais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup> Variação: mudança percentual da taxa média em reais sobre o ano anterior; positiva quando o dólar encarece.</p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-cambio" data-source="cambio" data-row-key="ano">
+        <thead><tr>
+          <th class="ib-l" data-field="ano">Ano</th>
+          <th class="ib-l" data-field="periodo">Período</th>
+          <th class="ib-l" data-field="moeda">Moeda</th>
+          <th data-field="cambio_medio">Taxa média</th>
+          <th data-field="cambio_fim">Taxa no fim do ano</th>
+          <th data-field="cambio_medio_reais">Taxa média em reais</th>
+          <th data-field="variacao">Variação (%)</th>
+          <th data-field="cambio_real_efetivo">Câmbio real efetivo</th>
+          <th data-field="cambio_reais_banco_mundial">Taxa em reais, Banco Mundial</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ib-card">
+    <h3 class="ib-card-title">Padrões monetários desde 1970</h3>
+    <p class="ib-card-note">Vigência, equivalência com o padrão anterior e base legal, conforme o Banco Central.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup> A última coluna encadeia as paridades (cálculo próprio).</p>
+    <div class="ib-scroll">
+      <table class="ib-table" id="ib-t-moedas" data-source="moedas" data-row-key="inicio">
+        <thead><tr>
+          <th class="ib-l" data-field="padrao">Padrão</th>
+          <th class="ib-l" data-field="simbolo">Símbolo</th>
+          <th class="ib-l" data-field="inicio">Início</th>
+          <th class="ib-l" data-field="fim">Fim</th>
+          <th class="ib-l" data-field="equivalencia">Equivalência com o padrão anterior</th>
+          <th class="ib-l" data-field="base_legal">Base legal</th>
+          <th data-field="reais_por_unidade">Reais por unidade</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="ib-sec" id="ib-metodo">
+  <h2 class="ib-h2">Método e limites</h2>
+  <div class="ib-prose">
+    <h3 class="ib-h3">O que é estatística oficial</h3>
+    <ul>
+      <li>IPCA e INPC, do IBGE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-1" aria-label="Referência 1">[1]</button><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button></sup></li>
+      <li>Taxas de desemprego, desocupação e nível da ocupação de cada pesquisa, do IBGE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-8" aria-label="Referência 8">[8]</button><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button><button type="button" class="ib-n" data-goto="ib-ref-12" aria-label="Referência 12">[12]</button></sup></li>
+      <li>Taxas de câmbio e índice de câmbio real efetivo, do Banco Central.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button><button type="button" class="ib-n" data-goto="ib-ref-16" aria-label="Referência 16">[16]</button></sup></li>
+      <li>Valores nominais do salário mínimo: série do Banco Central e tabela de vigências do DIEESE, que coincidem de 1990 a 2004, fora do caso de 1991 descrito abaixo e dos meses de março a junho de 1994, em que a tabela do DIEESE traz o valor em URV e o Banco Central, em cruzeiros reais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup></li>
+    </ul>
+    <h3 class="ib-h3">O que é cálculo meu</h3>
+    <ul>
+      <li>Salário mínimo real: valor de cada mês convertido a reais, multiplicado pela razão entre o INPC de agosto de 2026 e o INPC do mês, e depois a média dos meses do ano. Corrigir o salário de um mês pelo índice do mesmo mês é aproximação grosseira quando a inflação mensal tem dois dígitos, como entre 1987 e 1994.</li>
+      <li>Todos os valores em reais anteriores a julho de 1994, pelas paridades legais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-17" aria-label="Referência 17">[17]</button></sup></li>
+      <li>Aumento real dos reajustes de 1995 a 2002 e a coluna “recalculado”.</li>
+      <li>Nível da ocupação da PME antiga, ocupados sobre população de 15 anos ou mais.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button></sup></li>
+      <li>Médias anuais das séries mensais (desemprego das duas PME, câmbio real efetivo, quociente do salário necessário) e todos os valores parciais de 2026.</li>
+      <li>Poder de compra de R$ 100 e multiplicação dos preços, pelo número-índice do IPCA.</li>
+    </ul>
+    <h3 class="ib-h3">Onde as fontes divergem</h3>
+    <ul>
+      <li>Salário mínimo de 1991: a série do Banco Central soma ao salário os abonos que a tabela do DIEESE lista à parte. Em dezembro de 1991 o Banco Central registra <span class="ib-v" data-source="salario_minimo" data-field="sm_nominal_fim" data-where="ano=1991" data-fmt="int">—</span> cruzeiros.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button><button type="button" class="ib-n" data-goto="ib-ref-5" aria-label="Referência 5">[5]</button></sup> Isso eleva a média real de 1991 nesta página.</li>
+      <li>Aumento real de janeiro de 2026: <span class="ib-v" data-source="reajustes" data-field="aumento_real" data-where="reajuste=jan/2026" data-fmt="pct2">—</span> na nota do DIEESE e <span class="ib-v" data-source="reajustes" data-field="aumento_real_recalculado" data-where="reajuste=jan/2026" data-fmt="pct2">—</span> com o INPC anual fechado.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-2" aria-label="Referência 2">[2]</button><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup></li>
+      <li>PME nova e PNAD Contínua dão taxas diferentes para os mesmos anos, de 2012 a 2015.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-10" aria-label="Referência 10">[10]</button><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button></sup></li>
+      <li>As estimativas da OIT diferem das apurações do IBGE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-11" aria-label="Referência 11">[11]</button><button type="button" class="ib-n" data-goto="ib-ref-14" aria-label="Referência 14">[14]</button></sup></li>
+      <li>Câmbio em reais antes de 1994: Banco Mundial acima do Banco Central.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-15" aria-label="Referência 15">[15]</button><button type="button" class="ib-n" data-goto="ib-ref-18" aria-label="Referência 18">[18]</button></sup></li>
+    </ul>
+    <h3 class="ib-h3">O que não consegui obter ou confirmar</h3>
+    <ul>
+      <li>A série de salário mínimo real do Ipea, referência usual, não respondeu às consultas desta sessão. O salário mínimo real anterior a 2002 não foi conferido contra outra fonte; de 2002 em diante, a conta foi conferida indiretamente pela tabela de reajustes do DIEESE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-6" aria-label="Referência 6">[6]</button></sup></li>
+      <li>Os valores nominais do salário mínimo de 1986 a janeiro de 1990 vêm de uma só fonte, a tabela do DIEESE.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-4" aria-label="Referência 4">[4]</button></sup></li>
+      <li>Nível da ocupação de 1986 a 1990.</li>
+      <li>Na página do DIEESE, o salário mínimo necessário de janeiro de 2026 aparece com o mesmo valor de janeiro de 2025; pode ser erro de transcrição na fonte. Mantive o valor publicado.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-7" aria-label="Referência 7">[7]</button></sup></li>
+      <li>Agosto de 2000 não consta nas tabelas do IBGE para a PME antiga; a série do Banco Central traz o mês.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-8" aria-label="Referência 8">[8]</button><button type="button" class="ib-n" data-goto="ib-ref-9" aria-label="Referência 9">[9]</button></sup></li>
+    </ul>
+    <h3 class="ib-h3">Datas</h3>
+    <p>Coleta em 8 de outubro de 2026. Último período disponível em cada série: IPCA e INPC, agosto de 2026; PNAD Contínua, trimestre de junho a agosto de 2026; câmbio mensal, setembro de 2026; câmbio real efetivo, julho de 2026.</p>
+  </div>
+</section>
+<section class="ib-sec" id="ib-refs"><h2 class="ib-h2">Referências</h2><ol class="ib-refs"><li id="ib-ref-1">INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA (IBGE). <i>Sistema IBGE de Recuperação Automática (SIDRA)</i>. Tabela 1737: “IPCA - Série histórica com número-índice, variação mensal e variações acumuladas em 3 meses, em 6 meses, no ano e em 12 meses (a partir de dezembro/1979)”. Pesquisa: Índice Nacional de Preços ao Consumidor Amplo. Série mensal, dez. 1979 a ago. 2026. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/1737/n1/all/v/63,69,2265,2266/p/all</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-2">IBGE. <i>SIDRA</i>. Tabela 1736: “INPC - Série histórica com número-índice, variação mensal e variações acumuladas em 3 meses, em 6 meses, no ano e em 12 meses (a partir de abril/1979)”. Pesquisa: Índice Nacional de Preços ao Consumidor. Série mensal até ago. 2026. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/1736/n1/all/v/44,68,2289/p/all</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-3">BANCO CENTRAL DO BRASIL (BCB). <i>SGS – Sistema Gerenciador de Séries Temporais</i>. Série 433: “Índice nacional de preços ao consumidor-amplo (IPCA)”, variação % mensal, jan. 1986 a ago. 2026. Disponível em: <span class="ib-url">https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=json</span> (consultada em janelas de dez anos, com os parâmetros dataInicial e dataFinal). Acesso em: 8 out. 2026.</li><li id="ib-ref-4">DEPARTAMENTO INTERSINDICAL DE ESTATÍSTICA E ESTUDOS SÓCIO-ECONÔMICOS (DIEESE). Anuário de 2005, Tabela 15: “Salário mínimo – Brasil 1940-2004 (em moeda nacional)”, p. 52-54. Fonte indicada na tabela: DIEESE. Disponível em: <span class="ib-url">https://www.dieese.org.br/anuario/2005/anuario2005/52.html</span>, <span class="ib-url">.../53.html</span> e <span class="ib-url">.../54.html</span>. Acesso em: 8 out. 2026. O título da publicação foi deduzido do endereço; as páginas consultadas trazem apenas o título da tabela.</li><li id="ib-ref-5">BCB. <i>SGS</i>. Série 1619: “Salário mínimo”, em unidades monetárias correntes, mensal, fev. 1990 a dez. 2026. Disponível em: <span class="ib-url">https://api.bcb.gov.br/dados/serie/bcdata.sgs.1619/dados?formato=json</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-6">DIEESE. <i>Impactos do aumento do salário mínimo para R$ 1.621,00 em 2026</i>. Nota Técnica n. 289. São Paulo: DIEESE, 22 dez. 2025. Equipe responsável: Camila Ikuta, Ilmar Ferreira Silva, Paulo Jager, Patrícia Costa, Ricardo de Melo Tamashiro e Victor Pagani. Regra de reajuste, p. 2; Gráfico 2 (cestas básicas), p. 7; Anexo, Tabela 1 (“Reajuste do salário mínimo - 2003-2026”), p. 8; direção sindical, p. 11. Disponível em: <span class="ib-url">https://www.dieese.org.br/notatecnica/2025/notaTec289salarioMinimo.pdf</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-7">DIEESE. <i>Salário mínimo nominal e necessário</i>. Pesquisa Nacional da Cesta Básica de Alimentos. Tabela mensal, jul. 1994 a ago. 2026. Disponível em: <span class="ib-url">https://www.dieese.org.br/analisecestabasica/salarioMinimo.html</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-8">BCB. <i>SGS</i>. Série 1620: “Taxa de desemprego - Região metropolitana - Brasil (na semana) - Desativada”, mensal, jan. 1986 a dez. 2002. Dados originais da Pesquisa Mensal de Emprego do IBGE. Disponível em: <span class="ib-url">https://api.bcb.gov.br/dados/serie/bcdata.sgs.1620/dados?formato=json</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-9">IBGE. <i>SIDRA</i>. Pesquisa Mensal de Emprego, séries encerradas, jan. 1991 a dez. 2002: Tabela 13, “Taxa de desemprego aberto - semana”; Tabela 8, “População residente de 15 anos e mais”; Tabela 10, “População ocupada de 15 anos e mais”. Nível territorial: total das áreas e regiões metropolitanas. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/13/n110/all/v/8/p/all</span> (e t/8, variável 3; t/10, variável 5). Acesso em: 8 out. 2026.</li><li id="ib-ref-10">IBGE. <i>SIDRA</i>. Pesquisa Mensal de Emprego, mar. 2002 a fev. 2016: Tabela 2176, “Taxa de desocupação na semana de referência, das pessoas de 10 anos ou mais de idade por sexo”; Tabela 2053, “Pessoas de 10 anos ou mais de idade, ocupadas na semana de referência, em relação ao total de pessoas em idade ativa”. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/2176/n110/all/v/1031/p/all/c2/6794</span> e <span class="ib-url">https://apisidra.ibge.gov.br/values/t/2053/n110/all/v/920/p/all</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-11">IBGE. <i>SIDRA</i>. Pesquisa Nacional por Amostra de Domicílios Contínua anual, 2012 a 2025: Tabela 4562, “Taxa de desocupação, na semana de referência, das pessoas de 14 anos ou mais de idade”; Tabela 4363, “Nível da ocupação, na semana de referência, das pessoas de 14 anos ou mais de idade”; Tabela 4660, “Rendimento médio mensal real e nominal das pessoas de 14 anos ou mais de idade ocupadas na semana de referência com rendimento de trabalho, habitualmente recebido em todos os trabalhos”. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/4562/n1/all/v/all/p/all</span> (e t/4363, t/4660). Acesso em: 8 out. 2026.</li><li id="ib-ref-12">IBGE. <i>SIDRA</i>. Pesquisa Nacional por Amostra de Domicílios Contínua mensal, trimestres móveis de jan.-mar. 2012 a jun.-ago. 2026: Tabela 6381, taxa de desocupação; Tabela 6379, nível da ocupação. Disponível em: <span class="ib-url">https://apisidra.ibge.gov.br/values/t/6381/n1/all/v/4099/p/all</span> e <span class="ib-url">https://apisidra.ibge.gov.br/values/t/6379/n1/all/v/4097/p/all</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-13">IBGE. PNAD Contínua: em 2025, taxa anual de desocupação foi de 5,6% enquanto taxa de subutilização foi 14,5%. <i>Agência de Notícias IBGE</i>, 30 jan. 2026 (atualizado em 27 mar. 2026). Disponível em: <span class="ib-url">https://agenciadenoticias.ibge.gov.br/agencia-sala-de-imprensa/2013-agencia-de-noticias/releases/45759</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-14">WORLD BANK. <i>World Development Indicators</i>. Indicadores SL.EMP.TOTL.SP.ZS, “Employment to population ratio, 15+, total (%) (modeled ILO estimate)”, e SL.UEM.TOTL.ZS, “Unemployment, total (% of total labor force) (modeled ILO estimate)”, Brasil, 1991 a 2025. Base atualizada em 8 out. 2026. Disponível em: <span class="ib-url">https://api.worldbank.org/v2/country/BRA/indicator/SL.EMP.TOTL.SP.ZS?format=json</span> (e SL.UEM.TOTL.ZS). Acesso em: 8 out. 2026.</li><li id="ib-ref-15">BCB. <i>SGS</i>. Séries 3694, “Taxa de câmbio - Livre - Dólar americano (venda) - Média de período - anual”; 3692, “Taxa de câmbio - Livre - Dólar americano (venda) - Fim de período - anual”; e 3698, taxa média mensal de venda; em unidades monetárias correntes por dólar, 1986 a set. 2026. Disponível em: <span class="ib-url">https://api.bcb.gov.br/dados/serie/bcdata.sgs.3694/dados?formato=json</span> (e 3692, 3698). Acesso em: 8 out. 2026.</li><li id="ib-ref-16">BCB. <i>SGS</i>. Série 11752: “Índice da taxa de câmbio real efetiva (IPCA) - Jun/1994=100”, mensal, jan. 1988 a jul. 2026. Disponível em: <span class="ib-url">https://api.bcb.gov.br/dados/serie/bcdata.sgs.11752/dados?formato=json</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-17">BCB. Museu de Valores. <i>Síntese dos Padrões Monetários Brasileiros</i>. Brasília, DF, maio 2007. 1 p. Disponível em: <span class="ib-url">https://www.bcb.gov.br/content/acessoinformacao/museudocs/pub/SintesePadroesMonetariosBrasileiros.pdf</span>. Acesso em: 8 out. 2026.</li><li id="ib-ref-18">WORLD BANK. <i>World Development Indicators</i>. Indicador PA.NUS.FCRF, “Official exchange rate (LCU per US$, period average)”, Brasil, 1986 a 2025. Base atualizada em 8 out. 2026. Disponível em: <span class="ib-url">https://api.worldbank.org/v2/country/BRA/indicator/PA.NUS.FCRF?format=json</span>. Acesso em: 8 out. 2026.</li></ol><h3 class="ib-h3">Bibliografia</h3><p class="ib-muted ib-small">Fontes consultadas que não sustentam nenhuma afirmação específica da página.</p><ul class="ib-refs"><li>BCB. <i>Webservice do SGS</i> (FachadaWSSGS, operação getUltimoValorXML): consultado para obter nome, unidade e periodicidade oficiais das séries 433, 188, 1619, 1620, 3692, 3694, 10777, 11752, 11753 e 24369. Disponível em: <span class="ib-url">https://www3.bcb.gov.br/wssgs/services/FachadaWSSGS</span>. Acesso em: 8 out. 2026.</li><li>BCB. <i>SGS</i>. Séries 188 (INPC, variação mensal), 10777 (taxa de desemprego, PME nova), 11753 (câmbio real, dólar) e 24369 (taxa de desocupação, PNADC): baixadas e comparadas com as do IBGE, sem uso direto na página. A série 24369 coincide com a Tabela 6381 do IBGE em todos os meses.</li><li>IBGE. <i>SIDRA</i>. Tabelas 4093 e 5436 (PNAD Contínua trimestral) e Tabela 14 (PME, desemprego aberto em 30 dias): consultadas, sem uso direto na página.</li><li>DIEESE. <i>Para pensar o salário mínimo</i>. Estudos e Pesquisas, ano I, n. 5, dez. 2004. Disponível em: <span class="ib-url">https://www.dieese.org.br/estudosepesquisas/2004/estpesqsalmin_0105.pdf</span>. Acesso em: 8 out. 2026.</li><li>WORLD BANK. <i>World Development Indicators</i>. Indicadores SL.EMP.TOTL.SP.NE.ZS, SL.UEM.TOTL.NE.ZS e FP.CPI.TOTL.ZG: baixados, sem uso na página.</li></ul></section></div>
+<script>
+const page = document.querySelector('.ib-page');
+const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const nf = (d) => new Intl.NumberFormat('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const sci = (x) => {
+  if (!x) return '0';
+  const e = Math.floor(Math.log10(Math.abs(x)));
+  const sup = String(e).replace(/[-0-9]/g, (c) => ({ '-': '⁻', 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹' })[c]);
+  return nf(2).format(x / 10 ** e) + ' × 10' + sup;
+};
+const F = {
+  pct2: (x) => nf(2).format(x) + '%',
+  pct1: (x) => nf(1).format(x) + '%',
+  spct2: (x) => (x > 0 ? '+' : '') + nf(2).format(x) + '%',
+  snum2: (x) => (x > 0 ? '+' : '') + nf(2).format(x),
+  num4: (x) => nf(4).format(x),
+  num2: (x) => nf(2).format(x),
+  num1: (x) => nf(1).format(x),
+  int: (x) => nf(0).format(x),
+  brl0: (x) => 'R$ ' + nf(0).format(x),
+  brl2: (x) => 'R$ ' + nf(2).format(x),
+  brl4: (x) => 'R$ ' + nf(4).format(x),
+  milhoes: (x) => nf(0).format(x / 1e6) + ' milhões de vezes',
+  rate: (x) => (Math.abs(x) < 0.01 ? sci(x) : nf(4).format(x)),
+  tiny: (x) => (Math.abs(x) < 0.01 ? sci(x) : nf(Math.abs(x) < 1 ? 6 : 0).format(x)),
+  date: (s) => (s ? s.slice(8, 10) + '/' + s.slice(5, 7) + '/' + s.slice(0, 4) : ''),
+  text: (s) => s,
+};
+const num = (x) => (x === '' || x === null || x === undefined ? null : Number(x));
+
+dash.calc('multiplicacao_precos', {
+  inputs: ['series_mensais'],
+  title: 'Multiplicação dos preços',
+  description: 'Número-índice do IPCA de junho de 1994 dividido pelo de janeiro de 1986.',
+  fn: (series_mensais) => {
+    const indice = (mes) => Number((series_mensais.find((r) => r.mes === mes) || {}).indice_ipca);
+    const fator = indice('1994-06') / indice('1986-01');
+    return Number.isFinite(fator) ? [{ periodo: '1986-1994', fator }] : [];
+  },
+});
+
+const rowsOf = (id) => {
+  const d = dash.data(id);
+  return d.status === 'ok' && Array.isArray(d.data) ? d.data : null;
+};
+
+// ---- valores marcados no texto
+function fillMarks() {
+  page.querySelectorAll('.ib-v').forEach((el) => {
+    const id = el.getAttribute('data-source');
+    const rows = rowsOf(id);
+    el.classList.toggle('dash-skeleton', dash.data(id).status === 'loading');
+    if (!rows) { el.textContent = '—'; return; }
+    const conds = el.getAttribute('data-where').split('&').map((p) => p.split('=').map(decodeURIComponent));
+    const row = rows.find((r) => conds.every(([k, val]) => String(r[k]) === val));
+    const raw = row ? num(row[el.getAttribute('data-field')]) : null;
+    el.textContent = raw === null || Number.isNaN(raw) ? '—' : F[el.getAttribute('data-fmt')](raw);
+  });
+}
+
+// ---- tabelas
+const TABLES = [
+  ['ib-t-inflacao', 'inflacao', 'ano', [['ano', 'text', 'l'], ['periodo', 'text', 'l'], ['ipca', 'num2'], ['inpc', 'num2'], ['cem_reais_jul94', 'brl2'], ['poder_compra_jul94', 'brl2']]],
+  ['ib-t-sm', 'salario_minimo', 'ano', [['ano', 'text', 'l'], ['periodo', 'text', 'l'], ['moeda', 'text', 'l'], ['sm_nominal_fim', 'num2'], ['sm_real_medio', 'brl2'], ['var_real', 'snum2'], ['razao_necessario', 'num2'], ['cestas_basicas_sp', 'num2']]],
+  ['ib-t-reaj', 'reajustes', 'reajuste', [['reajuste', 'text', 'l'], ['sm_novo', 'num2'], ['reajuste_nominal', 'num2'], ['inpc', 'num2'], ['aumento_real', 'snum2'], ['origem', 'text', 'l'], ['aumento_real_recalculado', 'snum2']]],
+  ['ib-t-emprego', 'emprego', 'ano', [['ano', 'text', 'l'], ['desemprego_pme_antiga', 'num2'], ['ocupacao_pme_antiga', 'num2'], ['desocupacao_pme_nova', 'num2'], ['ocupacao_pme_nova', 'num2'], ['desocupacao_pnadc', 'num1'], ['ocupacao_pnadc', 'num1'], ['emprego_pop_oit', 'num2'], ['desemprego_oit', 'num2'], ['rendimento_real_pnadc', 'int']]],
+  ['ib-t-cambio', 'cambio', 'ano', [['ano', 'text', 'l'], ['periodo', 'text', 'l'], ['moeda', 'text', 'l'], ['cambio_medio', 'num4'], ['cambio_fim', 'num4'], ['cambio_medio_reais', 'rate'], ['variacao', 'num1'], ['cambio_real_efetivo', 'num1'], ['cambio_reais_banco_mundial', 'rate']]],
+  ['ib-t-moedas', 'moedas', 'inicio', [['padrao', 'text', 'l'], ['simbolo', 'text', 'l'], ['inicio', 'date', 'l'], ['fim', 'date', 'l'], ['equivalencia', 'text', 'l ib-wrap'], ['base_legal', 'text', 'l ib-wrap'], ['reais_por_unidade', 'tiny']]],
+];
+function drawTables() {
+  TABLES.forEach(([tid, id, key, cols]) => {
+    const body = page.querySelector('#' + tid + ' tbody');
+    const rows = rowsOf(id);
+    if (!rows) { body.replaceChildren(); return; }
+    body.replaceChildren(...rows.map((r) => {
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-key', String(r[key]));
+      cols.forEach(([field, fmt, cls], i) => {
+        const td = document.createElement(i === 0 ? 'th' : 'td');
+        if (i === 0) td.setAttribute('scope', 'row');
+        if (cls) td.className = cls.split(' ').map((c) => (c.startsWith('ib-') ? c : 'ib-' + c)).join(' ');
+        const raw = r[field];
+        const isText = fmt === 'text' || fmt === 'date';
+        const val = isText ? (raw === null || raw === undefined ? '' : String(raw)) : num(raw);
+        td.textContent = val === null || val === '' ? '' : F[fmt](val);
+        tr.appendChild(td);
+      });
+      return tr;
+    }));
+  });
+}
+
+// ---- gráficos
+const MUTED = 'var(--cds-chart-muted)';
+function boxState(box, ids) {
+  const st = ids.map((id) => dash.data(id).status);
+  box.classList.toggle('dash-skeleton', st.includes('loading'));
+  if (st.every((s) => s === 'ok')) return true;
+  box.replaceChildren();
+  if (st.includes('error')) {
+    const f = document.createElement('div'); f.className = 'ib-fail';
+    const d = document.createElement('span'); d.className = 'ib-dot';
+    const t = document.createElement('span'); t.textContent = 'Falha ao carregar';
+    f.append(d, t); box.appendChild(f);
+  }
+  return false;
+}
+function legend(id, items) {
+  const el = page.querySelector('#' + id);
+  el.replaceChildren(...items.map(([name, color]) => {
+    const k = document.createElement('span'); k.className = 'ib-key';
+    const sw = document.createElement('span'); sw.className = 'ib-sw'; sw.style.background = color;
+    const t = document.createElement('span'); t.textContent = name;
+    k.append(sw, t); return k;
+  }));
+}
+function frame(box, cfg) {
+  const w = box.clientWidth;
+  if (!w) return null;
+  const h = cfg.height || 260;
+  box.replaceChildren();
+  const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('role', 'img').attr('aria-label', cfg.label);
+  const probe = svg.append('g');
+  let wide = 0;
+  cfg.yTicks.forEach((t) => { wide = Math.max(wide, probe.append('text').attr('class', 'ib-tick').text(cfg.yFmt(t)).node().getComputedTextLength()); });
+  probe.remove();
+  const m = { t: 10, r: 16, b: 26, l: Math.ceil(wide) + 10 };
+  const y = (cfg.log ? d3.scaleLog : d3.scaleLinear)(cfg.yDomain, [h - m.b, m.t]);
+  cfg.yTicks.forEach((t) => {
+    svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(t)).attr('y2', y(t)).style('stroke', 'var(--cds-chart-grid)').style('stroke-width', 1);
+    svg.append('text').attr('class', 'ib-tick').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.32em').attr('text-anchor', 'end').text(cfg.yFmt(t));
+  });
+  const base = cfg.log ? cfg.yDomain[0] : Math.max(cfg.yDomain[0], Math.min(0, cfg.yDomain[1]));
+  svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(base)).attr('y2', y(base)).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1);
+  const tip = document.createElement('div'); tip.className = 'ib-tip'; tip.hidden = true; box.appendChild(tip);
+  const showTip = (px, title, lines) => {
+    tip.replaceChildren();
+    const hd = document.createElement('div'); hd.className = 'ib-tip-h'; hd.textContent = title; tip.appendChild(hd);
+    lines.forEach(([name, color, text]) => {
+      const r = document.createElement('div'); r.className = 'ib-tip-r';
+      if (color) { const sw = document.createElement('span'); sw.className = 'ib-sw'; sw.style.background = color; r.appendChild(sw); }
+      const t = document.createElement('span'); t.textContent = (name ? name + ': ' : '') + text; r.appendChild(t);
+      tip.appendChild(r);
+    });
+    tip.hidden = false;
+    const tw = tip.offsetWidth;
+    const left = px + 12 + tw > w ? px - 12 - tw : px + 12;
+    tip.style.left = Math.max(0, Math.min(w - tw, left)) + 'px';
+    tip.style.top = m.t + 'px';
+  };
+  return { svg, w, h, m, y, tip, showTip };
+}
+function yearTicks(a, b, w) {
+  const step = w < 380 ? 10 : 5;
+  const out = [];
+  for (let t = Math.ceil(a / step) * step; t <= b; t += step) out.push(t);
+  return out;
+}
+// série: {name, color, pts:[{x, y}]}; x numérico (ano ou ano + mês/12)
+function lineChart(box, cfg) {
+  const fr = frame(box, cfg);
+  if (!fr) return;
+  const { svg, w, h, m, y, tip, showTip } = fr;
+  const x = d3.scaleLinear(cfg.xDomain, [m.l, w - m.r]);
+  yearTicks(cfg.xDomain[0], cfg.xDomain[1], w).forEach((t) => {
+    svg.append('text').attr('class', 'ib-tick').attr('x', x(t)).attr('y', h - m.b + 16).attr('text-anchor', 'middle').text(String(t));
+  });
+  (cfg.refs || []).forEach((r) => {
+    svg.append('line').attr('x1', m.l).attr('x2', w - m.r).attr('y1', y(r.y)).attr('y2', y(r.y)).style('stroke', 'var(--cds-chart-reference)').style('stroke-width', 1).style('stroke-dasharray', '4 3');
+    svg.append('text').attr('class', 'ib-tick').attr('x', w - m.r).attr('y', y(r.y) - 5).attr('text-anchor', 'end').text(r.label);
+  });
+  const line = d3.line().x((d) => x(d.x)).y((d) => y(d.y));
+  cfg.series.forEach((s) => {
+    svg.append('path').attr('d', line(s.pts)).style('fill', 'none').style('stroke', s.color).style('stroke-width', 2).style('stroke-linejoin', 'round').style('stroke-linecap', 'round');
+    if (cfg.dots) s.pts.forEach((p) => { svg.append('circle').attr('cx', x(p.x)).attr('cy', y(p.y)).attr('r', 2).style('fill', s.color); });
+    const last = s.pts[s.pts.length - 1];
+    if (last) svg.append('circle').attr('cx', x(last.x)).attr('cy', y(last.y)).attr('r', 3.5).style('fill', s.color);
+  });
+  const xs = Array.from(new Set(cfg.series.flatMap((s) => s.pts.map((p) => p.x)))).sort((a, b) => a - b);
+  const rule = svg.append('line').attr('y1', m.t).attr('y2', h - m.b).style('stroke', 'var(--cds-chart-axis)').style('stroke-width', 1).style('display', 'none');
+  const marks = svg.append('g');
+  const node = svg.node();
+  const move = (ev) => {
+    const r = node.getBoundingClientRect();
+    const px = (ev.clientX - r.left) * (w / r.width);
+    const xv = x.invert(px);
+    let best = xs[0];
+    xs.forEach((v) => { if (Math.abs(v - xv) < Math.abs(best - xv)) best = v; });
+    const lines = [];
+    marks.selectAll('*').remove();
+    cfg.series.forEach((s) => {
+      const p = s.pts.find((q) => q.x === best);
+      if (!p) return;
+      marks.append('circle').attr('cx', x(p.x)).attr('cy', y(p.y)).attr('r', 4.5).style('fill', s.color).style('stroke', 'var(--color-panel)').style('stroke-width', 1.5);
+      lines.push([cfg.series.length > 1 ? s.name : '', cfg.series.length > 1 ? s.color : '', cfg.tipFmt(p.y)]);
+    });
+    rule.attr('x1', x(best)).attr('x2', x(best)).style('display', null);
+    showTip(x(best), cfg.tipTitle(best), lines);
+  };
+  const leave = () => { tip.hidden = true; rule.style('display', 'none'); marks.selectAll('*').remove(); };
+  node.addEventListener('pointermove', move);
+  node.addEventListener('pointerdown', move);
+  node.addEventListener('pointerleave', leave);
+}
+function barChart(box, cfg) {
+  const fr = frame(box, cfg);
+  if (!fr) return;
+  const { svg, w, h, m, y, tip, showTip } = fr;
+  const x = d3.scaleBand(cfg.bars.map((b) => b.key), [m.l, w - m.r]).padding(0.25);
+  const bw = Math.min(32, x.bandwidth());
+  const off = (x.bandwidth() - bw) / 2;
+  const step = w < 380 ? 10 : 5;
+  const seen = new Set();
+  cfg.bars.forEach((b) => {
+    if (b.year % step === 0 && !seen.has(b.year)) {
+      seen.add(b.year);
+      svg.append('text').attr('class', 'ib-tick').attr('x', x(b.key) + x.bandwidth() / 2).attr('y', h - m.b + 16).attr('text-anchor', 'middle').text(String(b.year));
+    }
+  });
+  const rects = cfg.bars.map((b) => svg.append('rect').attr('x', x(b.key) + off).attr('width', bw).attr('y', Math.min(y(0), y(b.v))).attr('height', Math.max(1, Math.abs(y(b.v) - y(0)))).attr('rx', 2).style('fill', b.color));
+  const node = svg.node();
+  const move = (ev) => {
+    const r = node.getBoundingClientRect();
+    const px = (ev.clientX - r.left) * (w / r.width);
+    let best = 0;
+    cfg.bars.forEach((b, i) => { if (Math.abs(x(b.key) + x.bandwidth() / 2 - px) < Math.abs(x(cfg.bars[best].key) + x.bandwidth() / 2 - px)) best = i; });
+    rects.forEach((rc, i) => rc.style('opacity', i === best ? 1 : 0.45));
+    const b = cfg.bars[best];
+    showTip(x(b.key) + x.bandwidth() / 2, b.key, [['', '', cfg.tipFmt(b.v) + ' (' + b.note + ')']]);
+  };
+  const leave = () => { tip.hidden = true; rects.forEach((rc) => rc.style('opacity', 1)); };
+  node.addEventListener('pointermove', move);
+  node.addEventListener('pointerdown', move);
+  node.addEventListener('pointerleave', leave);
+}
+const pts = (rows, xf, yf, keep) => rows.filter((r) => (keep ? keep(r) : true) && num(r[yf]) !== null).map((r) => ({ x: typeof xf === 'function' ? xf(r) : Number(r[xf]), y: num(r[yf]) }));
+const yr = (v) => String(Math.round(v));
+const monthX = (r) => Number(r.mes.slice(0, 4)) + (Number(r.mes.slice(5, 7)) - 1) / 12;
+const monthTitle = (v) => { const a = Math.floor(v + 1e-6); return MESES[Math.round((v - a) * 12)] + '/' + a; };
+
+function drawCharts() {
+  const c = dash.colors;
+  const el = (id) => page.querySelector('#' + id);
+  const safe = (fn) => { try { fn(); } catch (err) { console.error(err); } };
+  const pct0 = (t) => nf(0).format(t) + '%';
+
+  safe(() => {
+    const box = el('ib-c-ipca'); if (!boxState(box, ['inflacao'])) return;
+    const rows = rowsOf('inflacao');
+    lineChart(box, { label: 'IPCA acumulado no ano, 1986 a 2025, em escala logarítmica', log: true, dots: true, yDomain: [1, 5000], yTicks: [1, 10, 100, 1000], yFmt: pct0, tipFmt: F.pct2, tipTitle: yr, xDomain: [1986, 2026],
+      series: [{ name: 'IPCA', color: c[0], pts: pts(rows, 'ano', 'ipca', (r) => r.periodo === 'jan-dez') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-ipca12'); if (!boxState(box, ['series_mensais'])) return;
+    const rows = rowsOf('series_mensais');
+    lineChart(box, { label: 'IPCA acumulado em doze meses, mensal, desde 1996', yDomain: [0, 24], yTicks: [0, 6, 12, 18, 24], yFmt: pct0, tipFmt: F.pct2, tipTitle: monthTitle, xDomain: [1996, 2027],
+      series: [{ name: 'IPCA em doze meses', color: c[0], pts: pts(rows, monthX, 'ipca_12m', (r) => r.mes >= '1996-01') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-poder'); if (!boxState(box, ['inflacao'])) return;
+    lineChart(box, { label: 'Poder de compra de cem reais em reais de julho de 1994', dots: true, yDomain: [0, 100], yTicks: [0, 25, 50, 75, 100], yFmt: F.brl0, tipFmt: F.brl2, tipTitle: yr, xDomain: [1994, 2026],
+      series: [{ name: 'Poder de compra', color: c[0], pts: pts(rowsOf('inflacao'), 'ano', 'poder_compra_jul94') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-razao'); if (!boxState(box, ['salario_minimo'])) return;
+    lineChart(box, { label: 'Salário mínimo necessário dividido pelo salário mínimo, 1995 a 2026', dots: true, yDomain: [0, 10], yTicks: [0, 2, 4, 6, 8, 10], yFmt: F.int, tipFmt: F.num2, tipTitle: yr, xDomain: [1995, 2026],
+      series: [{ name: 'Quociente', color: c[0], pts: pts(rowsOf('salario_minimo'), 'ano', 'razao_necessario') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-rend'); if (!boxState(box, ['emprego'])) return;
+    lineChart(box, { label: 'Rendimento médio real do trabalho, 2012 a 2025', dots: true, yDomain: [2800, 3800], yTicks: [2800, 3000, 3200, 3400, 3600, 3800], yFmt: F.brl0, tipFmt: F.brl0, tipTitle: yr, xDomain: [2012, 2025],
+      series: [{ name: 'Rendimento real', color: c[0], pts: pts(rowsOf('emprego'), 'ano', 'rendimento_real_pnadc') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-smreal'); if (!boxState(box, ['salario_minimo'])) return;
+    lineChart(box, { label: 'Salário mínimo real, média anual, 1986 a 2026', dots: true, yDomain: [0, 1800], yTicks: [0, 300, 600, 900, 1200, 1500, 1800], yFmt: F.brl0, tipFmt: F.brl2, tipTitle: yr, xDomain: [1986, 2026],
+      series: [{ name: 'Salário mínimo real', color: c[0], pts: pts(rowsOf('salario_minimo'), 'ano', 'sm_real_medio') }] });
+  });
+  safe(() => {
+    const box = el('ib-c-reaj');
+    legend('ib-l-reaj', [['DIEESE', c[0]], ['cálculo próprio', MUTED]]);
+    if (!boxState(box, ['reajustes'])) return;
+    const bars = rowsOf('reajustes').map((r) => ({ key: r.reajuste, year: Number(r.ano), v: Number(r.aumento_real), note: r.origem, color: r.origem === 'DIEESE' ? c[0] : MUTED }));
+    barChart(box, { label: 'Aumento real do salário mínimo a cada reajuste, 1995 a 2026', yDomain: [-8, 24], yTicks: [-8, 0, 8, 16, 24], yFmt: pct0, tipFmt: F.spct2, bars });
+  });
+  safe(() => {
+    const box = el('ib-c-desemp');
+    const defs = [['PME antiga, 6 regiões, 15 anos ou mais', 'desemprego_pme_antiga', c[0]], ['PME nova, 6 regiões, 10 anos ou mais', 'desocupacao_pme_nova', c[1]], ['PNAD Contínua, Brasil, 14 anos ou mais', 'desocupacao_pnadc', c[2]], ['OIT, estimativa de modelo', 'desemprego_oit', MUTED]];
+    legend('ib-l-desemp', defs.map((d) => [d[0], d[2]]));
+    if (!boxState(box, ['emprego'])) return;
+    const rows = rowsOf('emprego');
+    lineChart(box, { label: 'Taxa de desemprego por pesquisa, 1986 a 2025', dots: true, yDomain: [0, 16], yTicks: [0, 4, 8, 12, 16], yFmt: pct0, tipFmt: F.pct2, tipTitle: yr, xDomain: [1986, 2026],
+      series: [defs[3], defs[0], defs[1], defs[2]].map((d) => ({ name: d[0].split(',')[0], color: d[2], pts: pts(rows, 'ano', d[1]) })) });
+  });
+  safe(() => {
+    const box = el('ib-c-ocup');
+    const defs = [['PME antiga, cálculo próprio', 'ocupacao_pme_antiga', c[0]], ['PME nova', 'ocupacao_pme_nova', c[1]], ['PNAD Contínua', 'ocupacao_pnadc', c[2]], ['OIT, estimativa de modelo', 'emprego_pop_oit', MUTED]];
+    legend('ib-l-ocup', defs.map((d) => [d[0], d[2]]));
+    if (!boxState(box, ['emprego'])) return;
+    const rows = rowsOf('emprego');
+    lineChart(box, { label: 'Taxa de emprego por pesquisa, 1991 a 2025', dots: true, yDomain: [48, 64], yTicks: [48, 52, 56, 60, 64], yFmt: pct0, tipFmt: F.pct2, tipTitle: yr, xDomain: [1986, 2026],
+      series: [defs[3], defs[0], defs[1], defs[2]].map((d) => ({ name: d[0].split(',')[0], color: d[2], pts: pts(rows, 'ano', d[1]) })) });
+  });
+  safe(() => {
+    const box = el('ib-c-cambio'); if (!boxState(box, ['cambio'])) return;
+    lineChart(box, { label: 'Dólar, taxa média anual em reais, 1994 a 2026', dots: true, yDomain: [0, 6], yTicks: [0, 1, 2, 3, 4, 5, 6], yFmt: F.brl0, tipFmt: F.brl4, tipTitle: yr, xDomain: [1994, 2026],
+      series: [{ name: 'Dólar', color: c[0], pts: pts(rowsOf('cambio'), 'ano', 'cambio_medio_reais', (r) => Number(r.ano) >= 1994) }] });
+  });
+  safe(() => {
+    const box = el('ib-c-reer'); if (!boxState(box, ['cambio'])) return;
+    lineChart(box, { label: 'Índice de câmbio real efetivo, média anual, 1988 a 2026', dots: true, yDomain: [60, 150], yTicks: [60, 90, 120, 150], yFmt: F.int, tipFmt: F.num1, tipTitle: yr, xDomain: [1988, 2026], refs: [{ y: 100, label: 'jun/1994 = 100' }],
+      series: [{ name: 'Câmbio real efetivo', color: c[0], pts: pts(rowsOf('cambio'), 'ano', 'cambio_real_efetivo') }] });
+  });
+}
+
+dash.onData(() => {
+  try { fillMarks(); } catch (err) { console.error(err); }
+  try { drawTables(); } catch (err) { console.error(err); }
+  drawCharts();
+});
+
+// ---- navegação e notas
+const go = (el, link) => {
+  el.scrollIntoView({ block: 'start' });
+  if (link) dash.setLink(el.id);
+  if (el.matches('.ib-refs li')) {
+    page.querySelectorAll('.ib-hit').forEach((x) => x.classList.remove('ib-hit'));
+    el.classList.add('ib-hit');
+  }
+};
+page.addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-goto]');
+  if (!b) return;
+  const target = document.getElementById(b.getAttribute('data-goto'));
+  if (target) go(target, target.classList.contains('ib-sec'));
+});
+const named = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
+if (named && page.contains(named)) go(named, false);
+
+</script>

@@ -1,0 +1,48 @@
+{
+  "titulo": "Indicadores do Brasil 1986–2026",
+  "coleta": "2026-10-08",
+  "conjuntos_de_dados": [
+    {
+      "id": "inflacao",
+      "titulo": "IPCA e INPC anuais",
+      "descricao": "IPCA e INPC acumulados no ano (IBGE, SIDRA, tabelas 1737 e 1736), de 1986 a agosto de 2026, com o poder de compra de R$ 100 de julho de 1994 calculado sobre o número-índice do IPCA.",
+      "arquivo": "dados/inflacao.csv"
+    },
+    {
+      "id": "salario_minimo",
+      "titulo": "Salário mínimo anual",
+      "descricao": "Salário mínimo nominal no fim de cada ano (DIEESE até janeiro de 1990, Banco Central SGS 1619 depois), valor real médio em reais de agosto de 2026 pelo INPC (cálculo próprio) e indicadores do DIEESE.",
+      "arquivo": "dados/salario_minimo.csv"
+    },
+    {
+      "id": "reajustes",
+      "titulo": "Reajustes do salário mínimo",
+      "descricao": "Reajustes do salário mínimo de 1995 a 2026: valores da Nota Técnica 289 do DIEESE de 2003 em diante; antes disso e na coluna de recálculo, cálculo próprio pelo mesmo método.",
+      "arquivo": "dados/reajustes.csv"
+    },
+    {
+      "id": "emprego",
+      "titulo": "Emprego e desemprego anuais",
+      "descricao": "Médias anuais de desemprego e nível da ocupação da PME antiga, da PME nova e da PNAD Contínua (IBGE), estimativas modeladas da OIT (Banco Mundial) e rendimento médio real da PNAD Contínua.",
+      "arquivo": "dados/emprego.csv"
+    },
+    {
+      "id": "cambio",
+      "titulo": "Câmbio anual do dólar",
+      "descricao": "Taxa de venda do dólar, média e fim de ano (Banco Central, SGS 3694 e 3692), conversão a reais pelas paridades legais, índice de câmbio real efetivo (SGS 11752) e taxa oficial do Banco Mundial.",
+      "arquivo": "dados/cambio.csv"
+    },
+    {
+      "id": "moedas",
+      "titulo": "Padrões monetários",
+      "descricao": "Padrões monetários brasileiros desde 1970, com vigência, equivalência e base legal, conforme a Síntese dos Padrões Monetários Brasileiros do Banco Central.",
+      "arquivo": "dados/moedas.csv"
+    },
+    {
+      "id": "series_mensais",
+      "titulo": "Séries mensais desde 1986",
+      "descricao": "Séries mensais de janeiro de 1986 a setembro de 2026: IPCA, INPC, salário mínimo nominal e real, câmbio, câmbio real efetivo e taxas de desemprego das três pesquisas do IBGE.",
+      "arquivo": "dados/series_mensais.csv"
+    }
+  ]
+}

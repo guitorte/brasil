@@ -1,0 +1,39 @@
+Indicadores do Brasil, 1986–2026
+Inflação, poder de compra, salário mínimo, emprego e câmbio.
+Dados coletados em 8 de outubro de 2026 no IBGE, no Banco Central, no DIEESE e no Banco Mundial.
+
+O QUE HÁ NESTE PACOTE
+
+index.html
+  A página completa, com textos, notas numeradas, gráficos, tabelas e referências.
+  Abra com dois cliques em qualquer navegador. Funciona sem internet: os dados e a
+  biblioteca de gráficos estão embutidos no arquivo. Segue o tema claro ou escuro
+  do sistema e pode ser impressa ou salva em PDF pelo navegador.
+
+dados/
+  Os sete arquivos de dados em CSV (UTF-8, separador vírgula, decimal com ponto):
+  inflacao.csv         IPCA e INPC por ano e poder de compra de R$ 100
+  salario_minimo.csv   valor nominal, valor real médio e indicadores do DIEESE, por ano
+  reajustes.csv        reajuste nominal, INPC e aumento real a cada reajuste desde 1995
+  emprego.csv          desemprego e nível da ocupação por pesquisa, OIT e rendimento, por ano
+  cambio.csv           dólar na moeda da época e em reais, variação e câmbio real efetivo
+  moedas.csv           padrões monetários desde 1970 e paridades legais
+  series_mensais.csv   todas as séries mês a mês, de janeiro de 1986 a setembro de 2026
+
+fonte-do-painel/
+  index.html                 o código da página tal como está guardado no painel do Claude.
+                             Só funciona dentro do painel; fora dele, use o index.html da raiz.
+  conjuntos-de-dados.json    título e descrição de cada conjunto de dados do painel.
+
+licencas/
+  d3-LICENSE.txt   licença da biblioteca D3 (versão 7.9.0), embutida no index.html.
+
+ANTES DE CITAR UM NÚMERO
+
+- Emprego não tem série única desde 1986: são três pesquisas do IBGE com cobertura
+  diferente, e os níveis não se comparam entre elas.
+- O salário mínimo real é cálculo próprio, com o INPC; os valores anteriores a 2002
+  não foram conferidos contra outra fonte.
+- Os valores de 2026 são parciais.
+- As demais ressalvas e todas as referências estão na página, nas seções
+  "Método e limites" e "Referências".
