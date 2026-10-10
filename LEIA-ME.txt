@@ -33,6 +33,8 @@ dados/mundo/
                            1980–2031; a partir de 2026 são projeções
   commodities.csv          índices e preços de commodities do Banco Mundial (Pink Sheet),
                            1960–2025, em dólares correntes e em dólares de 2010
+  renda_relativa_eua.csv   renda por habitante em paridade de poder de compra como % da dos
+                           EUA, 1990–2025, para o Brasil, 9 países e 2 agregados
   fontes_e_indicadores.csv fonte, unidade, cobertura e notas de cada série
   paises.csv               códigos e nomes dos países e agregados
 
