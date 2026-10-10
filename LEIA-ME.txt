@@ -8,7 +8,13 @@ index.html
   A página completa, com textos, notas numeradas, gráficos, tabelas e referências.
   Abra com dois cliques em qualquer navegador. Funciona sem internet: os dados e a
   biblioteca de gráficos estão embutidos no arquivo. Segue o tema claro ou escuro
-  do sistema e pode ser impressa ou salva em PDF pelo navegador.
+  do sistema e pode ser impressa ou salva em PDF pelo navegador. Inclui a seção
+  “Brasil no mundo” e um layout pensado para celular. A fonte dos títulos vem do
+  Google Fonts; sem internet, o navegador usa uma fonte do sistema.
+
+v1.html, v2.html
+  Versões anteriores da página: a original e a primeira com o visual da capa.
+  v3.html apenas redireciona para index.html.
 
 dados/
   Os sete arquivos de dados em CSV (UTF-8, separador vírgula, decimal com ponto):
@@ -19,6 +25,24 @@ dados/
   cambio.csv           dólar na moeda da época e em reais, variação e câmbio real efetivo
   moedas.csv           padrões monetários desde 1970 e paridades legais
   series_mensais.csv   todas as séries mês a mês, de janeiro de 1986 a setembro de 2026
+
+dados/mundo/
+  Dados para comparar o Brasil com o mundo, baixados em 10 de outubro de 2026
+  (mesmo formato: UTF-8, separador vírgula, decimal com ponto):
+  brasil_no_mundo.csv      resumo por ano, 1960–2031: crescimento do Brasil contra mundo e
+                           América Latina, diferença em pontos percentuais, renda por habitante
+                           como % da dos EUA, participação no PIB mundial, termos de troca,
+                           câmbio real, investimento e preços de commodities
+  banco_mundial.csv        15 indicadores do Banco Mundial (WDI), 1960–2025, para o Brasil,
+                           13 países de comparação e 5 agregados (formato longo)
+  fmi_weo.csv              10 indicadores do FMI (World Economic Outlook de abril de 2026),
+                           1980–2031; a partir de 2026 são projeções
+  commodities.csv          índices e preços de commodities do Banco Mundial (Pink Sheet),
+                           1960–2025, em dólares correntes e em dólares de 2010
+  renda_relativa_eua.csv   renda por habitante em paridade de poder de compra como % da dos
+                           EUA, 1990–2025, para o Brasil, 9 países e 2 agregados
+  fontes_e_indicadores.csv fonte, unidade, cobertura e notas de cada série
+  paises.csv               códigos e nomes dos países e agregados
 
 fonte-do-painel/
   index.html                 o código da página tal como está guardado no painel do Claude.
@@ -35,5 +59,9 @@ ANTES DE CITAR UM NÚMERO
 - O salário mínimo real é cálculo próprio, com o INPC; os valores anteriores a 2002
   não foram conferidos contra outra fonte.
 - Os valores de 2026 são parciais.
+- Em dados/mundo, o crescimento mundial do FMI pondera os países pela paridade de poder
+  de compra e o do Banco Mundial pelo câmbio de mercado; não misture as duas fontes.
+- Em commodities.csv, o minério de ferro só aparece a partir de 2009: antes disso a planilha
+  do Banco Mundial diverge da série do FMI por mudança de método.
 - As demais ressalvas e todas as referências estão na página, nas seções
   "Método e limites" e "Referências".

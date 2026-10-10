@@ -1,0 +1,24 @@
+codigo,nome,tipo,fonte
+BRA,Brasil,país,Banco Mundial e FMI
+ARG,Argentina,país,Banco Mundial e FMI
+CHL,Chile,país,Banco Mundial e FMI
+COL,Colômbia,país,Banco Mundial e FMI
+MEX,México,país,Banco Mundial e FMI
+PER,Peru,país,Banco Mundial e FMI
+USA,Estados Unidos,país,Banco Mundial e FMI
+CHN,China,país,Banco Mundial e FMI
+IND,Índia,país,Banco Mundial e FMI
+KOR,Coreia do Sul,país,Banco Mundial e FMI
+ZAF,África do Sul,país,Banco Mundial e FMI
+RUS,Rússia,país,Banco Mundial e FMI
+TUR,Turquia,país,Banco Mundial e FMI
+IDN,Indonésia,país,Banco Mundial e FMI
+WLD,Mundo,agregado,Banco Mundial
+LCN,América Latina e Caribe,agregado,Banco Mundial
+UMC,Países de renda média-alta,agregado,Banco Mundial
+HIC,Países de renda alta,agregado,Banco Mundial
+LMY,Países de renda baixa e média,agregado,Banco Mundial
+WEOWORLD,Mundo,agregado,FMI
+WE,América Latina e Caribe,agregado,FMI
+ADVEC,Economias avançadas,agregado,FMI
+OEMDC,Economias emergentes e em desenvolvimento,agregado,FMI
