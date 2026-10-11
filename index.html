@@ -159,6 +159,13 @@ html{scroll-behavior:smooth}
 .ib-page .v3-hint::before{content:"↔";font-weight:700;color:var(--v2-pink-strong)}
 
 .ib-page #ib-t-periodos tr[data-key="1981-2025"] > *{font-weight:var(--cds-font-weight-medium)}
+/* linhas de projeção: fundo próprio, divisa tracejada e etiqueta na coluna fixa */
+:root{--v3-proj:#fbf3cc}
+@media (prefers-color-scheme: dark){:root{--v3-proj:#33301c}}
+.ib-page .ib-table tr.ib-proj > *,.ib-page .ib-table tr.ib-proj > th:first-child{background:var(--v3-proj);color:var(--color-fg-muted)}
+.ib-page .ib-table tr.ib-proj > th:first-child{color:var(--color-fg)}
+.ib-page .ib-table tr.ib-proj-first > *{border-top:2px dashed var(--color-fg-muted)}
+.ib-page .ib-proj-tag{display:inline-block;margin-left:.4rem;padding:0 .3rem;border-radius:4px;background:var(--v2-yellow);color:var(--v2-ink);font-size:.6875rem;font-weight:700;line-height:1.5;vertical-align:1px}
 
 /* barra de navegação: no topo em telas largas, embaixo (ao alcance do polegar) no celular */
 .ib-page .v3-dock{position:fixed;left:0;right:0;top:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:.5rem;background:var(--v2-yellow);color:var(--v2-ink);border-bottom:3px solid var(--v2-ink);padding:.5rem clamp(.75rem,3vw,1.5rem);transform:translateY(-110%);visibility:hidden;transition:transform .25s ease,visibility .25s}
@@ -601,7 +608,7 @@ html{scroll-behavior:smooth}
   </div>
   <div class="ib-card">
     <h3 class="ib-card-title">Brasil no mundo ano a ano</h3>
-    <p class="ib-card-note">Crescimento em % ao ano; diferença em pontos percentuais. Renda e participação em paridade de poder de compra; termos de troca com 2015 = 100; câmbio real efetivo do Banco Mundial com 2010 = 100, alta = real mais valorizado; investimento em % do PIB; commodities não energéticas em termos reais, 2010 = 100.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-19" aria-label="Referência 19">[19]</button><button type="button" class="ib-n" data-goto="ib-ref-20" aria-label="Referência 20">[20]</button><button type="button" class="ib-n" data-goto="ib-ref-21" aria-label="Referência 21">[21]</button></sup> Os arquivos completos, com 14 países e 9 agregados, estão na pasta “dados/mundo”.</p>
+    <p class="ib-card-note">Crescimento em % ao ano; diferença em pontos percentuais. Renda e participação em paridade de poder de compra; termos de troca com 2015 = 100; câmbio real efetivo do Banco Mundial com 2010 = 100, alta = real mais valorizado; investimento em % do PIB; commodities não energéticas em termos reais, 2010 = 100.&#8288;<sup class="ib-sup"><button type="button" class="ib-n" data-goto="ib-ref-19" aria-label="Referência 19">[19]</button><button type="button" class="ib-n" data-goto="ib-ref-20" aria-label="Referência 20">[20]</button><button type="button" class="ib-n" data-goto="ib-ref-21" aria-label="Referência 21">[21]</button></sup> Linhas destacadas, de 2026 em diante: projeções do FMI (World Economic Outlook de abril de 2026); nelas só há as colunas do FMI. Os arquivos completos, com 14 países e 9 agregados, estão na pasta “dados/mundo”.</p>
     <div class="ib-scroll">
       <table class="ib-table" id="ib-t-mundo" data-source="brasil_no_mundo" data-row-key="ano">
         <thead><tr>
@@ -833,17 +840,21 @@ const TABLES = [
   ['ib-t-emprego', 'emprego', 'ano', [['ano', 'text', 'l'], ['desemprego_pme_antiga', 'num2'], ['ocupacao_pme_antiga', 'num2'], ['desocupacao_pme_nova', 'num2'], ['ocupacao_pme_nova', 'num2'], ['desocupacao_pnadc', 'num1'], ['ocupacao_pnadc', 'num1'], ['emprego_pop_oit', 'num2'], ['desemprego_oit', 'num2'], ['rendimento_real_pnadc', 'int']]],
   ['ib-t-cambio', 'cambio', 'ano', [['ano', 'text', 'l'], ['periodo', 'text', 'l'], ['moeda', 'text', 'l'], ['cambio_medio', 'num4'], ['cambio_fim', 'num4'], ['cambio_medio_reais', 'rate'], ['variacao', 'num1'], ['cambio_real_efetivo', 'num1'], ['cambio_reais_banco_mundial', 'rate']]],
   ['ib-t-periodos', 'periodos_mundo', 'periodo', [['rotulo', 'text', 'l'], ['brasil', 'pct1'], ['mundo', 'pct1'], ['al', 'pct1'], ['dif', 'pp'], ['pc_brasil', 'pct1'], ['pc_mundo', 'pct1'], ['contexto', 'text', 'l ib-wrap']]],
-  ['ib-t-mundo', 'brasil_no_mundo', 'ano', [['ano', 'text', 'l'], ['crescimento_brasil', 'num2'], ['crescimento_mundo', 'num2'], ['crescimento_america_latina', 'num2'], ['diferenca_mundo_pp', 'snum2'], ['crescimento_pc_brasil', 'num2'], ['crescimento_pc_mundo', 'num2'], ['pib_pc_ppc_pct_eua', 'num1'], ['participacao_pib_mundial_ppc', 'num2'], ['participacao_pib_mundial_usd', 'num2'], ['termos_troca', 'num1'], ['cambio_real_efetivo', 'num1'], ['investimento_pct_pib', 'num1'], ['indice_commodities_nao_energia_real', 'num1'], ['crescimento_brasil_fmi', 'num1'], ['crescimento_mundo_fmi', 'num1'], ['fmi_projecao', 'text', 'l']]],
+  ['ib-t-mundo', 'brasil_no_mundo', 'ano', [['ano', 'text', 'l'], ['crescimento_brasil', 'num2'], ['crescimento_mundo', 'num2'], ['crescimento_america_latina', 'num2'], ['diferenca_mundo_pp', 'snum2'], ['crescimento_pc_brasil', 'num2'], ['crescimento_pc_mundo', 'num2'], ['pib_pc_ppc_pct_eua', 'num1'], ['participacao_pib_mundial_ppc', 'num2'], ['participacao_pib_mundial_usd', 'num2'], ['termos_troca', 'num1'], ['cambio_real_efetivo', 'num1'], ['investimento_pct_pib', 'num1'], ['indice_commodities_nao_energia_real', 'num1'], ['crescimento_brasil_fmi', 'num1'], ['crescimento_mundo_fmi', 'num1'], ['fmi_projecao', 'text', 'l']], { proj: 'fmi_projecao' }],
   ['ib-t-moedas', 'moedas', 'inicio', [['padrao', 'text', 'l'], ['simbolo', 'text', 'l'], ['inicio', 'date', 'l'], ['fim', 'date', 'l'], ['equivalencia', 'text', 'l ib-wrap'], ['base_legal', 'text', 'l ib-wrap'], ['reais_por_unidade', 'tiny']]],
 ];
 function drawTables() {
-  TABLES.forEach(([tid, id, key, cols]) => {
+  TABLES.forEach(([tid, id, key, cols, opt]) => {
     const body = page.querySelector('#' + tid + ' tbody');
     const rows = rowsOf(id);
     if (!rows) { body.replaceChildren(); return; }
+    let prevProj = false;
     body.replaceChildren(...rows.map((r) => {
       const tr = document.createElement('tr');
       tr.setAttribute('data-key', String(r[key]));
+      const proj = !!(opt && opt.proj && r[opt.proj] === 'sim');
+      if (proj) tr.className = prevProj ? 'ib-proj' : 'ib-proj ib-proj-first';
+      prevProj = proj;
       cols.forEach(([field, fmt, cls], i) => {
         const td = document.createElement(i === 0 ? 'th' : 'td');
         if (i === 0) td.setAttribute('scope', 'row');
@@ -852,6 +863,11 @@ function drawTables() {
         const isText = fmt === 'text' || fmt === 'date';
         const val = isText ? (raw === null || raw === undefined ? '' : String(raw)) : num(raw);
         td.textContent = val === null || val === '' ? '' : F[fmt](val);
+        if (i === 0 && proj) {
+          const tag = document.createElement('span');
+          tag.className = 'ib-proj-tag'; tag.textContent = 'proj.';
+          td.appendChild(tag);
+        }
         tr.appendChild(td);
       });
       return tr;
