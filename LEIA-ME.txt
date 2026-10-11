@@ -5,6 +5,20 @@ Dados coletados em 8 de outubro de 2026 no IBGE, no Banco Central, no DIEESE e n
 O QUE HÁ NESTE PACOTE
 
 index.html
+  Página de entrada do site: manchetes e o sumário dos capítulos. Gerada por
+  ferramentas/montar.py; não edite à mão.
+
+mundo/index.html
+  Capítulo "Brasil no mundo" em formato de história. Também gerado pelo montar.py.
+
+assets/
+  estilo.css e graficos.js, o visual e o motor de gráficos comuns aos capítulos.
+
+ferramentas/
+  montar.py (gera as páginas a partir de dados/) e os modelos das páginas.
+  Veja ferramentas/LEIA-ME.md.
+
+v3.html
   A página completa, com textos, notas numeradas, gráficos, tabelas e referências.
   Abra com dois cliques em qualquer navegador. Funciona sem internet: os dados e a
   biblioteca de gráficos estão embutidos no arquivo. Segue o tema claro ou escuro
@@ -14,7 +28,7 @@ index.html
 
 v1.html, v2.html
   Versões anteriores da página: a original e a primeira com o visual da capa.
-  v3.html apenas redireciona para index.html.
+  v4.html redireciona para mundo/.
 
 dados/
   Os sete arquivos de dados em CSV (UTF-8, separador vírgula, decimal com ponto):
