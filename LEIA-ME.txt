@@ -44,6 +44,18 @@ dados/mundo/
   fontes_e_indicadores.csv fonte, unidade, cobertura e notas de cada série
   paises.csv               códigos e nomes dos países e agregados
 
+dados/eleicoes/
+  Eleitos nas eleições gerais de 2018 e 2022 para governador, senador, deputado federal e
+  deputado estadual ou distrital, a partir das bases de candidaturas do TSE (Portal de Dados
+  Abertos, consulta_cand_2018 e consulta_cand_2022), baixadas em 10 de outubro de 2026:
+  eleitos_por_partido.csv  quantos cada partido elegeu, por cargo e por ano
+  comparacao_2018_2022.csv os dois anos lado a lado, com os partidos de 2018 agrupados pelo
+                           nome que tinham em 2022 (PR = PL, PRB = REPUBLICANOS, PPS =
+                           CIDADANIA, PSL + DEM = UNIÃO, PHS = PODE, PRP = PATRIOTA, PPL =
+                           PC do B, PTC = AGIR)
+  eleitos.csv              um eleito por linha: UF, cargo, nome, partido, federação (2022),
+                           coligação e situação na base do TSE
+
 fonte-do-painel/
   index.html                 o código da página tal como está guardado no painel do Claude.
                              Só funciona dentro do painel; fora dele, use o index.html da raiz.
@@ -61,6 +73,13 @@ ANTES DE CITAR UM NÚMERO
 - Os valores de 2026 são parciais.
 - Em dados/mundo, o crescimento mundial do FMI pondera os países pela paridade de poder
   de compra e o do Banco Mundial pelo câmbio de mercado; não misture as duas fontes.
+- Em dados/eleicoes, os números seguem a base atual do TSE, que é atualizada depois de
+  decisões judiciais e retotalizações (a de 2022 foi gerada em 10/10/2026; a de 2018, em
+  13/11/2024). Por isso podem diferir em uma ou duas cadeiras das contagens divulgadas na
+  época. Só eleições ordinárias foram contadas; as suplementares ficaram de fora. Exceção:
+  a senadora Selma Arruda (PSL-MT), eleita em 2018 e depois cassada, consta na base como não
+  eleita e foi contada como eleita; a vaga dela foi preenchida em eleição suplementar em 2020.
+  Deputados estaduais incluem os 24 distritais do DF.
 - Em commodities.csv, o minério de ferro só aparece a partir de 2009: antes disso a planilha
   do Banco Mundial diverge da série do FMI por mudança de método.
 - As demais ressalvas e todas as referências estão na página, nas seções
