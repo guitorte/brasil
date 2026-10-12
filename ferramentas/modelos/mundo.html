@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brasil no mundo · Indicadores do Brasil</title>
+<meta name="description" content="Desde 1980, a renda média do brasileiro subiu {{bra_pct_n}}; a do mundo dobrou. O Brasil comparado ao mundo, em gráficos.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Indicadores do Brasil">
+<meta property="og:title" content="Brasil no mundo">
+<meta property="og:description" content="Desde 1980, a renda média do brasileiro subiu {{bra_pct_n}}; a do mundo dobrou.">
+<meta property="og:url" content="https://guitorte.github.io/brasil/mundo/">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://guitorte.github.io/brasil/preview.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="Indicadores do Brasil, 1986–2026">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://guitorte.github.io/brasil/preview.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&display=swap">
+<link rel="stylesheet" href="{{raiz}}assets/estilo.css">
+</head>
+<body data-slug="brasil-no-mundo">
+{{barra}}
+
+<main>
+<section class="hero wrap">
+  <p class="kicker">Capítulo 6 · Comparação internacional</p>
+  <h1 class="h1">Brasil no mundo</h1>
+  <p class="dek">Desde 1980, a renda média do brasileiro subiu {{bra_pct_n}}. A do mundo dobrou. Esta é a história de como o Brasil ficou para trás, e dos anos em que andou na frente.</p>
+  <div class="heads">
+    <a class="head" href="#historia"><b>{{bra_pct}}</b><span>foi quanto subiu a renda por pessoa no Brasil de 1980 a 2025. A do mundo dobrou.</span></a>
+    <a class="head" href="#quem-subiu"><b>{{bra_eua_2025}}</b><span>da renda de um americano é a renda de um brasileiro, em poder de compra. Era {{bra_eua_1990}} em 1990.</span></a>
+    <a class="head" href="#fatia"><b>{{share_2025}}</b><span>de tudo o que o mundo produz é produzido no Brasil. Era {{share_1980}} em 1980.</span></a>
+  </div>
+  <p class="scroll-hint">Role a página: o gráfico abaixo muda a cada passo da história ↓</p>
+</section>
+
+<section class="story wrap" id="historia" aria-label="A história em seis passos">
+  <div class="story-fig">
+    <p class="fig-title">Renda por habitante, com 1980 valendo 100</p>
+    <p class="fig-sub">Descontada a inflação · <button type="button" class="term" data-term="indice">o que é “valendo 100”?</button></p>
+    <div class="chart" id="c-story"></div>
+  </div>
+  <div class="steps">
+    <div class="step" data-step="0"><p>Imagine que, em 1980, a <button type="button" class="term" data-term="pib-hab">renda média</button> de cada brasileiro valesse <b>100</b>. Em 2025, valia <b>{{bra_idx}}</b>: subiu {{bra_pct_n}} em 45 anos.</p></div>
+    <div class="step" data-step="1"><p>Quase todo esse ganho veio antes de 2014. De 2014 a 2025, a renda por pessoa subiu só <b>{{bra_14_25}}</b>.</p></div>
+    <div class="step" data-step="2"><p>No mesmo período, a média do <b>mundo dobrou</b>: foi de 100 a {{wld_idx}}. A <b>América Latina</b> ficou perto do Brasil, em {{lcn_idx}}.</p></div>
+    <div class="step" data-step="3"><p>Até os <b>Estados Unidos</b>, que já eram ricos em 1980, cresceram mais por pessoa: chegaram a {{usa_idx}}.</p></div>
+    <div class="step" data-step="4"><p>A <b>Coreia do Sul</b> foi de 100 a {{kor_idx}}: multiplicou por {{kor_mult}}. Repare que a escala mudou, e a linha do Brasil quase encostou no chão.</p></div>
+    <div class="step" data-step="5"><p>E a <b>China</b> foi de 100 a {{chn_idx}}: multiplicou por {{chn_mult}}. Nenhum outro país desta página chegou perto.</p><p class="step-more"><a href="#compare">Compare você mesmo outros países ↓</a></p></div>
+  </div>
+</section>
+
+<div class="cards wrap">
+
+<article class="card" id="acima-abaixo" data-source="Fonte: Banco Mundial, World Development Indicators. Crescimento do PIB a preços constantes.">
+  <header>
+    <p class="card-kicker">Ano a ano</p>
+    <h2>Quando o Brasil andou na frente, e quando ficou para trás</h2>
+    <p class="card-dek">Cada barra mostra quanto o PIB do Brasil cresceu a mais (azul) ou a menos (vermelho) que o do mundo naquele ano, em <button type="button" class="term" data-term="pp">pontos percentuais</button>.</p>
+  </header>
+  <div class="controls">
+    <div class="chips" role="group" aria-label="Período" data-ctl="periodo">
+      <button type="button" class="chip" aria-pressed="true" data-v="1961">Desde 1961</button>
+      <button type="button" class="chip" aria-pressed="false" data-v="1981">Desde 1981</button>
+      <button type="button" class="chip" aria-pressed="false" data-v="1994">Desde o Real</button>
+    </div>
+    <div class="seg" role="group" aria-label="Ver como"><button type="button" aria-pressed="true" data-view="chart">Gráfico</button><button type="button" aria-pressed="false" data-view="table">Tabela</button></div>
+  </div>
+  <div class="pane" data-pane="chart">
+    <div class="legend"><span class="lg"><i style="background:var(--pos)"></i>Brasil acima do mundo</span><span class="lg"><i style="background:var(--neg)"></i>Brasil abaixo do mundo</span></div>
+    <div class="chart" id="c-dif"></div>
+  </div>
+  <div class="pane" data-pane="table" hidden><div class="tbl-scroll" id="t-dif"></div></div>
+  <p class="card-text">O Brasil cresceu acima do mundo nos anos 60 e 70 e de 2003 a 2010. Ficou abaixo na crise da dívida dos anos 80 e, sobretudo, na recessão de 2015 e 2016, quando chegou a {{dif_2015}} e {{dif_2016}} pontos.</p>
+  <details class="more">
+    <summary>Aprofundar: as médias de cada período</summary>
+    <div class="more-body">
+      <p>Média de crescimento por ano em cada fase, para o Brasil, o mundo e a América Latina. A distância entre os pontos é a vantagem ou o atraso do Brasil.</p>
+      <div class="legend"><span class="lg"><i class="dot" style="background:var(--c1)"></i>Brasil</span><span class="lg"><i class="dot" style="background:var(--gray)"></i>Mundo</span><span class="lg"><i class="dot" style="background:var(--c2)"></i>América Latina</span></div>
+      <div class="chart" id="c-periodos"></div>
+      <div class="tbl-scroll" id="t-periodos"></div>
+    </div>
+  </details>
+  <footer class="card-foot"><button type="button" class="act" data-act="share">Compartilhar</button><button type="button" class="act" data-act="image">Baixar imagem</button><span class="src">Fonte: Banco Mundial (World Development Indicators).</span></footer>
+</article>
+
+<article class="card" id="quem-subiu" data-source="Fonte: Banco Mundial, World Development Indicators. PIB por habitante em paridade de poder de compra.">
+  <header>
+    <p class="card-kicker">Os risquinhos na parede</p>
+    <h2>Quem subiu e quem ficou parado</h2>
+    <p class="card-dek">Renda por habitante de cada país como porcentagem da americana, em <button type="button" class="term" data-term="ppc">poder de compra</button>. O círculo vazio é 1990; o cheio, 2025.</p>
+  </header>
+  <div class="controls">
+    <span></span>
+    <div class="seg" role="group" aria-label="Ver como"><button type="button" aria-pressed="true" data-view="chart">Gráfico</button><button type="button" aria-pressed="false" data-view="table">Tabela</button></div>
+  </div>
+  <div class="pane" data-pane="chart">
+    <div class="legend"><span class="lg"><i class="ring"></i>1990</span><span class="lg"><i class="dot" style="background:var(--ink2)"></i>2025</span><span class="lg"><i class="dot" style="background:var(--c1)"></i>Brasil</span></div>
+    <div class="chart" id="c-halteres"></div>
+  </div>
+  <div class="pane" data-pane="table" hidden>
+    <div class="chips" role="group" aria-label="Indicador da tabela" data-ctl="indicador">
+      <button type="button" class="chip" aria-pressed="true" data-v="renda">Renda, % da americana</button>
+      <button type="button" class="chip" aria-pressed="false" data-v="cresc">Crescimento por habitante, por década</button>
+    </div>
+    <div class="tbl-scroll" id="t-paises" style="margin-top:.6rem"></div>
+  </div>
+  <p class="card-text">O Brasil foi de {{bra_eua_1990}} para {{bra_eua_2025}}. No mesmo período, a Coreia do Sul foi de {{kor_eua_1990}} para {{kor_eua_2025}}; o Chile, de {{chl_eua_1990}} para {{chl_eua_2025}}; a China, de {{chn_eua_1990}} para {{chn_eua_2025}}. O México e a Argentina também perderam terreno.</p>
+  <details class="more">
+    <summary>Aprofundar: por que comparar com os Estados Unidos?</summary>
+    <div class="more-body">
+      <p>Os Estados Unidos funcionam como régua: são uma economia grande, rica e que cresceu de forma estável. Se a fração de um país sobe, ele está alcançando os ricos; se cai, está ficando para trás, mesmo que a renda dele tenha aumentado.</p>
+      <p>A conta usa paridade de poder de compra, que corrige as diferenças de preço entre países. Ela só existe a partir de 1990 no Banco Mundial.</p>
+    </div>
+  </details>
+  <footer class="card-foot"><button type="button" class="act" data-act="share">Compartilhar</button><button type="button" class="act" data-act="image">Baixar imagem</button><span class="src">Fonte: Banco Mundial (World Development Indicators); cálculo próprio.</span></footer>
+</article>
+
+<article class="card" id="vento" data-source="Fontes: Banco Mundial, Commodity Price Data (Pink Sheet) e World Development Indicators.">
+  <header>
+    <p class="card-kicker">O vento de fora</p>
+    <h2>Quando o preço do que o Brasil vende subiu, o Brasil cresceu mais que o mundo</h2>
+    <p class="card-dek">Em cima, os preços internacionais de <button type="button" class="term" data-term="commodities">commodities</button>, descontada a inflação, com 2010 valendo 100. Embaixo, o Brasil menos o mundo, como no primeiro cartão. Os dois gráficos usam os mesmos anos.</p>
+  </header>
+  <div class="controls">
+    <span></span>
+    <div class="seg" role="group" aria-label="Ver como"><button type="button" aria-pressed="true" data-view="chart">Gráfico</button><button type="button" aria-pressed="false" data-view="table">Tabela</button></div>
+  </div>
+  <div class="pane" data-pane="chart">
+    <div class="legend"><span class="lg"><i class="ln" style="background:var(--c1)"></i>Não energéticas (agrícolas e metais)</span><span class="lg"><i class="ln" style="background:var(--c2)"></i>Energia</span></div>
+    <div class="chart" id="c-com"></div>
+    <div class="chart" id="c-com-dif" style="margin-top:.25rem"></div>
+  </div>
+  <div class="pane" data-pane="table" hidden><div class="tbl-scroll" id="t-com"></div></div>
+  <p class="card-text">O índice de preços das commodities não energéticas foi de {{ne_2002}} em 2002 para {{ne_2011}} em 2011, quase o dobro. Foi a fase em que o Brasil cresceu acima do mundo. Quando os preços caíram, a partir de 2012, a vantagem desapareceu. A coincidência não prova sozinha a causa, mas a mesma alta ajudou outros exportadores da região.</p>
+  <details class="more">
+    <summary>Aprofundar: os termos de troca do Brasil</summary>
+    <div class="more-body">
+      <p>Os <button type="button" class="term" data-term="termos">termos de troca</button> medem quanto o Brasil compra lá fora com o que vende. Com 2015 valendo 100, foram de {{tt_2005}} em 2005 a {{tt_2011}} em 2011, e estavam em {{tt_2024}} em 2024. O Banco Mundial só publica essa série de 2005 a 2024.</p>
+      <div class="chart" id="c-tt"></div>
+    </div>
+  </details>
+  <footer class="card-foot"><button type="button" class="act" data-act="share">Compartilhar</button><button type="button" class="act" data-act="image">Baixar imagem</button><span class="src">Fontes: Banco Mundial (Pink Sheet e World Development Indicators).</span></footer>
+</article>
+
+<article class="card" id="fatia" data-source="Fonte: FMI, World Economic Outlook de abril de 2026. A partir de 2026, projeção.">
+  <header>
+    <p class="card-kicker">O tamanho no bolo</p>
+    <h2>Uma fatia cada vez menor de um bolo que cresce</h2>
+    <p class="card-dek">Parte de tudo o que o mundo produz que é produzida no Brasil, em poder de compra. A partir de 2026, <button type="button" class="term" data-term="projecao">projeção</button> do FMI.</p>
+  </header>
+  <div class="controls">
+    <span></span>
+    <div class="seg" role="group" aria-label="Ver como"><button type="button" aria-pressed="true" data-view="chart">Gráfico</button><button type="button" aria-pressed="false" data-view="table">Tabela</button></div>
+  </div>
+  <div class="pane" data-pane="chart"><div class="chart" id="c-fatia"></div></div>
+  <div class="pane" data-pane="table" hidden><div class="tbl-scroll" id="t-fatia"></div></div>
+  <p class="card-text">Em 1980, o Brasil produzia {{share_1980}} de tudo o que o mundo produzia; em 2025, {{share_2025}}. O FMI projeta {{share_2031}} em 2031. O Brasil não encolheu: o bolo cresceu mais depressa do que a fatia.</p>
+  <details class="more">
+    <summary>Aprofundar: e em dólares?</summary>
+    <div class="more-body">
+      <p>Medida em dólares pelo câmbio de cada ano, a fatia oscila com o valor do real: foi de {{usd_1990}} em 1990, {{usd_2011}} em 2011, quando o real estava forte, e {{usd_2025}} em 2025. Por isso a comparação de tamanho entre países usa poder de compra.</p>
+    </div>
+  </details>
+  <footer class="card-foot"><button type="button" class="act" data-act="share">Compartilhar</button><button type="button" class="act" data-act="image">Baixar imagem</button><span class="src">Fonte: FMI (World Economic Outlook, abril de 2026).</span></footer>
+</article>
+
+<article class="card" id="compare" data-source="Fonte: Banco Mundial, World Development Indicators. PIB por habitante a preços constantes.">
+  <header>
+    <p class="card-kicker">Sua vez</p>
+    <h2>Compare você mesmo</h2>
+    <p class="card-dek">Renda por habitante, descontada a inflação, com o ano inicial valendo 100. O Brasil fica sempre no gráfico; escolha até três outros.</p>
+  </header>
+  <div class="controls">
+    <div class="chips" role="group" aria-label="Ano inicial" data-ctl="base">
+      <button type="button" class="chip" aria-pressed="true" data-v="1980">Desde 1980</button>
+      <button type="button" class="chip" aria-pressed="false" data-v="1994">Desde 1994</button>
+      <button type="button" class="chip" aria-pressed="false" data-v="2010">Desde 2010</button>
+    </div>
+    <div class="seg" role="group" aria-label="Ver como"><button type="button" aria-pressed="true" data-view="chart">Gráfico</button><button type="button" aria-pressed="false" data-view="table">Tabela</button></div>
+  </div>
+  <div class="chips" role="group" aria-label="Países para comparar" data-ctl="paises" data-multi id="chips-paises"></div>
+  <div class="pane" data-pane="chart"><div class="legend" id="lg-compare"></div><div class="chart" id="c-compare"></div></div>
+  <div class="pane" data-pane="table" hidden><div class="tbl-scroll" id="t-compare"></div></div>
+  <footer class="card-foot"><button type="button" class="act" data-act="share">Compartilhar</button><button type="button" class="act" data-act="image">Baixar imagem</button><span class="src">Fonte: Banco Mundial (World Development Indicators); cálculo próprio.</span></footer>
+</article>
+
+</div>
+
+<section class="about wrap" id="sobre">
+  <div>
+    <h2>Palavras desta página</h2>
+    <dl id="glossario"></dl>
+  </div>
+  <div>
+    <h2>De onde vêm os dados</h2>
+    <ul>
+      <li>Banco Mundial, World Development Indicators: crescimento, renda por habitante e termos de troca, base atualizada em 8 de outubro de 2026.</li>
+      <li>FMI, World Economic Outlook de abril de 2026: participação no PIB mundial e projeções até 2031.</li>
+      <li>Banco Mundial, Commodity Price Data (Pink Sheet), atualizado em 2 de setembro de 2026.</li>
+      <li>Dados baixados em 10 de outubro de 2026. Arquivos completos: <a href="{{raiz}}dados/mundo/banco_mundial.csv">banco_mundial.csv</a>, <a href="{{raiz}}dados/mundo/fmi_weo.csv">fmi_weo.csv</a>, <a href="{{raiz}}dados/mundo/commodities.csv">commodities.csv</a>, <a href="{{raiz}}dados/mundo/renda_relativa_eua.csv">renda_relativa_eua.csv</a>.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Cuidados</h2>
+    <ul>
+      <li>O FMI e o Banco Mundial calculam o crescimento do mundo de jeitos diferentes; esta página usa o Banco Mundial para o crescimento e o FMI só para a fatia do PIB mundial.</li>
+      <li>Renda em poder de compra só existe a partir de 1990.</li>
+      <li>Projeções do FMI mudam a cada edição do relatório.</li>
+    </ul>
+    <p>Os outros capítulos estão sendo levados para este formato; enquanto isso, continuam na <a href="{{raiz}}v3.html">versão completa</a>, com todas as tabelas e notas.</p>
+  </div>
+</section>
+{{navegacao}}
+</main>
+
+
+<script src="{{raiz}}assets/graficos.js"></script>
+<script>
+(function () {
+'use strict';
+const { $, $$, reduce, f0, f1, f2, pct1, spp, T, lineChart, divBars, dumbbell, dotRows, table, ticks, closePop } = IB;
+const D = /*__DATA__*/null;
+const NOME = D.nomes;
+const CURTO = { USA: 'EUA', LCN: 'Am. Latina', KOR: 'Coreia do Sul', ZAF: 'Áfr. do Sul' };
+const curto = (c) => CURTO[c] || NOME[c];
+
+// ---------- dados derivados
+const years = (o) => Object.keys(o).map(Number).sort((a, b) => a - b);
+function indexed(code, base, end = 2025) {
+  const g = D.pc[code]; let v = 100; const pts = [{ x: base, y: 100 }];
+  for (let yr = base + 1; yr <= end; yr++) { if (g[yr] === undefined) return null; v *= 1 + g[yr] / 100; pts.push({ x: yr, y: v }); }
+  return pts;
+}
+const geo = (ser, a, b) => {
+  let p = 1;
+  for (let yr = a; yr <= b; yr++) { if (ser[yr] === undefined) return null; p *= 1 + ser[yr] / 100; }
+  return (p ** (1 / (b - a + 1)) - 1) * 100;
+};
+const PERIODOS = [
+  [1961, 1980, 'Anos 60 e 70', 'industrialização e “milagre econômico”', '60 e 70'], [1981, 1993, 'Crise da dívida', 'dívida externa e inflação alta', 'Dívida'],
+  [1994, 2002, 'Real', 'Plano Real e crises externas', 'Real'], [2003, 2010, 'Commodities', 'alta dos preços das matérias-primas', 'Alta'],
+  [2011, 2016, 'Recessão', 'desaceleração e recessão de 2015–2016', 'Crise'], [2017, 2019, 'Lenta', 'recuperação lenta', ''],
+  [2020, 2020, '', 'pandemia', ''], [2021, 2025, 'Retomada', 'retomada pós-pandemia', ''],
+];
+const faseDe = (yr) => (PERIODOS.find(([a, b]) => yr >= a && yr <= b) || [])[3] || '';
+const difBars = years(D.gdp.BRA).filter((yr) => D.gdp.WLD[yr] !== undefined).map((yr) => ({
+  x: yr, v: D.gdp.BRA[yr] - D.gdp.WLD[yr],
+  note: [['Brasil', '', pct1(D.gdp.BRA[yr])], ['Mundo', '', pct1(D.gdp.WLD[yr])], ['', '', faseDe(yr)]],
+}));
+const bands = PERIODOS.map(([a, b, label, , short]) => ({ x0: a, x1: b, label, short }));
+
+// ---------- história com rolagem guiada
+const STORY = [
+  { show: ['BRA'], ymax: 250 },
+  { show: ['BRA'], ymax: 250, band: [2014, 2025] },
+  { show: ['BRA', 'WLD', 'LCN'], ymax: 250, focus: ['WLD', 'LCN'] },
+  { show: ['BRA', 'WLD', 'LCN', 'USA'], ymax: 250, focus: ['USA'] },
+  { show: ['BRA', 'WLD', 'LCN', 'USA', 'KOR'], ymax: 1000, focus: ['KOR'] },
+  { show: ['BRA', 'WLD', 'LCN', 'USA', 'KOR', 'CHN'], ymax: 3500, focus: ['CHN'] },
+];
+const storyPts = {};
+['BRA', 'WLD', 'LCN', 'USA', 'KOR', 'CHN'].forEach((c) => { storyPts[c] = indexed(c, 1980); });
+let stepNow = 0, stepPrev = 0, anim = null, view = { ymax: 250, clip: {} };
+function drawStory() {
+  const st = STORY[stepNow], t = T(), box = $('#c-story');
+  const ymax = view.ymax;
+  const series = st.show.map((c) => ({
+    name: curto(c), pts: storyPts[c], clip: view.clip[c] === undefined ? 2025 : view.clip[c],
+    color: c === 'BRA' ? t.c1 : ((st.focus || []).includes(c) ? [t.c2, t.c3][(st.focus || []).indexOf(c)] : t.gray),
+    width: c === 'BRA' ? 3 : ((st.focus || []).includes(c) ? 2.5 : 1.75), labelStrong: c === 'BRA' || (st.focus || []).includes(c),
+    tipOrder: c === 'BRA' ? 10 : 0,
+  }));
+  series.sort((a, b) => (a.labelStrong === b.labelStrong ? 0 : a.labelStrong ? 1 : -1));
+  lineChart(box, {
+    height: Math.max(200, box.clientHeight),
+    label: 'Renda por habitante com 1980 valendo 100: ' + st.show.map((c) => NOME[c] + ' ' + f0(storyPts[c][storyPts[c].length - 1].y)).join(', '),
+    xDomain: [1980, 2025], yDomain: [0, ymax], yTicks: ticks(0, ymax, 5), yFmt: f0, tipFmt: f0, endLabels: true,
+    refs: [{ y: 100, label: ymax < 400 ? '1980 = 100' : '' }], bands: st.band ? [{ x0: st.band[0], x1: st.band[1], fill: t.hi, label: '2014–2025: quase parado' }] : [],
+    series,
+  });
+}
+function goStep(i) {
+  if (i === stepNow && anim === null) return;
+  stepPrev = stepNow; stepNow = i;
+  $$('.step').forEach((s) => s.classList.toggle('on', Number(s.dataset.step) === i));
+  const from = view.ymax, to = STORY[i].ymax;
+  const fresh = i > stepPrev ? STORY[i].show.filter((c) => !STORY[stepPrev].show.includes(c)) : [];
+  if (anim) cancelAnimationFrame(anim);
+  if (reduce.matches) { view = { ymax: to, clip: {} }; drawStory(); anim = null; return; }
+  const t0 = performance.now(), dur = 900;
+  const tick = (now) => {
+    const k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+    view.ymax = from + (to - from) * e;
+    view.clip = {};
+    fresh.forEach((c) => { view.clip[c] = 1980 + 45 * e; });
+    drawStory();
+    anim = k < 1 ? requestAnimationFrame(tick) : null;
+  };
+  anim = requestAnimationFrame(tick);
+}
+let io = null;
+const wide = matchMedia('(min-width: 900px)');
+function watchSteps() {
+  if (!('IntersectionObserver' in window)) return;
+  if (io) io.disconnect();
+  io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) goStep(Number(e.target.dataset.step)); });
+  }, { rootMargin: wide.matches ? '-45% 0px -50% 0px' : '-70% 0px -25% 0px' });
+  $$('.step').forEach((s) => io.observe(s));
+}
+watchSteps();
+wide.addEventListener('change', watchSteps);
+$$('.step')[0].classList.add('on');
+
+// ---------- cartões
+const state = { periodo: 1961, indicador: 'renda', base: 1980, view: {}, paises: ['WLD', 'KOR', 'CHL'] };
+const SLOTS = ['c2', 'c3', 'c4'];
+const slotOf = {};
+state.paises.forEach((c, i) => { slotOf[c] = SLOTS[i]; });
+
+function drawDif() {
+  const a = state.periodo;
+  divBars($('#c-dif'), { label: 'Diferença entre o crescimento do PIB do Brasil e o do mundo, ' + a + ' a 2025, em pontos percentuais', bars: difBars, xDomain: [a, 2025], yDomain: [-8, 8], yTicks: [-8, -4, 0, 4, 8], bands });
+}
+function periodRows() {
+  return PERIODOS.concat([[1981, 2025, 'Desde 1981', 'todo o período desde 1981']]).map(([a, b, , contexto]) => ({
+    label: a === b ? String(a) : a + '–' + b, contexto, bold: a === 1981 && b === 2025,
+    brasil: geo(D.gdp.BRA, a, b), mundo: geo(D.gdp.WLD, a, b), al: geo(D.gdp.LCN, a, b),
+    pcb: geo(D.pc.BRA, a, b), pcm: geo(D.pc.WLD, a, b),
+  }));
+}
+function drawPeriodos() {
+  const rows = periodRows();
+  dotRows($('#c-periodos'), { label: 'Crescimento médio do PIB por período: Brasil, mundo e América Latina', rows, domain: [-4, 8], ticks: [-4, 0, 4, 8],
+    keys: [{ key: 'brasil', name: 'Brasil', color: 'c1' }, { key: 'mundo', name: 'Mundo', color: 'gray' }, { key: 'al', name: 'América Latina', color: 'c2' }] });
+  table($('#t-periodos'), [
+    { label: 'Período', get: (r) => r.label }, { label: 'Brasil (%)', get: (r) => r.brasil, fmt: f1 }, { label: 'Mundo (%)', get: (r) => r.mundo, fmt: f1 },
+    { label: 'América Latina (%)', get: (r) => r.al, fmt: f1 }, { label: 'Brasil menos mundo', get: (r) => r.brasil - r.mundo, fmt: spp },
+    { label: 'Por habitante, Brasil (%)', get: (r) => r.pcb, fmt: f1 }, { label: 'Por habitante, mundo (%)', get: (r) => r.pcm, fmt: f1 },
+  ], rows);
+}
+const HALT = ['KOR', 'ARG', 'CHL', 'CHN', 'WLD', 'MEX', 'LCN', 'BRA', 'COL', 'PER', 'ZAF', 'IND'];
+function drawHalteres() {
+  const rows = HALT.map((c) => ({ name: NOME[c] === 'Mundo' ? 'Média mundial' : NOME[c], a: D.renda[c][1990], b: D.renda[c][2025], hl: c === 'BRA', agg: c === 'WLD' || c === 'LCN' }))
+    .sort((p, q) => q.b - p.b);
+  dumbbell($('#c-halteres'), { label: 'Renda por habitante como porcentagem da americana, 1990 e 2025, por país', rows, domain: [0, 80], ticks: [0, 20, 40, 60, 80], fmt: (v) => f0(v) + '%' });
+}
+function drawTablePaises() {
+  if (state.indicador === 'renda') {
+    const ys = [1990, 2000, 2010, 2020, 2025];
+    const rows = HALT.map((c) => ({ c, name: NOME[c], v: ys.map((yr) => D.renda[c][yr]) })).sort((p, q) => (p.c === 'BRA' ? -1 : q.c === 'BRA' ? 1 : q.v[4] - p.v[4]));
+    table($('#t-paises'), [{ label: 'País', get: (r) => r.name }, ...ys.map((yr, i) => ({ label: String(yr), get: (r) => r.v[i], fmt: (v) => f1(v) + '%' })),
+      { label: '1990 → 2025', get: (r) => r.v[4] - r.v[0], fmt: spp }], rows, { pin: (r) => r.c === 'BRA' });
+  } else {
+    const per = [[1981, 1990], [1991, 2000], [2001, 2010], [2011, 2020], [2021, 2025], [1981, 2025]];
+    const rows = Object.keys(D.pc).map((c) => ({ c, name: NOME[c], v: per.map(([a, b]) => geo(D.pc[c], a, b)) })).filter((r) => r.v.every((v) => v !== null))
+      .sort((p, q) => (p.c === 'BRA' ? -1 : q.c === 'BRA' ? 1 : q.v[5] - p.v[5]));
+    table($('#t-paises'), [{ label: 'País', get: (r) => r.name }, ...per.map(([a, b], i) => ({ label: a + '–' + String(b).slice(2) + ' (% ao ano)', get: (r) => r.v[i], fmt: f1 }))], rows, { pin: (r) => r.c === 'BRA' });
+  }
+}
+function drawVento() {
+  const t = T(), box = $('#c-com'), W = box.clientWidth;
+  if (!W) return;
+  const ml = 40;
+  const com = years(D.com).map((yr) => ({ yr, ne: D.com[yr][0], en: D.com[yr][1] }));
+  lineChart(box, { label: 'Índices de preços reais de commodities, 1961 a 2025, 2010 igual a 100', height: W < 480 ? 220 : 250, ml,
+    xDomain: [1961, 2025], yDomain: [0, 150], yTicks: [0, 50, 100, 150], yFmt: f0, tipFmt: f1, refs: [{ y: 100 }],
+    bands: [{ x0: 2003, x1: 2011, fill: t.hi, label: '2003–2011' }],
+    series: [{ name: 'Energia', color: t.c2, pts: com.filter((r) => r.yr >= 1961).map((r) => ({ x: r.yr, y: r.en })) },
+      { name: 'Não energéticas', color: t.c1, width: 2.5, pts: com.filter((r) => r.yr >= 1961).map((r) => ({ x: r.yr, y: r.ne })), tipOrder: 1 }] });
+  // embaixo, as barras com a mesma margem esquerda, para os anos coincidirem
+  divBars($('#c-com-dif'), { label: 'Brasil menos mundo, crescimento do PIB em pontos percentuais', bars: difBars, xDomain: [1961, 2025], yDomain: [-8, 8], yTicks: [-8, 0, 8],
+    height: W < 480 ? 120 : 140, ml, bands: [{ x0: 2003, x1: 2011, fill: t.hi }] });
+}
+function drawTT() {
+  const t = T();
+  lineChart($('#c-tt'), { label: 'Termos de troca do Brasil, 2005 a 2024, 2015 igual a 100', height: 220, xDomain: [2005, 2024], yDomain: [80, 140], yTicks: [80, 100, 120, 140],
+    yFmt: f0, tipFmt: f1, refs: [{ y: 100, label: '2015 = 100' }], xTicks: [2005, 2010, 2015, 2020],
+    series: [{ name: 'Termos de troca', color: t.c1, pts: years(D.tt).map((yr) => ({ x: yr, y: D.tt[yr] })) }] });
+}
+function drawFatia() {
+  const t = T();
+  lineChart($('#c-fatia'), { label: 'Participação do Brasil no PIB mundial em poder de compra, 1980 a 2031; projeção do FMI a partir de 2026', xDomain: [1980, 2031], yDomain: [0, 5],
+    yTicks: [0, 1, 2, 3, 4, 5], yFmt: (v) => f0(v) + '%', tipFmt: (v) => f2(v) + '%', tipTitle: (yr) => yr + (yr >= 2026 ? ' (projeção)' : ''), projFrom: 2025,
+    series: [{ name: 'Brasil', color: t.c1, width: 2.5, projFrom: 2025, pts: years(D.share.fmi).map((yr) => ({ x: yr, y: D.share.fmi[yr] })) }] });
+}
+function drawCompare() {
+  const t = T(), base = state.base;
+  const chips = $('#chips-paises');
+  if (!chips.childElementCount) {
+    Object.keys(D.pc).filter((c) => c !== 'BRA').forEach((c) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.dataset.v = c;
+      b.append(document.createElement('i'), document.createTextNode(NOME[c]));
+      chips.appendChild(b);
+    });
+  }
+  $$('.chip', chips).forEach((b) => {
+    const on = state.paises.includes(b.dataset.v);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.firstChild.style.background = on ? t[slotOf[b.dataset.v]] : 'transparent';
+    b.firstChild.style.display = on ? '' : 'none';
+  });
+  const list = ['BRA'].concat(state.paises);
+  const series = list.map((c) => ({ c, name: curto(c), color: c === 'BRA' ? t.c1 : t[slotOf[c]], width: c === 'BRA' ? 3 : 2, labelStrong: c === 'BRA', pts: indexed(c, base) }));
+  const ymax = Math.max(...series.map((s) => Math.max(...s.pts.map((p) => p.y))));
+  const yt = ticks(0, ymax * 1.05, 5);
+  $('#lg-compare').replaceChildren(...series.map((s) => { const sp = document.createElement('span'); sp.className = 'lg'; const i = document.createElement('i'); i.className = 'ln'; i.style.background = s.color; sp.append(i, document.createTextNode(s.name)); return sp; }));
+  lineChart($('#c-compare'), { label: 'Renda por habitante com ' + base + ' valendo 100: ' + series.map((s) => s.name).join(', '), xDomain: [base, 2025], yDomain: [0, yt[yt.length - 1]], yTicks: yt,
+    yFmt: f0, tipFmt: f0, endLabels: true, refs: [{ y: 100 }], series: series.slice(1).concat(series[0]) });
+  if (state.view.compare === 'table') {
+    table($('#t-compare'), [{ label: 'Ano', get: (r) => r.yr }, ...series.map((s) => ({ label: s.name, get: (r) => (s.pts.find((p) => p.x === r.yr) || {}).y, fmt: f0 }))],
+      series[0].pts.map((p) => ({ yr: p.x })));
+  }
+}
+const TABLES = {
+  'acima-abaixo': () => table($('#t-dif'), [{ label: 'Ano', get: (r) => r.x }, { label: 'Brasil (%)', get: (r) => D.gdp.BRA[r.x], fmt: f2 }, { label: 'Mundo (%)', get: (r) => D.gdp.WLD[r.x], fmt: f2 },
+    { label: 'América Latina (%)', get: (r) => D.gdp.LCN[r.x], fmt: f2 }, { label: 'Brasil menos mundo', get: (r) => r.v, fmt: spp }], difBars),
+  'quem-subiu': drawTablePaises,
+  vento: () => table($('#t-com'), [{ label: 'Ano', get: (r) => r }, { label: 'Não energéticas (2010 = 100)', get: (r) => D.com[r][0], fmt: f1 }, { label: 'Energia (2010 = 100)', get: (r) => D.com[r][1], fmt: f1 },
+    { label: 'Brasil menos mundo', get: (r) => (D.gdp.WLD[r] === undefined ? null : D.gdp.BRA[r] - D.gdp.WLD[r]), fmt: spp }, { label: 'Termos de troca (2015 = 100)', get: (r) => D.tt[r], fmt: f1 }], years(D.com)),
+  fatia: () => table($('#t-fatia'), [{ label: 'Ano', get: (r) => r }, { label: 'FMI (% do PIB mundial)', get: (r) => D.share.fmi[r], fmt: f2 }, { label: 'Banco Mundial (% do PIB mundial)', get: (r) => D.share.bm[r], fmt: f2 }],
+    years(D.share.fmi), { proj: (r) => r >= 2026 }),
+  compare: drawCompare,
+};
+function drawAll() {
+  closePop();
+  drawStory(); drawDif(); drawHalteres(); drawVento(); drawFatia(); drawCompare();
+  if ($('#acima-abaixo details').open) drawPeriodos();
+  if ($('#vento details').open) drawTT();
+  Object.keys(state.view).forEach((id) => { if (state.view[id] === 'table') TABLES[id](); });
+}
+
+// ---------- controles deste capítulo
+Object.assign(IB.hooks, {
+  chip(ctl, v) {
+    if (ctl === 'paises') {
+      const i = state.paises.indexOf(v);
+      if (i >= 0) { state.paises.splice(i, 1); delete slotOf[v]; }
+      else {
+        if (state.paises.length >= 3) { const out = state.paises.shift(); delete slotOf[out]; }
+        state.paises.push(v); slotOf[v] = SLOTS.find((s) => !Object.values(slotOf).includes(s));
+      }
+      drawCompare(); return;
+    }
+    if (ctl === 'periodo') { state.periodo = Number(v); drawDif(); }
+    if (ctl === 'indicador') { state.indicador = v; drawTablePaises(); }
+    if (ctl === 'base') { state.base = Number(v); drawCompare(); }
+  },
+  view(id, v) { state.view[id] = v; if (v === 'table') TABLES[id](); else drawAll(); },
+  more(id) { if (id === 'acima-abaixo') drawPeriodos(); if (id === 'vento') drawTT(); },
+  redraw(full) { if (full) drawAll(); else drawStory(); },
+});
+IB.start();
+})();
+</script>
+</body>
+</html>
