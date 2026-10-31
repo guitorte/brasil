@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Alugando a Garantia: Como Funcionava a Máquina do Banco Master</title>
+  <style>
+    :root {
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #555555;
+      --border: #e2e5e9;
+      --primary: #0f172a;
+      --accent: #1e3a8a;
+      --badge-central-bg: #fee2e2;
+      --badge-central-text: #991b1b;
+      --badge-sec-bg: #fef3c7;
+      --badge-sec-text: #92400e;
+      --badge-acc-bg: #f1f5f9;
+      --badge-acc-text: #475569;
+      --link: #0366d6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 90px;
+    }
+
+    /* Barra de Progresso de Leitura */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: transparent;
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 0.1s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* Cabeçalho */
+    header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .kicker {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 26px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .byline {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Tipografia de Seções */
+    h2 {
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 32px 0 14px 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border);
+    }
+    h3 {
+      font-size: 17px;
+      line-height: 1.35;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 24px 0 10px 0;
+    }
+    p {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    ul, ol {
+      margin: 0 0 16px 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* Citações e Notas inline */
+    a.fn {
+      color: var(--link);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+      vertical-align: super;
+      padding: 0 2px;
+    }
+
+    /* Destaque / Callout sutil */
+    .callout {
+      background: var(--surface);
+      border-left: 4px solid var(--accent);
+      padding: 14px 16px;
+      margin: 16px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 15px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+    .badge-central { background: var(--badge-central-bg); color: var(--badge-central-text); }
+    .badge-secondary { background: var(--badge-sec-bg); color: var(--badge-sec-text); }
+    .badge-accessory { background: var(--badge-acc-bg); color: var(--badge-acc-text); }
+
+    /* Cards Modulares de Dados / Atores */
+    .data-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .data-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .data-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .data-row {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .data-label {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .data-response {
+      background: #f8fafc;
+      border-radius: 4px;
+      padding: 8px 10px;
+      font-size: 13px;
+      border-left: 3px solid #cbd5e1;
+      margin-top: 8px;
+    }
+
+    /* Diagrama em Esteira Vertical (Pipeline) */
+    .pipeline {
+      position: relative;
+      margin: 20px 0;
+      padding-left: 18px;
+    }
+    .pipeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 10px;
+      bottom: 20px;
+      width: 2px;
+      background: #cbd5e1;
+    }
+    .pipeline-step {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+    }
+    .pipeline-step::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 16px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+    }
+    .pipeline-step h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .pipeline-step p {
+      font-size: 13px;
+      margin: 0;
+      color: var(--text-muted);
+    }
+
+    /* Barra Visualizadora de Proporção (Fontes de Recursos) */
+    .bar-row {
+      margin-bottom: 12px;
+    }
+    .bar-label-group {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .bar-track {
+      background: #e2e8f0;
+      border-radius: 4px;
+      height: 10px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .bar-fill {
+      background: var(--accent);
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    /* Rodapé de Referências */
+    .ref-list {
+      list-style-type: none;
+      padding-left: 0;
+      font-size: 13px;
+    }
+    .ref-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      word-break: break-word;
+    }
+    .ref-index {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 4px;
+    }
+
+    /* Barra de Ação Flutuante no Polegar */
+    .floating-bar {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      display: flex;
+      gap: 8px;
+      z-index: 900;
+    }
+    .btn-float {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Modal / Bottom Sheet para Notas e Sumário */
+    dialog {
+      margin: auto auto 0 auto;
+      width: 100%;
+      max-width: 680px;
+      border: none;
+      border-radius: 14px 14px 0 0;
+      background: #ffffff;
+      padding: 18px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+    }
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .sheet-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .sheet-close {
+      background: #f1f5f9;
+      border: none;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+    .sheet-content {
+      font-size: 14px;
+      line-height: 1.5;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .sheet-content a {
+      color: var(--link);
+      display: inline-block;
+      margin-top: 6px;
+    }
+    .toc-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-item a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de Progresso no topo -->
+  <div id="progress-container"><div id="progress-bar"></div></div>
+
+  <div class="container">
+    <header>
+      <div class="kicker">Compilação</div>
+      <h1>Golpe com garantia: como funcionava o esquema do Banco Master</h1>
+      <div class="byline">30 de outubro de 2026 · <strong>@guitorte</strong></div>
+    </header>
+
+    <!-- INTRODUÇÃO -->
+    <section id="cdb">
+      <h2>CDBs astronômicos</h2>
+      <p>Em 2024, os Certificados de Depósito Bancário (CDBs) do Banco Master pagavam até 140% do CDI, chegando a 150% em algumas emissões, enquanto a média do mercado girava em torno de 100% a 107% <a href="#ref-1" class="fn" data-ref="1">[1]</a>. Poupadores comuns os compravam por meio de grandes plataformas de investimento, como XP e BTG Pactual <a href="#ref-2" class="fn" data-ref="2">[2]</a>.</p>
+      
+      <p>Eles não precisavam confiar no Master. O Fundo Garantidor de Créditos (FGC), financiado principalmente pelos seus bancos associados <a href="#ref-5" class="fn" data-ref="5">[5]</a>, cobria até R$ 250.000 por CPF ou CNPJ <a href="#ref-3" class="fn" data-ref="3">[3]</a>. A taxa agressiva vinha do banco; a segurança vinha do fundo.</p>
+      
+      <p>Quando o Banco Central decretou a liquidação extrajudicial do Master em 18 de novembro de 2025, o FGC devia cerca de R$ 40,6 bilhões a aproximadamente 800.000 investidores — o maior pagamento da sua história <a href="#ref-4" class="fn" data-ref="4">[4]</a>. O recorde anterior, estabelecido pelo Banco Bamerindus em 1997, havia sido de R$ 19,6 bilhões <a href="#ref-5" class="fn" data-ref="5">[5]</a>.</p>
+    </section>
+
+    <section id="argumento">
+      <h2>Tese resumida</h2>
+      <p>O caso Master é melhor compreendido como uma <em>fraude de controle</em> (ou <em>control fraud</em>) estruturada sobre uma garantia de depósitos. Economistas utilizam o termo <em>"saque"</em> (<em>looting</em>): proprietários de uma instituição cujas obrigações são garantidas por terceiros obtêm mais lucro extraindo recursos líquidos e entrando em default do que administrando o negócio de forma sólida <a href="#ref-6" class="fn" data-ref="6">[6]</a>. Nos casos examinados classicamente por Akerlof e Romer, o garantidor era usualmente o Estado <a href="#ref-6" class="fn" data-ref="6">[6]</a>; aqui, era o FGC, abastecido majoritariamente pelos bancos concorrentes <a href="#ref-5" class="fn" data-ref="5">[5]</a>. O saque requer duas condições essenciais: captação garantida e a capacidade de sustentar ativos contábeis inflados acima do seu valor real de mercado <a href="#ref-7" class="fn" data-ref="7">[7]</a>.</p>
+      
+      <p>Sob essa ótica, os controladores do Master usaram o FGC para levantar poupança do varejo, inflaram o balanço patrimonial, drenaram o caixa e pagaram por tempo, blindagem e influência. Quando a liquidez minguou, tentaram transferir o buraco financeiro para o Banco de Brasília (BRB), instituição controlada pelo Governo do Distrito Federal. O dinheiro público já havia ingressado anteriormente por meio de regimes próprios de previdência social (RPPS) estaduais e municipais, que compraram papéis do Master desprovidos de cobertura do FGC <a href="#ref-96" class="fn" data-ref="96">[96]</a>. Esta leitura constitui inferência analítica do autor a partir das apurações de órgãos reguladores, autoridades policiais e da administração da liquidação.</p>
+      
+      <p>Nenhuma dessas alegações foi julgada em definitivo em tribunal. Em 28 de outubro de 2026, a Polícia Federal (PF) indiciou 15 pessoas em seu primeiro inquérito, sob suspeitas que incluem organização criminosa, lavagem de capitais e gestão fraudulenta <a href="#ref-8" class="fn" data-ref="8">[8]</a>. Vorcaro nega qualquer fraude e classifica sua prisão como injusta <a href="#ref-9" class="fn" data-ref="9">[9]</a>.</p>
+
+      <div class="callout">
+        <p><strong>Estabelecido:</strong> O Banco Central liquidou o conglomerado em 18 de novembro de 2025, apontando grave crise de liquidez e violações severas das normas do Sistema Financeiro Nacional <a href="#ref-10" class="fn" data-ref="10">[10]</a>.</p>
+        <p><strong>Alegado:</strong> As operações fraudulentas, o desvio de caixa, os pagamentos ilícitos e a coação descritos adiante.</p>
+        <p><strong>Desconhecido:</strong> O momento exato em que se iniciou o dolo, quem de fato exercia o comando final, a totalidade das transferências e quanto das evidências digitais resistirá ao escrutínio judicial.</p>
+      </div>
+    </section>
+
+    <!-- PIPELINE DA MÁQUINA -->
+    <section id="maquina">
+      <h2>O esquema em resumo</h2>
+      <p><em>Poupadores e fundos de pensão injetavam recursos; as perdas recaíram sobre o FGC, o BRB e os orçamentos públicos.</em></p>
+      
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <h4>1. Poupadores do Varejo (~800 mil investidores)</h4>
+          <p>Atraídos por CDBs pagando até 140% do CDI, respaldados pela garantia do FGC até R$ 250 mil por CPF/CNPJ.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>2. Fundos de Pensão Públicos (18 RPPS estaduais e municipais)</h4>
+          <p>Aportaram em Letras Financeiras e fundos estruturados sem cobertura do FGC, em busca de retorno acima de 130% do CDI.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>3. O Núcleo: Banco Master</h4>
+          <p>Instituição controlada por um grupo restrito, coordenando captação acelerada e operações cruzadas.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>4. Ativos Inflados</h4>
+          <p>Circuitos estruturados via gestora Reag, carteiras de precatórios e empresas ligadas a sócios, mantendo papéis acima do valor de face.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>5. Extração para Veículos Familiares</h4>
+          <p>Desvios de caixa através de operações com a Super Empreendimentos, fundos (City, Navarra, Astralo 95) e entregas em espécie.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>6. A Blindagem (Aproximadamente R$ 0,4 bilhão)</h4>
+          <p>Pagamentos a agentes públicos, parlamentares, bancas de advocacia de influência e campanhas midiáticas para manter o esquema operando.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>7. Coação (Alegada)</h4>
+          <p>Uso de grupo apelidado de "A Turma" para monitoramento e intimidação de desafetos, críticos e jornalistas.</p>
+        </div>
+        <div class="pipeline-step">
+          <h4>8. A Rota de Saída: O BRB</h4>
+          <p>Tentativa de transferência de ativos estressados/podres para o Banco de Brasília antes do colapso final.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NÚCLEOS E ATORES -->
+    <section id="atores">
+      <h2>Quem importava, e quanto</h2>
+      <p>Oito pessoas ou grupos operavam o motor da máquina, enquanto um punhado atuava sobre seus pontos de controle. A maioria dos nomes de grande notoriedade figura na periferia: evidenciam o alcance das relações do grupo, mas não explicam o funcionamento técnico da engrenagem.</p>
+      
+      <p>A classificação adota o papel funcional documentado, e não grau de culpa, fama ou volume financeiro:</p>
+      <ul>
+        <li><span class="badge badge-central">Central</span> Captou, inflou, movimentou ou desovou o dinheiro. Sem eles, o motor para.</li>
+        <li><span class="badge badge-secondary">Secundário</span> Atuou sobre um ponto de controle (fiscalização, regras da garantia, banco comprador ou contenção de críticos), sem integrar o motor.</li>
+        <li><span class="badge badge-accessory">Acessório</span> Contatos e despesas no entorno do motor, sem ato documentado que altere o curso dos fundos.</li>
+      </ul>
+
+      <p><em>Um pagamento mensal de R$ 500.000 a um supervisor hierarquiza-se acima de um filme de R$ 64 milhões, pois tocou um ponto crítico de controle. A leitura é vertical: quanto mais abaixo o nome se situa, menor seria o impacto de sua ausência sobre as origens e destinos do dinheiro.</em></p>
+
+      <!-- Cards dos Atores -->
+      <h3>Atores Centrais</h3>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Daniel Vorcaro</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Comando geral do esquema, segundo o relatório da PF <a href="#ref-62" class="fn" data-ref="62">[62]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega qualquer prática fraudulenta e considera a prisão arbitrária e injusta <a href="#ref-9" class="fn" data-ref="9">[9]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Augusto Lima</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Sócio; integrou o núcleo executivo-financeiro; apontado pela PF como arquiteto das carteiras simuladas <a href="#ref-62" class="fn" data-ref="62">[62]</a><a href="#ref-46" class="fn" data-ref="46">[46]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega as irregularidades apontadas <a href="#ref-46" class="fn" data-ref="46">[46]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fabiano Zettel</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Pivô financeiro: recebeu R$ 485 milhões através da Super Empreendimentos <a href="#ref-27" class="fn" data-ref="27">[27]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Não localizada manifestação nos autos públicos.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Antonio Carlos Freixo Jr. (Entre)</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Gerou aproximadamente R$ 1,3 bilhão em espécie para Vorcaro entre 2020 e 2025 e remeteu US$ 12,3 milhões para a Havengate, segundo delação premiada homologada <a href="#ref-84" class="fn" data-ref="84">[84]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Declarou que o acordo de colaboração foi estritamente voluntário <a href="#ref-84" class="fn" data-ref="84">[84]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">João Carlos Mansur (Reag)</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Circuitos de fundos de investimento que viabilizaram R$ 11,5 bilhões em operações irregulares, segundo o Banco Central <a href="#ref-18" class="fn" data-ref="18">[18]</a><a href="#ref-19" class="fn" data-ref="19">[19]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Delação assinada sob apreciação <a href="#ref-67" class="fn" data-ref="67">[67]</a>; refuta enfaticamente vínculos com facções criminosas <a href="#ref-23" class="fn" data-ref="23">[23]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">André Maia e Henrique Peretto (Tirreno, Cartos)</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Origem das carteiras de crédito sob suspeita de simulação <a href="#ref-82" class="fn" data-ref="82">[82]</a>; Maia foi formalmente indiciado <a href="#ref-83" class="fn" data-ref="83">[83]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> A Cartos afirmou que nunca manteve operações ativas com o Banco Master <a href="#ref-82" class="fn" data-ref="82">[82]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Paulo Henrique Costa (BRB)</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Viabilizou a aquisição das carteiras pelo BRB; colocado pela PF no núcleo estratégico com Vorcaro <a href="#ref-50" class="fn" data-ref="50">[50]</a>; suspeito de receber entre R$ 140 milhões e R$ 146,5 milhões <a href="#ref-49" class="fn" data-ref="49">[49]</a><a href="#ref-87" class="fn" data-ref="87">[87]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Sustenta que as operações não acarretaram prejuízo ao BRB <a href="#ref-87" class="fn" data-ref="87">[87]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Henrique Vorcaro e Veículos Familiares</span>
+          <span class="badge badge-central">Central</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Estruturas de desvio patrimonial através das empresas City, Navarra e fundo Astralo 95; R$ 2,2 bilhões teriam sido ocultados de credores <a href="#ref-26" class="fn" data-ref="26">[26]</a><a href="#ref-29" class="fn" data-ref="29">[29]</a><a href="#ref-89" class="fn" data-ref="89">[89]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Não localizada manifestação nos autos públicos.
+        </div>
+      </div>
+
+      <!-- Atores Secundários -->
+      <h3>Atores Secundários</h3>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ex-Fiscais / Supervisores do Banco Central</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Recebimento de pagamentos periódicos em troca de informações privilegiadas e proteção institucional, segundo a PF <a href="#ref-31" class="fn" data-ref="31">[31]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Não localizada manifestação pública.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Senador Ciro Nogueira (PP)</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Repasses mensais sistemáticos; apresentação de emenda legislativa para ampliar o teto do FGC redigida internamente no Master <a href="#ref-33" class="fn" data-ref="33">[33]</a><a href="#ref-55" class="fn" data-ref="55">[55]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Rejeita qualquer prática ilícita ou favorecimento indevido <a href="#ref-40" class="fn" data-ref="40">[40]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ibaneis Rocha (então Governador do DF)</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Chefe político do acionista controlador do BRB; Costa afirmou à PF que o governador detinha ciência plena das movimentações; não indiciado <a href="#ref-85" class="fn" data-ref="85">[85]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Declarou total desconhecimento de fraudes até a decretação da liquidação <a href="#ref-86" class="fn" data-ref="86">[86]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Cláudio Castro (então Governador do RJ)</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Alinhamento político para viabilizar aportes de ~R$ 3 bilhões do Rioprevidência em títulos e fundos ligados ao Master; viagens e jantar em NY pagos por Vorcaro, segundo a PF <a href="#ref-99" class="fn" data-ref="99">[99]</a><a href="#ref-100" class="fn" data-ref="100">[100]</a><a href="#ref-101" class="fn" data-ref="101">[101]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega relacionamento impróprio; alega que os investimentos seguiram critérios técnicos e que não houve custeio pessoal de viagens <a href="#ref-102" class="fn" data-ref="102">[102]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Diretores e Gestores do Rioprevidência</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Aprovação de alocações bilionárias em desconformidade com o histórico conservador da carteira previdenciária, segundo a PF <a href="#ref-103" class="fn" data-ref="103">[103]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> A fundação negou irregularidades <a href="#ref-98" class="fn" data-ref="98">[98]</a> e informou a recuperação administrativa de R$ 1,4 bilhão <a href="#ref-106" class="fn" data-ref="106">[106]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Nelson Tanure</span>
+          <span class="badge badge-secondary">Secundário (Central se provado)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Suspeita de aportes de capital ocultos via debêntures conversíveis no montante superior a R$ 700 milhões <a href="#ref-63" class="fn" data-ref="63">[63]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega enfaticamente qualquer participação acionária direta, indireta ou por debêntures <a href="#ref-65" class="fn" data-ref="65">[65]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">“A Turma”</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Ações de inteligência privada, espionagem de críticos e tentativas de coerção física/moral <a href="#ref-58" class="fn" data-ref="58">[58]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> A defesa de Vorcaro contesta a existência fática da referida estrutura <a href="#ref-61" class="fn" data-ref="61">[61]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Mídia e Influenciadores Digitais</span>
+          <span class="badge badge-secondary">Secundário</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Contratação coordenada de ataques institucionais contra diretores do Banco Central; repasse de R$ 51,9 milhões ao portal Metrópoles <a href="#ref-35" class="fn" data-ref="35">[35]</a><a href="#ref-37" class="fn" data-ref="37">[37]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Publicitário interrogado confirmou a liquidação de pagamentos a influenciadores <a href="#ref-37" class="fn" data-ref="37">[37]</a>.
+        </div>
+      </div>
+
+      <!-- Atores Acessórios -->
+      <h3>Atores Acessórios</h3>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Escritório Barci de Moraes</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Contrato de assessoria jurídica somando R$ 80 milhões em 22 parcelas mensais <a href="#ref-34" class="fn" data-ref="34">[34]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> A banca sustenta a efetiva e regular prestação de serviços jurídicos complexos; a PF não apontou conduta ilícita imputável ao ministro do STF ou à sua esposa <a href="#ref-34" class="fn" data-ref="34">[34]</a><a href="#ref-41" class="fn" data-ref="41">[41]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ministro Dias Toffoli (STF)</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Aportes e fluxos de R$ 20 a 35 milhões direcionados a empreendimento hoteleiro (Tayayá) no qual empresa familiar possuía participação societária <a href="#ref-71" class="fn" data-ref="71">[71]</a><a href="#ref-72" class="fn" data-ref="72">[72]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega recebimento de recursos de Vorcaro ou Zettel <a href="#ref-71" class="fn" data-ref="71">[71]</a>; ministros da corte classificaram as ilações do relatório como "lixo jurídico" <a href="#ref-73" class="fn" data-ref="73">[73]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ministro Nunes Marques (STF)</span>
+          <span class="badge badge-accessory">Acessório (Secundário se mantido elo com votos)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Repasse de R$ 6,6 milhões à consultoria que remunerou seu filho; custeio de estadia de Carnaval de R$ 1,45 milhão a "KN"; mensagens sugerindo elo com julgamento de usina ligado a precatórios do Master <a href="#ref-74" class="fn" data-ref="74">[74]</a><a href="#ref-76" class="fn" data-ref="76">[76]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega ter atuado em causas de interesse do Master ou que seu filho tenha recebido verbas do banco <a href="#ref-74" class="fn" data-ref="74">[74]</a>; afirma que jamais solicitou contrapartidas a Vorcaro <a href="#ref-75" class="fn" data-ref="75">[75]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Procurador-Geral da República Paulo Gonet</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Interlocução social mediada por terceiros; ausência de qualquer indício de vantagens financeiras nos autos <a href="#ref-78" class="fn" data-ref="78">[78]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Nega intimidade pessoal; Conselho Superior do MPF arquivou apuração preliminar por 5 a 4 <a href="#ref-77" class="fn" data-ref="77">[77]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Senador Flávio Bolsonaro (PL)</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Articulação de captação privada para o filme <em>Dark Horse</em>; remessa internacional de US$ 12,3 milhões mapeada na Operação Crédito Oculto <a href="#ref-84" class="fn" data-ref="84">[84]</a><a href="#ref-79" class="fn" data-ref="79">[79]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Qualifica a captação audiovisual como atividade legítima de patrocínio privado <a href="#ref-79" class="fn" data-ref="79">[79]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Campanhas Eleitorais de 2022</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Aportes classificados como repasses ilícitos de campanha em proposta de delação rejeitada pelo MPF <a href="#ref-38" class="fn" data-ref="38">[38]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Candidatos e legendas citadas rechaçam categoricamente as suspeitas <a href="#ref-38" class="fn" data-ref="38">[38]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Nikolas Ferreira, Hugo Motta e Jaques Wagner</span>
+          <span class="badge badge-accessory">Acessório</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Papel Atribuído (Alegado)</span>
+          Pedidos pontuais de apoio institucional, comparecimento a eventos e ingressos/cortesias <a href="#ref-81" class="fn" data-ref="81">[81]</a><a href="#ref-27" class="fn" data-ref="27">[27]</a><a href="#ref-21" class="fn" data-ref="21">[21]</a>.
+        </div>
+        <div class="data-response">
+          <strong>Resposta:</strong> Ferreira declarou nunca ter auferido recursos do grupo <a href="#ref-81" class="fn" data-ref="81">[81]</a>; outros nomes mantiveram esclarecimentos no âmbito parlamentar.
+        </div>
+      </div>
+      
+      <p><em>Ressalva jurídica: Todas as categorias descritas fundamentam-se em inquéritos policiais e delações ainda não submetidas ao crivo final do contraditório judicial.</em></p>
+    </section>
+
+    <!-- CAPÍTULO 1 -->
+    <section id="cap-1">
+      <h2>1. Captação: alugando a credibilidade do FGC</h2>
+      <p>A estrutura de captação do Banco Master apoiava-se deliberadamente na garantia do FGC por concepção original. O próprio Daniel Vorcaro declarou à Polícia Federal que o plano de negócios submetido ao Banco Central em 2018 era estritamente amarrado aos limites de garantia do fundo, definindo-o como as "regras do jogo" vigentes <a href="#ref-11" class="fn" data-ref="11">[11]</a>.</p>
+      
+      <p>A anomalia chamou a atenção da Comissão de Valores Mobiliários (CVM). O presidente interino da autarquia destacou que um dos primeiros focos de inquietação do mercado foi a utilização ostensiva do FGC pelo banco como alavanca agressiva de funding <a href="#ref-12" class="fn" data-ref="12">[12]</a>.</p>
+      
+      <p>Contudo, nem todos os recursos contavam com o colchão do seguro. Dezoito fundos de previdência de servidores públicos estaduais e municipais aplicaram R$ 1,876 bilhão em Letras Financeiras (LFs) emitidas pelo Master — títulos bancários que, por determinação legal, não possuem nenhuma cobertura do FGC <a href="#ref-96" class="fn" data-ref="96">[96]</a>.</p>
+      
+      <p>O balanço patrimonial da instituição inflou em velocidade incomum: o patrimônio líquido saltou de R$ 219 milhões em 2021 para R$ 4,7 bilhões em 2024, ano em que o conglomerado divulgou publicamente um lucro líquido contábil de R$ 1 bilhão <a href="#ref-13" class="fn" data-ref="13">[13]</a>. As apurações técnicas posteriores colocaram em dúvida a fidedignidade desses números.</p>
+      
+      <p>A dinâmica matemática revelou-se insustentável. Conforme a PF, a emissão massiva de novos CDBs era consumida para honrar amortizações e juros de aplicadores anteriores, em um mecanismo assemelhado à arquitetura de pirâmide financeira <a href="#ref-14" class="fn" data-ref="14">[14]</a>. Uma nota técnica do Banco Central situou o colapso estrutural em novembro de 2024, quando a receita dos ativos do banco perdeu a capacidade de cobrir a remuneração das emissões de CDBs em circulação <a href="#ref-15" class="fn" data-ref="15">[15]</a>.</p>
+    </section>
+
+    <!-- CAPÍTULO 2 -->
+    <section id="cap-2">
+      <h2>2. Inflando o balanço</h2>
+      <p>A segunda função da máquina consistia em atribuir aos ativos da instituição valores fictícios, bastante superiores aos de liquidação. Relatórios da CVM apontam que indícios de triangulação já apareciam desde 2020: ativos eram transferidos de um fundo para outro com sobrepreços e remarcações acentuadas sem justificativa de mercado <a href="#ref-12" class="fn" data-ref="12">[12]</a>.</p>
+      
+      <p>Investigação da autarquia apurada pelo <em>Estadão</em> revelou que, entre 2022 e 2025, o Master aportou cerca de R$ 2,1 bilhões em dez sociedades empresariais desprovidas de suporte operacional ou capacidade patrimonial que justificasse as avaliações <a href="#ref-16" class="fn" data-ref="16">[16]</a>. Peritos constataram também mais de R$ 3,5 bilhões aplicados em fundos administrados pelo próprio Master, dos quais R$ 1,8 bilhão estava lastreado em notas emitidas por empresas ligadas aos sócios <a href="#ref-17" class="fn" data-ref="17">[17]</a>. Empréstimos concedidos a essas companhias retornavam à tesouraria do banco sob a forma de compra dos seus próprios CDBs <a href="#ref-17" class="fn" data-ref="17">[17]</a>.</p>
+      
+      <p>Nesse ecossistema, a gestora Reag exerceu papel fulcral. O Banco Central informou formalmente ao Tribunal de Contas da União (TCU) que fundos sob gestão da Reag estruturaram esquemas fraudulentos com o Master entre julho de 2023 e julho de 2024 <a href="#ref-18" class="fn" data-ref="18">[18]</a>, perfazendo um montante suspeito de R$ 11,5 bilhões <a href="#ref-19" class="fn" data-ref="19">[19]</a>.</p>
+      
+      <p>Recursos circulavam em questão de minutos através de carteiras geridas pelas mesmas partes, desembocando em papéis de baixíssima liquidez ou desprovidos de valor econômico real — tais como antigas debêntures e títulos do extinto Banco do Estado de Santa Catarina (Besc) <a href="#ref-20" class="fn" data-ref="20">[20]</a>. Em sua colaboração, o fundador da Reag, João Carlos Mansur, admitiu que a gestora operava a serviço das demandas do Master desde 2019 <a href="#ref-21" class="fn" data-ref="21">[21]</a>.</p>
+      
+      <p>A Reag também entrou na mira da Operação Carbono Oculto, apuração voltada à lavagem de capitais do Primeiro Comando da Capital (PCC), suspeita de branquear até R$ 1 bilhão para a organização criminosa <a href="#ref-22" class="fn" data-ref="22">[22]</a>. Mansur rechaçou peremptoriamente qualquer envolvimento com o crime organizado <a href="#ref-23" class="fn" data-ref="23">[23]</a>.</p>
+      
+      <p>Nem todas as carteiras eram destituídas de valor. O banco mantinha um volume representativo de precatórios federais e estaduais <a href="#ref-2" class="fn" data-ref="2">[2]</a>. Mais tarde, quando tais ativos foram repassados ao BRB, a carteira de crédito consignado Credcesta foi marcada contabilmente com ágio de 45% acima do valor lançado no Master, ao passo que operações de crédito ligadas à Oncoclínicas sofreram baixa de 52% <a href="#ref-24" class="fn" data-ref="24">[24]</a>.</p>
+    </section>
+
+    <!-- CAPÍTULO 3 -->
+    <section id="cap-3">
+      <h2>3. Extração: do banco para a família</h2>
+      <p>A terceira engrenagem voltava-se ao dreno financeiro: transferir a liquidez captada no mercado financeiro para as esferas pessoais de Vorcaro, de parentes e de sócios <a href="#ref-25" class="fn" data-ref="25">[25]</a>.</p>
+      
+      <p>O caso com documentação mais detalhada antecedeu a fase crítica de iliquidez. Em 2022, o fundo City, estruturado em torno do Master, pagou R$ 419,9 milhões a empresas vinculadas à família de Vorcaro em troca de direitos creditórios com promessa de recebimento de R$ 798 milhões <a href="#ref-26" class="fn" data-ref="26">[26]</a>. O liquidante judicial constatou posteriormente que esses créditos careciam de lastro <a href="#ref-26" class="fn" data-ref="26">[26]</a>.</p>
+      
+      <p>Em julho de 2025, o City alienou a totalidade desse pacote à empresa Navarra por R$ 776,9 milhões. O liquidante apurou que o beneficiário econômico da Navarra era o próprio Daniel Vorcaro, através dos fundos Lunar e Astralo 95 <a href="#ref-26" class="fn" data-ref="26">[26]</a>. A manobra serviu para camuflar o endividamento do núcleo familiar perante os balanços contábeis <a href="#ref-26" class="fn" data-ref="26">[26]</a>.</p>
+      
+      <p>O fluxo de desvios passou sistematicamente pela empresa Super Empreendimentos e Participações. O cunhado de Vorcaro, Fabiano Zettel, recebeu R$ 485 milhões dessa firma entre julho de 2022 e janeiro de 2026; a PF o descreve como figura-chave na tesouraria oculta do grupo <a href="#ref-27" class="fn" data-ref="27">[27]</a>. Uma entidade investigada na Operação Carbono Oculto também transferiu R$ 180 milhões à Super <a href="#ref-28" class="fn" data-ref="28">[28]</a>.</p>
+      
+      <p>Conforme as autoridades, a blindagem patrimonial prosseguiu mesmo após as primeiras ordens cautelares: ao ter a prisão inicialmente revogada, Vorcaro teria movimentado R$ 2,2 bilhões de credores para conta controlada por seu pai <a href="#ref-29" class="fn" data-ref="29">[29]</a>. O Ministério Público Federal em São Paulo sustenta a operação contínua de organização criminosa montada desde meados da década passada; a defesa sustenta que nenhuma movimentação beneficiou ilegalmente parentes ou terceiros <a href="#ref-30" class="fn" data-ref="30">[30]</a>.</p>
+      
+      <p>A evasão em espécie atingiu montantes recordes. Antonio Carlos Freixo Jr., titular da Entre Investimentos, afirmou em acordo de delação homologado ter disponibilizado cerca de R$ 1,3 bilhão em papel-moeda vivo a Vorcaro entre 2020 e 2025 <a href="#ref-84" class="fn" data-ref="84">[84]</a>.</p>
+      
+      <p>Em março de 2026, a 1ª Vara de Falências de São Paulo determinou o bloqueio patrimonial da Astralo 95 e fundos correlatos, registrando transações atípicas antes do decreto de liquidação, incluindo a drenagem de R$ 285,8 milhões <a href="#ref-89" class="fn" data-ref="89">[89]</a>. No exterior, a massa liquidanda move ações nos tribunais dos EUA para reaver uma cobertura avaliada em US$ 25,8 milhões em Miami transferida à ex-esposa em 2024 <a href="#ref-90" class="fn" data-ref="90">[90]</a> e obteve a suspensão cautelar da alienação de uma mansão de US$ 32 milhões na Flórida <a href="#ref-91" class="fn" data-ref="91">[91]</a>.</p>
+    </section>
+
+    <!-- CAPÍTULO 4 -->
+    <section id="cap-4">
+      <h2>4. A blindagem: comprando tempo, regras e reputação</h2>
+      <p>Os desembolsos identificados até o momento em favor de autoridades públicas, lideranças políticas, escritórios de advocacia de grande porte e empresas de comunicação totalizam entre <strong>R$ 0,40 bilhão e R$ 0,42 bilhão</strong> — montante equivalente a cerca de 1% do rombo assumido pelo FGC (cálculo discriminado abaixo). O valor monetário representava custo operacional de proteção: as transferências visavam atingir exatamente os centros de decisão que possuíam prerrogativa para frear as operações ou ampliar as fontes do banco.</p>
+
+      <!-- Pagamentos Identificados em Cards -->
+      <h3>Pagamentos e Desembolsos Mapeados</h3>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ex-Chefe de Fiscalização do Banco Central</span>
+          <span class="badge badge-secondary">Supervisão</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Pagamentos mensais recorrentes de R$ 500.000.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Relatório circunstanciado da Polícia Federal <a href="#ref-31" class="fn" data-ref="31">[31]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Agentes e Ex-Agentes da Polícia Federal</span>
+          <span class="badge badge-secondary">Inteligência</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Repasses periódicos de até R$ 400.000 mensais.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Inquéritos da própria Corregedoria e PF <a href="#ref-32" class="fn" data-ref="32">[32]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Senador Ciro Nogueira (PP)</span>
+          <span class="badge badge-secondary">Congresso</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Entre R$ 300.000 e R$ 500.000 mensais; R$ 18,85 milhões bloqueados por ordem judicial.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Relatórios da PF e quebras de sigilo bancário <a href="#ref-33" class="fn" data-ref="33">[33]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Escritório Barci de Moraes</span>
+          <span class="badge badge-accessory">Advocacia</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 80 milhões pactuados em 22 parcelas (fev/2024 a nov/2025).
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Declarações contábeis e fiscais do Banco Master <a href="#ref-34" class="fn" data-ref="34">[34]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Estrutura Societária do Tayayá Resort</span>
+          <span class="badge badge-accessory">Judiciário / Família</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          De R$ 20 milhões a R$ 35 milhões.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Interceptações de diálogos entre Vorcaro e Zettel <a href="#ref-71" class="fn" data-ref="71">[71]</a><a href="#ref-72" class="fn" data-ref="72">[72]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Consult Consultoria (Ligada ao Filho de Nunes Marques)</span>
+          <span class="badge badge-accessory">Judiciário / Vínculo</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 6,6 milhões (ago/2024 a jul/2025).
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Relatórios de Inteligência Financeira do Coaf <a href="#ref-74" class="fn" data-ref="74">[74]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Hospedagem de Carnaval 2025 ("KN")</span>
+          <span class="badge badge-accessory">Custeio</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Aproximadamente R$ 1,45 milhão.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Troca de mensagens vinculando a sigla ao ministro <a href="#ref-76" class="fn" data-ref="76">[76]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Portal de Notícias Metrópoles</span>
+          <span class="badge badge-secondary">Imprensa</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 51,9 milhões.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Mensagens apreendidas pela PF e alertas do Coaf <a href="#ref-35" class="fn" data-ref="35">[35]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Site Diário do Centro do Mundo (DCM)</span>
+          <span class="badge badge-secondary">Imprensa</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 50.000 mensais para cessar notas desfavoráveis.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Relatório de mensagens da PF <a href="#ref-36" class="fn" data-ref="36">[36]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Criadores de Conteúdo / Influenciadores</span>
+          <span class="badge badge-secondary">Redes Sociais</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Propostas de até R$ 2 milhões por pacote.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Depoimento formal de intermediário de publicidade <a href="#ref-37" class="fn" data-ref="37">[37]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Campanhas Eleitorais de 2022</span>
+          <span class="badge badge-accessory">Eleitoral</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 5 milhões oficiais + R$ 10 milhões em espécie.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Anexo de delação preliminar de Vorcaro <a href="#ref-38" class="fn" data-ref="38">[38]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Produção do Filme "Dark Horse" (Biopic de Jair Bolsonaro)</span>
+          <span class="badge badge-accessory">Audiovisual</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          US$ 12,3 milhões (~R$ 64 milhões).
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Colaboração de Freixo; autos da Operação Crédito Oculto <a href="#ref-84" class="fn" data-ref="84">[84]</a><a href="#ref-39" class="fn" data-ref="39">[39]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ingressos para Senador Jaques Wagner (PT)</span>
+          <span class="badge badge-accessory">Cortesias</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          R$ 63.300 em ingressos de espetáculos.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Termo de colaboração de Mansur <a href="#ref-21" class="fn" data-ref="21">[21]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Cláudio Castro (Governador do RJ)</span>
+          <span class="badge badge-secondary">Poder Executivo</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Montante Apurado</span>
+          Despesas de viagens internacionais e jantar em NY de US$ 13.000 (R$ 66 mil).
+        </div>
+        <div class="data-row">
+          <span class="data-label">Origem da Evidência</span>
+          Relatórios policiais de interceptação telemática <a href="#ref-100" class="fn" data-ref="100">[100]</a><a href="#ref-101" class="fn" data-ref="101">[101]</a>.
+        </div>
+      </div>
+
+      <p>Todos os mencionados refutam com veemência a existência de contrapartidas espúrias. A defesa de Ciro Nogueira nega conduta imprópria <a href="#ref-40" class="fn" data-ref="40">[40]</a>. O escritório Barci de Moraes demonstrou ter emitido notas fiscais, atuado em centenas de contenciosos do banco e que a PF não imputou crimes aos sócios <a href="#ref-34" class="fn" data-ref="34">[34]</a><a href="#ref-41" class="fn" data-ref="41">[41]</a>. O gabinete de Toffoli informou que sua família retirou-se do condomínio hoteleiro em fevereiro de 2025 <a href="#ref-71" class="fn" data-ref="71">[71]</a>. Nunes Marques afirmou que nunca julgou demandas favoráveis ao banco e que seu filho recebeu R$ 281.600 por assessoria tributária específica da Consult <a href="#ref-74" class="fn" data-ref="74">[74]</a>.</p>
+      
+      <p>Divergências contratuais figuram nos autos: veículos de imprensa apontam contratos de advocacia totalizando até R$ 208 milhões <a href="#ref-42" class="fn" data-ref="42">[42]</a> ou R$ 180 milhões <a href="#ref-43" class="fn" data-ref="43">[43]</a>. Flávio Bolsonaro, alvo de inquérito aberto pelo STF, afirmou que o apoio a produções culturais segue os ditames estritamente privados <a href="#ref-79" class="fn" data-ref="79">[79]</a>. No campo governista, Augusto Lima, ex-sócio de Vorcaro, possuía comprovada interlocução política com dirigentes petistas na Bahia <a href="#ref-44" class="fn" data-ref="44">[44]</a>.</p>
+      
+      <p>A penetração institucional operava também em encontros de hospitalidade. Vorcaro promovia jantares para senadores e deputados — como Ciro Nogueira e o deputado Hugo Motta — em mansão de R$ 36 milhões em Brasília registrada pela Super Empreendimentos (a qual seu gabinete afirmou ter alugado) <a href="#ref-27" class="fn" data-ref="27">[27]</a>. O PGR Paulo Gonet figurou em trocas de mensagens informais via terceiros tratando de degustações, sem indício de transferências; o Conselho Nacional do MPF arquivou o caso <a href="#ref-77" class="fn" data-ref="77">[77]</a><a href="#ref-78" class="fn" data-ref="78">[78]</a>.</p>
+
+      <div class="callout">
+        <strong>Aritmética dos Gastos de Influência:</strong><br>
+        A somatória identifica R$ 140–146,5 mi atribuídos ao ex-presidente do BRB; R$ 80 mi em contratos de advocacia; R$ 64 mi na produção audiovisual; R$ 51,9 mi em portais de mídia; R$ 20–35 mi na estrutura do resort; R$ 18,85 mi bloqueados de liderança partidária; R$ 15 mi em doações eleitorais declaradas/alegadas; R$ 6,6 mi na consultoria e R$ 1,45 mi no Carnaval. Total consolidado: <strong>R$ 0,40 a R$ 0,42 bilhão</strong> (~1% dos R$ 40,6 bilhões pagos pelo FGC). Adicionando-se os R$ 485 milhões cursados por Zettel (com sobreposições parciais), atinge-se cerca de 2% do total.
+      </div>
+    </section>
+
+    <!-- CAPÍTULO 5 -->
+    <section id="cap-5">
+      <h2>5. A saída: o BRB e a própria garantia</h2>
+      <p>À medida que a captação de CDBs esfriava em 2024, a estratégia do banco mudou de orientação: em vez de apenas extrair valor, buscou repassar o rombo acumulado a um terceiro com bolsos fundos. A rota de saída desenhada foi o BRB, instituição pública do Distrito Federal.</p>
+      
+      <h3>Carteiras Simuladas</h3>
+      <p>As transações com o BRB ganharam corpo no segundo semestre de 2024 <a href="#ref-45" class="fn" data-ref="45">[45]</a>. Os créditos comercializados derivaram da empresa de fachada Tirreno, fundada em dezembro de 2024 e controlada pelo grupo Cartos <a href="#ref-46" class="fn" data-ref="46">[46]</a>. O Master apropriou-se dos recebíveis da Tirreno sem efetuar desembolsos e os revendeu na sequência ao banco estatal <a href="#ref-47" class="fn" data-ref="47">[47]</a>.</p>
+      
+      <p>Entre janeiro e junho de 2025, o BRB adquiriu R$ 6,7 bilhões dessas carteiras, agregando um ágio contratual de R$ 5,5 bilhões — perfazendo R$ 12,2 bilhões brutos <a href="#ref-48" class="fn" data-ref="48">[48]</a>. O relatório da PF estima que o volume total de repasses do BRB para o Master alcançou R$ 17 bilhões <a href="#ref-46" class="fn" data-ref="46">[46]</a>.</p>
+
+      <h3>Dentro do BRB</h3>
+      <p>Conforme os autos, a cúpula do BRB foi formalmente alertada pelos órgãos internos de controle técnico a respeito de inconsistências graves, mas chancelou os negócios <a href="#ref-45" class="fn" data-ref="45">[45]</a>. O ex-presidente do banco estatal, Paulo Henrique Costa, é apontado pela PF como destinatário de repasses imobiliários de R$ 140 milhões a R$ 146,5 milhões coordenados por Vorcaro <a href="#ref-49" class="fn" data-ref="49">[49]</a><a href="#ref-87" class="fn" data-ref="87">[87]</a>, integrando o núcleo decisório da operação <a href="#ref-50" class="fn" data-ref="50">[50]</a>. Costa afirmou categoricamente não haver evidências de podridão prévia das carteiras <a href="#ref-48" class="fn" data-ref="48">[48]</a>.</p>
+      
+      <p>Em oitiva, Costa declarou que o governador Ibaneis Rocha acompanhava passo a passo a saúde financeira da instituição <a href="#ref-85" class="fn" data-ref="85">[85]</a>. Ibaneis, que não foi indiciado, reiterou que ignorava as fraudes e atribuiu os atos integralmente à diretoria técnica <a href="#ref-86" class="fn" data-ref="86">[86]</a>.</p>
+
+      <h3>O Swap e o Rombo Efetivo</h3>
+      <p>Com o estrangulamento das operações, aproximadamente R$ 10 bilhões em ativos foram devolvidos ao Master em troca de outros créditos e precatórios, restando R$ 2,6 bilhões inteiramente a descoberto, o que obrigou o Banco Central a exigir provisionamento de 100% pelo BRB <a href="#ref-51" class="fn" data-ref="51">[51]</a>. O corpo técnico do BC calcula que a perda final consolidada do BRB ultrapasse R$ 5 bilhões <a href="#ref-52" class="fn" data-ref="52">[52]</a>. Os R$ 12,2 bilhões representam a face de negociação, não o prejuízo líquido apurado.</p>
+
+      <h3>A Tese da Defesa</h3>
+      <p>Vorcaro sustenta que as transações não infligiram danos ao patrimônio do BRB, argumentando que entregou ativos reais em substituição com desconto substancial, reivindicando perícia contábil independente <a href="#ref-9" class="fn" data-ref="9">[9]</a>. Ele atribui a crise de liquidez do BRB aos desdobramentos açodados das operações ostensivas da PF <a href="#ref-88" class="fn" data-ref="88">[88]</a>.</p>
+
+      <h3>A Tentativa de Fusão</h3>
+      <p>Documentos judiciais evidenciam que a aquisição societária do Master pelo BRB visava diluir as carteiras fictícias no bojo de uma instituição financeira de grande porte <a href="#ref-53" class="fn" data-ref="53">[53]</a>. A operação foi vetada pela Diretoria Colegiada do Banco Central no início de setembro de 2025 <a href="#ref-54" class="fn" data-ref="54">[54]</a>.</p>
+
+      <h3>A Própria Garantia: Mudança no FGC</h3>
+      <p>A PF revelou que a assessoria do Master redigiu a minuta de uma emenda legislativa para quadruplicar o limite máximo de garantia individual do FGC de R$ 250.000 para R$ 1.000.000 por correntista. O texto foi entregue ao gabinete do senador Ciro Nogueira e protocolado integralmente sem supressões <a href="#ref-55" class="fn" data-ref="55">[55]</a>. Em gravações, Vorcaro jactou-se de que a alteração "saiu sob encomenda", com potencial de multiplicar por seis a capacidade de captação do banco <a href="#ref-56" class="fn" data-ref="56">[56]</a>.</p>
+
+      <h3>O Desfecho</h3>
+      <p>Vorcaro foi detido pela Polícia Federal na noite de 17 de novembro de 2025 <a href="#ref-54" class="fn" data-ref="54">[54]</a>. Investigadores informaram à imprensa que sua aeronave particular preparava decolagem rumo a Malta e que o anúncio formal de venda do controle ao Grupo Fictor foi uma encenação para disfarçar a rota de fuga <a href="#ref-57" class="fn" data-ref="57">[57]</a>.</p>
+    </section>
+
+    <!-- FUNDOS PÚBLICOS DE PENSÃO -->
+    <section id="previdencia">
+      <h2>Fundos públicos de pensão: combustível, depois um estacionamento</h2>
+      <p>Os regimes próprios de previdência forneceram capital sem qualquer garantia em duas ondas bem demarcadas: primeiro, como combustível estável de longo prazo; mais tarde, quando a máquina perdeu o compasso, funcionaram como local para depositar papéis depreciados. Constituíram provedores involuntários de liquidez, não o alvo primordial da fraude.</p>
+      
+      <p>Dezoito dos 2.130 fundos de previdência de estados e municípios do país destinaram R$ 1,876 bilhão à compra de Letras Financeiras do Master entre outubro de 2023 e dezembro de 2024 <a href="#ref-96" class="fn" data-ref="96">[96]</a>. As maiores exposições envolveram o Rioprevidência do Rio de Janeiro (R$ 970 milhões), o Amapá Previdência (R$ 400 milhões) e a previdência municipal de Maceió (R$ 97 milhões) <a href="#ref-96" class="fn" data-ref="96">[96]</a>, atraídos por retornos anunciados de 130% do CDI <a href="#ref-98" class="fn" data-ref="98">[98]</a>.</p>
+
+      <!-- Fases dos Fundos em Cards -->
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fase 1: Out/2023 a Jul/2024</span>
+          <span class="badge badge-central">Combustível</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Onde Alocaram</span>
+          Títulos de Letras Financeiras do próprio banco; papéis do Rio com vencimento estendido para 2033–2034 <a href="#ref-96" class="fn" data-ref="96">[96]</a><a href="#ref-97" class="fn" data-ref="97">[97]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Função na Máquina</span>
+          Fornecimento de liquidez sem demanda de resgate por até 10 anos consecutivos.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fase 2: Dez/2024 a Out/2025</span>
+          <span class="badge badge-central">Depósito de Ativos</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Onde Alocaram</span>
+          R$ 2,01 bilhões do Rioprevidência injetados em fundos fechados estruturados sob o mesmo controle, contornando travas do CMN <a href="#ref-103" class="fn" data-ref="103">[103]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Função na Máquina</span>
+          Estacionamento e absorção de papéis de liquidez duvidosa após a exaustão da captação primária.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fase 3: Outubro de 2025</span>
+          <span class="badge badge-central">A Manobra BRB</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">Onde Alocaram</span>
+          Proposta de permuta das LFs do Rioprevidência por cotas de fundos e direitos creditórios sob lema flagrado: <em>"Faremos o mesmo em Maceió"</em> <a href="#ref-105" class="fn" data-ref="105">[105]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Função na Máquina</span>
+          Despejo emergencial de obrigações das contas do banco para os fundos previdenciários às vésperas da intervenção.
+        </div>
+      </div>
+
+      <h3>Por que os títulos eram bom combustível?</h3>
+      <p>Um mecanismo que liquida passivos antigos mediante entrada contínua de recursos novos <a href="#ref-14" class="fn" data-ref="14">[14]</a> depende de capital paciente, que não realize resgates antecipados. Fundos previdenciários operam em horizontes decenais, movimentam centenas de milhões em assinaturas concentradas e prescindem da trava de R$ 250 mil do FGC, decididos por colegiados reduzidos de diretores politicamente indicados.</p>
+
+      <h3>Onde as perdas surgiram</h3>
+      <p>Nos veículos finais, a perda incidiu diretamente no patrimônio dos servidores. Em julho de 2026, a Procuradoria-Geral do Estado do Rio de Janeiro ajuizou ações cíveis buscando recuperar R$ 641,4 milhões. A PGE vinculou R$ 135,1 milhões a operações de especulação com ações da Ambipar e R$ 481,4 milhões a alterações estatutárias nos fundos que suprimiram direitos políticos dos cotistas públicos e prorrogaram a liquidação em mais quatro anos <a href="#ref-106" class="fn" data-ref="106">[106]</a>.</p>
+      
+      <p>O Rioprevidência declarou ter resgatado administrativamente R$ 1,4 bilhão de fundo gerido pelo Master em dezembro de 2025 <a href="#ref-106" class="fn" data-ref="106">[106]</a>. Seus R$ 970 milhões em títulos de LF permanecem na fila retardatária de credores quirografários da liquidação <a href="#ref-104" class="fn" data-ref="104">[104]</a>.</p>
+
+      <h3>Rioprevidência e Cláudio Castro</h3>
+      <p>A PF fixou o comprometimento total do instituto do Rio entre R$ 3 bilhões e R$ 3,6 bilhões durante o governo Castro <a href="#ref-98" class="fn" data-ref="98">[98]</a><a href="#ref-99" class="fn" data-ref="99">[99]</a>. Eucherio Lerner Rodrigues assumiu a Diretoria de Investimentos em 4 de outubro de 2023, mesmo dia em que o Banco Master deu entrada formal no pedido de credenciamento financeiro no fundo <a href="#ref-103" class="fn" data-ref="103">[103]</a>.</p>
+      
+      <p>O Tribunal de Contas do Estado (TCE-RJ) apurou mais de R$ 2,6 bilhões expostos (ultrapassando 25% de toda a reserva previdenciária estadual), sendo cerca de R$ 1 bilhão aportado após alertas expressos emitidos em maio de 2025 <a href="#ref-98" class="fn" data-ref="98">[98]</a>. O órgão proibiu novas alocações em 8 de outubro de 2025 <a href="#ref-105" class="fn" data-ref="105">[105]</a>.</p>
+      
+      <p>Peritos transcreveram diálogos mencionando que os aportes refletiam "alinhamento político" com o governador, cronogramas de jantares e custeio de diárias no exterior <a href="#ref-99" class="fn" data-ref="99">[99]</a><a href="#ref-100" class="fn" data-ref="100">[100]</a>, incluindo a conta de US$ 13.000 em restaurante nova-iorquino em maio de 2023 paga por Vorcaro <a href="#ref-101" class="fn" data-ref="101">[101]</a>. O ministro André Mendonça considerou o acervo indiciário "consistente e robusto", autorizando busca e apreensão contra Castro em 26 de maio de 2026 <a href="#ref-99" class="fn" data-ref="99">[99]</a><a href="#ref-98" class="fn" data-ref="98">[98]</a>. Castro reitera que os contatos foram protocolares, que jamais integrou o comitê de investimentos e que o banco não pagou suas viagens <a href="#ref-102" class="fn" data-ref="102">[102]</a>.</p>
+    </section>
+
+    <!-- CAPÍTULO 6 -->
+    <section id="cap-6">
+      <h2>6. Coação: “A Turma” (alegada, contestada)</h2>
+      <p>A PF e despachos judiciais do ministro relator André Mendonça descrevem a estruturação de um aparato coercitivo informal e miliciano operando em favor de Daniel Vorcaro, orçado em aproximadamente R$ 1 milhão mensal <a href="#ref-58" class="fn" data-ref="58">[58]</a>. A rede teria obtido acessos ilegais a bancos de dados sigilosos da PF, Interpol e FBI com o objetivo de vigiar jornalistas independentes, agentes fiscais e ex-empregados, conspirando inclusive para simular um roubo com agressão física com o intuito de intimidar um profissional de imprensa <a href="#ref-58" class="fn" data-ref="58">[58]</a>.</p>
+      
+      <p>A composição envolveria ex-policiais, milicianos e agentes do jogo do bicho, contando com aportes de R$ 400.000 mensais repassados pelo pai do banqueiro <a href="#ref-59" class="fn" data-ref="59">[59]</a>. O chefe operacional do grupo teria recebido R$ 24 milhões ao longo do período apurado <a href="#ref-60" class="fn" data-ref="60">[60]</a>. Os advogados do banqueiro protocolaram requerimentos exigindo que a PF comprove pericialmente a existência física da referida milícia <a href="#ref-61" class="fn" data-ref="61">[61]</a>.</p>
+      
+      <p>Essa camada elucida o <em>modus operandi</em> de coação do grupo, embora não altere os canais de circulação monetária do esquema financeiro.</p>
+    </section>
+
+    <!-- ORIGENS DO DINHEIRO -->
+    <section id="origens">
+      <h2>De onde veio o dinheiro</h2>
+      <p>A maior fatia dos recursos do Banco Master originou-se de cidadãos comuns adquirindo CDBs garantidos pelo FGC: aproximadamente dois terços do total de R$ 76 a R$ 86 bilhões mapeados. O BRB respondeu por um quinto; fundos de pensão, patrimônio contábil e dívida subordinada completaram o quadro.</p>
+
+      <!-- Gráfico Proporcional em Barras -->
+      <div class="data-card">
+        <h4 style="margin-bottom: 14px; font-size: 15px;">Participação das Fontes de Recursos (R$ Bilhões)</h4>
+        
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>Depósitos (Majoritariamente CDBs / FGC)</span>
+            <span>R$ 49,3–59,7 bi (65–69%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 68%;"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>Aquisições de Carteira pelo BRB</span>
+            <span>R$ 17,0 bi (20–22%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 21%; background: #475569;"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>Patrimônio Líquido Declarado (Dez/24)</span>
+            <span>R$ 4,7 bi (5–6%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 6%; background: #64748b;"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>Rioprevidência (Fundos Estruturados)</span>
+            <span>R$ 2,0 bi (2–3%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 3%; background: #94a3b8;"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>18 Fundos de Pensão (LFs Não Cobertas)</span>
+            <span>R$ 1,9 bi (2%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 2.5%; background: #cbd5e1;"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-label-group">
+            <span>Dívida Subordinada Elegível a Capital</span>
+            <span>R$ 0,9 bi (1%)</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width: 1.5%; background: #e2e8f0;"></div></div>
+        </div>
+      </div>
+
+      <p><strong>Divergência Contábil:</strong> O Master publicou em dezembro de 2024 um volume de funding institucional de R$ 49,3 bilhões e ativo total de R$ 63 bilhões <a href="#ref-115" class="fn" data-ref="115">[115]</a>. Os registros compilados pelo DIEESE no IFData do Banco Central registravam volume sensivelmente maior em depósitos <a href="#ref-114" class="fn" data-ref="114">[114]</a>. Essa disparidade reflete a consolidação exclusiva do banco versus o ecossistema coligado. Parte das captações decorria de autofinanciamento: empréstimos concedidos a empresas aliadas regressavam à tesouraria para recompor CDBs <a href="#ref-17" class="fn" data-ref="17">[17]</a>.</p>
+
+      <h3>Os Quatro Motores da Captação</h3>
+      <ol>
+        <li><strong>A Garantia:</strong> A proteção individual de R$ 250.000 do FGC neutralizava o apetite a risco do aplicador. O correntista não precisava atestar a solidez do Master: a aposta era transferida para a blindagem do sistema <a href="#ref-3" class="fn" data-ref="3">[3]</a>.</li>
+        <li><strong>A Taxa:</strong> Rendimentos agressivos de até 140% do CDI em prazos de até cinco anos — frente a ofertas médias de 100% dos grandes bancos de varejo <a href="#ref-116" class="fn" data-ref="116">[116]</a>.</li>
+        <li><strong>A Força de Vendas das Corretoras:</strong> Relatórios de mercado estimam vendas acumuladas de R$ 26 bilhões pela plataforma XP, R$ 6,7 bilhões pelo BTG Pactual e R$ 2,9 bilhões via Easynvest <a href="#ref-116" class="fn" data-ref="116">[116]</a>. Agentes autônomos recebiam comissões antecipadas de cerca de 1,5% em papéis de cinco anos, contra 0,6% em emissões curtas. A XP afirmou que o comissionamento médio habitual situa-se em 0,3% ao ano <a href="#ref-116" class="fn" data-ref="116">[116]</a>.</li>
+        <li><strong>O Ritmo de Crescimento:</strong> O volume depositado dobrou anualmente entre 2021 e 2024, acumulando avanço de sete vezes <a href="#ref-114" class="fn" data-ref="114">[114]</a>. Cerca de 98% compunha-se de depósitos a prazo, comparado a 56–68% na média do SFN <a href="#ref-114" class="fn" data-ref="114">[114]</a>.</li>
+      </ol>
+
+      <p>As fontes alimentaram o sistema em escada sequencial: o varejo sustentou o ciclo inicial de 2021 a 2024 <a href="#ref-114" class="fn" data-ref="114">[114]</a>; os fundos públicos ingressaram no final de 2023 <a href="#ref-96" class="fn" data-ref="96">[96]</a><a href="#ref-103" class="fn" data-ref="103">[103]</a>; e a injeção do BRB surgiu a partir de 2024 para cobrir a esteira de vencimentos das primeiras rodadas de CDBs <a href="#ref-46" class="fn" data-ref="46">[46]</a>.</p>
+      
+      <p>No desenlace, os CDBs garantidos formavam a maior dívida do Master: o FGC arcou com R$ 40,6 bilhões <a href="#ref-4" class="fn" data-ref="4">[4]</a>, cerca de dois terços dos R$ 59,6 bilhões apurados no balanço de março de 2025 pelo IFData <a href="#ref-114" class="fn" data-ref="114">[114]</a>.</p>
+    </section>
+
+    <!-- QUEM PAGOU E COMO -->
+    <section id="custos">
+      <h2>Quem pagou, e como</h2>
+      <p>A existência do FGC transmitia a impressão de que o custo da falência seria inteiramente privado. Na prática, a conta distribuiu-se de forma difusa entre correntistas de todos os bancos do país, os contribuintes do Distrito Federal e os servidores e orçamentos de 18 municípios e estados.</p>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Poupadores até R$ 250.000 (~800.000 credores)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Reembolsados pelo FGC a partir de janeiro de 2026; atualização dos juros cessou formalmente no ato da decretação de liquidação <a href="#ref-4" class="fn" data-ref="4">[4]</a><a href="#ref-110" class="fn" data-ref="110">[110]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Parcialmente ressarcidos, suportando a perda da rentabilidade contratada no período.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Poupadores e Empresas Acima do Teto / Títulos sem Seguro</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Inscritos na fila de credores quirografários da massa falida, após os créditos trabalhistas e fiscais prioritários <a href="#ref-111" class="fn" data-ref="111">[111]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Os próprios credores e correntistas.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Cotistas de Fundos Imobiliários Administrados</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Cerca de R$ 610 milhões bloqueados em três FIIs suspensos para negociação <a href="#ref-95" class="fn" data-ref="95">[95]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Os próprios cotistas do varejo, aguardando assembleias judiciais.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Clientes do Will Bank e Banco Pleno</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Garantidos e ressarcidos pelo FGC em volumes de R$ 6,3 bilhões e R$ 4,9 bilhões, respectivamente <a href="#ref-108" class="fn" data-ref="108">[108]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Reembolsados pelo fundo garantidor.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fundos de Pensão de Servidores Públicos (RPPS)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          LFs desprovidas de cobertura do FGC; pela Lei Federal 9.717/1998, déficits atuariais de aposentadoria devem ser cobertos pelo tesouro estadual/municipal <a href="#ref-97" class="fn" data-ref="97">[97]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Orçamentos públicos de estados e municípios (contribuintes de serviços e cidadãos em geral).
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">O Distrito Federal (via BRB)</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Provisionamento compulsório de R$ 2,6 bilhões exigido pelo BC <a href="#ref-51" class="fn" data-ref="51">[51]</a>; aprovação legislativa de capitalização de até R$ 6,6 bilhões oferecendo 9 imóveis públicos como lastro <a href="#ref-107" class="fn" data-ref="107">[107]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          População e patrimônio imobiliário do Distrito Federal.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Clientes Bancários e Tomadores de Crédito em Geral</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          FGC exigiu dos bancos associados a antecipação de cinco anos de contribuições (R$ 32,5 bilhões) para recompor reservas <a href="#ref-108" class="fn" data-ref="108">[108]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Os bancos do sistema e, por repasse de spread bancário, os tomadores de empréstimos <a href="#ref-109" class="fn" data-ref="109">[109]</a>.
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Pessoas Cujos Nomes Foram Usados em Contratos Falsos</span>
+        </div>
+        <div class="data-row">
+          <span class="data-label">O que Ocorreu</span>
+          Emissão de consignados fraudulentos em nome de cidadãos que nunca solicitaram crédito, atingindo professores da Bahia e PMs do DF <a href="#ref-112" class="fn" data-ref="112">[112]</a><a href="#ref-113" class="fn" data-ref="113">[113]</a>.
+        </div>
+        <div class="data-row">
+          <span class="data-label">Quem Paga o Prejuízo</span>
+          Vítimas lesadas patrimonialmente e moralmente no sistema de crédito.
+        </div>
+      </div>
+    </section>
+
+    <!-- ONDE AS LEITURAS DIVERGEM -->
+    <section id="divergencias">
+      <h2>Onde as leituras divergem</h2>
+      <p>Duas teses fundamentais permanecem em aberto nos tribunais:</p>
+
+      <h3>1. Quando começou o dolo?</h3>
+      <p><strong>Hipótese A:</strong> O banco foi desenhado especificamente para extrair patrimônio desde 2019.<br>
+      <strong>Hipótese B:</strong> Tratava-se de um modelo agressivo e arriscado que descambou para a fraude quando o aperto de liquidez tornou-se insolúvel.</p>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Sobrepreços de cotas de fundos mapeados desde 2020</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Apurações da CVM <a href="#ref-12" class="fn" data-ref="12">[12]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Fundo City pagou R$ 419,9 mi a empresas familiares em 2022</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Registros da CVM e relatórios do liquidante <a href="#ref-26" class="fn" data-ref="26">[26]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Reag operando a serviço do Master desde 2019</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Termo de delação de João Carlos Mansur <a href="#ref-21" class="fn" data-ref="21">[21]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Estrutura criminosa articulada desde a década passada</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Parecer do Ministério Público Federal (SP) <a href="#ref-30" class="fn" data-ref="30">[30]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Carteira Credcesta marcada pelo BRB 45% acima da avaliação</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Relatório de precificação do BRB <a href="#ref-24" class="fn" data-ref="24">[24]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Ruptura definitiva datada pelo Banco Central em nov/2024</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Nota Técnica do Banco Central <a href="#ref-15" class="fn" data-ref="15">[15]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Empresa de fachada Tirreno aberta apenas em dez/2024</span>
+          <span class="badge badge-secondary">Aponta para: B (Escalada Tardia)</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Inquérito da Polícia Federal <a href="#ref-46" class="fn" data-ref="46">[46]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Vorcaro sustenta entrega de ativos próprios com deságio</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Manifestações da defesa do banqueiro <a href="#ref-9" class="fn" data-ref="9">[9]</a>.</div>
+      </div>
+
+      <p><em>Balanço das teses: A hipótese A apresenta suporte robusto na cronologia de desvios familiares; contudo, a hipótese B não está descartada, dada a existência de ativos reais na base do conglomerado.</em></p>
+
+      <h3>2. Quem exercia o controle efetivo?</h3>
+      <p><strong>Hipótese A:</strong> Daniel Vorcaro comandava monocraticamente, com sócios em posição subordinada.<br>
+      <strong>Hipótese B:</strong> Tratava-se de sociedade com estruturas ocultas de financiamento.</p>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Indiciamento indicando Vorcaro como chefe e Lima no núcleo executivo</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Relatório de Indiciamento da PF <a href="#ref-62" class="fn" data-ref="62">[62]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Sociedade em 2022: Vorcaro, Lima e empresa ligada a Quadrado</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Noticiário financeiro (Brazil Journal) <a href="#ref-63" class="fn" data-ref="63">[63]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Aval solidário de Vorcaro, Lima e Quadrado em emissão de dívida</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Registros de contencioso judicial <a href="#ref-64" class="fn" data-ref="64">[64]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Representação alegando injeção de R$ 700 mi por Tanure</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Denúncia formal da Esh Capital <a href="#ref-63" class="fn" data-ref="63">[63]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Tanure nega participação societária ou posse de debêntures</span>
+          <span class="badge badge-central">Aponta para: A</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Declarações formais do empresário <a href="#ref-65" class="fn" data-ref="65">[65]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Lima reuniu-se 7 vezes com diretores do BC em 2025 como CEO</span>
+          <span class="badge badge-secondary">Aponta para: B</span>
+        </div>
+        <div class="data-row"><span class="data-label">Fonte</span> Agendas oficiais de autoridades públicas do BC <a href="#ref-66" class="fn" data-ref="66">[66]</a>.</div>
+      </div>
+
+      <p><em>Balanço das teses: Um grupo coeso liderado por Vorcaro é a linha mais respaldada pelas autoridades; a existência de controle oculto de terceiros segue sob disputa.</em></p>
+    </section>
+
+    <!-- PROVAS DO CELULAR -->
+    <section id="celular">
+      <h2>Quanto depende do celular apreendido?</h2>
+      <p>A contestação jurídica promovida pelos advogados em relação aos aparelhos telefônicos apreendidos de Vorcaro impacta primordialmente as provas subjetivas de intenção dolosa. O caminho do dinheiro (origem e destino dos fluxos financeiros) permanece demonstrado por registros bancários, cartorários e contábeis independentes.</p>
+      
+      <p>Em 29 de outubro de 2026, os defensores protocolaram laudo do perito judicial Marcos Monteiro referente ao telefone apreendido em 17 de novembro de 2025 <a href="#ref-92" class="fn" data-ref="92">[92]</a>. O exame apontou que 657 arquivos foram alterados e 436 foram gerados em 18 de novembro de 2025 — poucas horas após o recolhimento do aparelho, enquanto sob custódia da Polícia Federal; no cômputo geral, 999 arquivos teriam sofrido modificações, incluindo as bases de dados do WhatsApp <a href="#ref-92" class="fn" data-ref="92">[92]</a>. O laudo atesta que os logs não permitem individualizar quem operou o dispositivo ou se as alterações decorreram de inserção acidental de cabo USB para recarga. A PF requereu dilação de 60 dias para perícia técnica oficial <a href="#ref-92" class="fn" data-ref="92">[92]</a>.</p>
+
+      <h3>Grau de Vulnerabilidade das Provas</h3>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Liquidação Extrajudicial e Pagamentos do FGC</span>
+          <span class="badge badge-central">Sem Risco</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Atos regulatórios normativos e extratos bancários <a href="#ref-4" class="fn" data-ref="4">[4]</a><a href="#ref-10" class="fn" data-ref="10">[10]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Aquisição das Carteiras Podres pelo BRB</span>
+          <span class="badge badge-central">Quase Nulo</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Auditorias do Banco Central e contratos do BRB <a href="#ref-46" class="fn" data-ref="46">[46]</a><a href="#ref-48" class="fn" data-ref="48">[48]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Desvios Familiares (City, Navarra, Astralo 95)</span>
+          <span class="badge badge-central">Sem Risco</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Balanços da CVM, ações do liquidante e ordens cíveis <a href="#ref-26" class="fn" data-ref="26">[26]</a><a href="#ref-89" class="fn" data-ref="89">[89]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Pagamentos a Bancas, Metrópoles e Consult</span>
+          <span class="badge badge-secondary">Parcial</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Relatórios fiscais da Receita e do Coaf (valores seguros; o propósito ilícito depende do celular) <a href="#ref-34" class="fn" data-ref="34">[34]</a><a href="#ref-35" class="fn" data-ref="35">[35]</a><a href="#ref-74" class="fn" data-ref="74">[74]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Repasses Internacionais do Filme "Dark Horse"</span>
+          <span class="badge badge-secondary">Parcial</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Delação de Freixo e ordens de câmbio do Coaf <a href="#ref-84" class="fn" data-ref="84">[84]</a><a href="#ref-80" class="fn" data-ref="80">[80]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Mesadas a Parlamentares, Mensagens a Magistrados e "A Turma"</span>
+          <span class="badge badge-accessory">Alto Risco</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Conversas telemáticas e mensagens de texto nos celulares apreendidos <a href="#ref-33" class="fn" data-ref="33">[33]</a><a href="#ref-72" class="fn" data-ref="72">[72]</a><a href="#ref-76" class="fn" data-ref="76">[76]</a><a href="#ref-58" class="fn" data-ref="58">[58]</a>.</div>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-header">
+          <span class="data-card-title">Aportes dos Fundos de Previdência e Elo Político de Castro</span>
+          <span class="badge badge-secondary">Parcial</span>
+        </div>
+        <div class="data-row"><span class="data-label">Base Probatória</span> Balanços do Ministério da Previdência e TCE (valores seguros; o elo com Castro depende das mensagens) <a href="#ref-96" class="fn" data-ref="96">[96]</a><a href="#ref-98" class="fn" data-ref="98">[98]</a><a href="#ref-99" class="fn" data-ref="99">[99]</a>.</div>
+      </div>
+
+      <p>Juristas consultados divergem quanto aos impactos de nulidade da prova digital: parcela dos penalistas defende que a violação da cadeia de custódia contamina exclusivamente as conversas extraídas dos aparelhos violados, permanecendo íntegras as provas fiscais, bancárias e periciais independentes <a href="#ref-93" class="fn" data-ref="93">[93]</a>.</p>
+    </section>
+
+    <!-- O QUE NÃO SABEMOS -->
+    <section id="aberto">
+      <h2>O que não sabemos, e o que esclareceria</h2>
+      <p>Seis questões centrais pendem de elucidação formal:</p>
+      <ul>
+        <li><strong>A Delação Homologada da Reag:</strong> O acordo assinado entre a PGR e João Carlos Mansur carece de julgamento homologatório <a href="#ref-67" class="fn" data-ref="67">[67]</a>. Sua alegação de que pode mapear R$ 20 bilhões sob custódia de Vorcaro segue sem confirmação <a href="#ref-68" class="fn" data-ref="68">[68]</a>. Em 27 de outubro de 2026, a PGR protocolou requerimento de urgência no STF <a href="#ref-69" class="fn" data-ref="69">[69]</a>.</li>
+        <li><strong>A Definição da Relatoria no STF:</strong> Desde 12 de setembro de 2026, a presidência do STF retém os autos do inquérito. O ministro Mendonça segue como relator formal, mas com atos obstados; aguarda-se redistribuição regimental <a href="#ref-94" class="fn" data-ref="94">[94]</a>.</li>
+        <li><strong>O Desfecho da Perícia Telefônica:</strong> O acolhimento ou não da tese de quebra da cadeia de custódia dos celulares <a href="#ref-92" class="fn" data-ref="92">[92]</a>.</li>
+        <li><strong>Inquéritos Secundários Além do BRB:</strong> O indiciamento inicial concentrou-se estritamente na compra de créditos pelo BRB <a href="#ref-8" class="fn" data-ref="8">[8]</a>. Relatórios conclusivos sobre fundos da Reag, Rioprevidência e blindagem política seguem em fase de elaboração.</li>
+        <li><strong>O Laudo Contábil da Massa Liquidanda:</strong> Apurará o valor de liquidação dos recebíveis. A CVM instaurou processo sancionador contra o liquidante por descumprimento de prazos na convocação de cotistas de FIIs com R$ 610 milhões aplicados <a href="#ref-95" class="fn" data-ref="95">[95]</a>.</li>
+        <li><strong>Oferecimento e Recebimento de Denúncias:</strong> A formalização ou arquivamento de ações penais pela PGR perante o plenário da Suprema Corte.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Limites Documentais da Análise:</strong> O Banco Central decretou sigilo administrativo de oito anos (com vigência até novembro de 2033) sobre os autos da fiscalização do Master <a href="#ref-70" class="fn" data-ref="70">[70]</a>. A eventual tramitação da emenda parlamentar do FGC no Congresso Nacional não foi verificada nesta apuração.
+      </div>
+    </section>
+
+    <!-- MÉTODO -->
+    <section id="metodo">
+      <h2>Método</h2>
+      <ul>
+        <li><strong>Fontes Utilizadas:</strong> Reportagens documentadas com base em autos do Banco Central, PF, CVM, Receita Federal, Coaf, administração judicial, decisões do STF e termos preliminares de colaboração premiada, coletadas em 30 e 31 de outubro de 2026. Os autos processuais originais sob segredo de justiça não foram acessados diretamente.</li>
+        <li><strong>Categorização Analítica:</strong> Classifica-se como <em>"Estabelecido"</em> aquilo que deriva de publicação em diários oficiais, decisões regulatórias formais ou convergência documental irrefutável. Considera-se <em>"Alegado"</em> o teor de peças investigativas, delações não sentenciadas e relatórios policiais. Todas as manifestações de defesa localizadas foram expressamente reproduzidas.</li>
+        <li><strong>Concentração Documental:</strong> A maior fatia das conclusões decorre de peças da PF, checadas, sempre que viável, com dados paralelos da Receita, Coaf e CVM.</li>
+        <li><strong>Status Processual:</strong> Indiciamento policial ou menção em termo de colaboração não equivalem a condenação penal transitada em julgado. Vigora para todos os citados a presunção constitucional de inocência.</li>
+        <li><strong>Inferência:</strong> A formulação de "fraude de controle", a modelagem em esteira e a consolidação dos dados monetários constituem inferências analíticas do autor a partir das evidências colhidas.</li>
+        <li><strong>Critério de Exclusão:</strong> Registros pontuais e isolados a respeito da conduta privada de magistrados em confraternizações sociais foram suprimidos por não agregarem relevância à análise dos fluxos monetários.</li>
+      </ul>
+    </section>
+
+    <!-- REFERÊNCIAS COMPLETAS 1 A 116 -->
+    <section id="referencias">
+      <h2>Referências</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;"><em>Fontes consultadas entre 30 e 31 de outubro de 2026. "s.d." indica sem data explícita informada no registro original consultado.</em></p>
+      
+      <ol class="ref-list">
+        <li id="ref-1"><span class="ref-index">1.</span> “Banco Central decreta liquidação extrajudicial do Banco Master.” Eu Quero Investir, s.d.</li>
+        <li id="ref-2"><span class="ref-index">2.</span> “Entenda a crise financeira por trás da compra do Banco Master pela BRB.” Jornal Opção, s.d.</li>
+        <li id="ref-3"><span class="ref-index">3.</span> Guia de ressarcimento do FGC para investidores de CDB do Master. Money Times, s.d.</li>
+        <li id="ref-4"><span class="ref-index">4.</span> “FGC paga R$ 40,6 bi a 800 mil investidores do Banco Master.” AUVP Analítica, s.d.</li>
+        <li id="ref-5"><span class="ref-index">5.</span> “FGC vai reembolsar 1,6 milhão de investidores do Banco Master.” Bora Investir (B3), nov. 2025.</li>
+        <li id="ref-6"><span class="ref-index">6.</span> Akerlof, George A.; Romer, Paul M. “Looting: The Economic Underworld of Bankruptcy for Profit.” Brookings Papers on Economic Activity, 1993, nº 2.</li>
+        <li id="ref-7"><span class="ref-index">7.</span> “Editors’ Summary.” Brookings Papers on Economic Activity, 1993, nº 2.</li>
+        <li id="ref-8"><span class="ref-index">8.</span> “Caso Master: PF indicia 15, incluindo Vorcaro, por crimes financeiros.” Band, 28 out. 2026.</li>
+        <li id="ref-9"><span class="ref-index">9.</span> “Banqueiro do Master nega fraude e critica Banco Central.” SpaceMoney, 30 out. 2026.</li>
+        <li id="ref-10"><span class="ref-index">10.</span> “BC explica liquidação do Banco Master.” O Antagonista, 18 nov. 2025.</li>
+        <li id="ref-11"><span class="ref-index">11.</span> “Banco Central impõe sigilo de 8 anos sobre caso Master.” Band, 6 abr. 2026.</li>
+        <li id="ref-12"><span class="ref-index">12.</span> “CVM admite indícios de fraude no Banco Master desde 2020.” Revista Oeste, s.d.</li>
+        <li id="ref-13"><span class="ref-index">13.</span> Correio da Manhã, 15 jan. 2026, p. 6 (edição impressa).</li>
+        <li id="ref-14"><span class="ref-index">14.</span> “Como funcionava o esquema do Banco Master, segundo a investigação.” IstoÉ, s.d.</li>
+        <li id="ref-15"><span class="ref-index">15.</span> “Como funcionava o esquema do Banco Master, segundo a investigação.” Band / Deutsche Welle, 30 jan. 2026.</li>
+        <li id="ref-16"><span class="ref-index">16.</span> Cerqueira, Felipe. “Banco Master é suspeito de inflar patrimônio com investimentos fraudulentos, diz CVM.” Jovem Pan, s.d.</li>
+        <li id="ref-17"><span class="ref-index">17.</span> “Investigação aponta uso de ‘laranjas’ em fundos do Banco Master.” Revista Oeste, s.d.</li>
+        <li id="ref-18"><span class="ref-index">18.</span> “Banco Central decreta liquidação da Reag Investimentos, envolvida no caso Master.” JOTA, 15 jan. 2026 (via Harvard TagTeam).</li>
+        <li id="ref-19"><span class="ref-index">19.</span> “Entenda por que operações do Banco Master com a Reag estão sob investigação.” Jornal de Brasília, s.d.</li>
+        <li id="ref-20"><span class="ref-index">20.</span> “Como funcionava o esquema do Banco Master segundo a investigação.” Band, s.d.</li>
+        <li id="ref-21"><span class="ref-index">21.</span> “Ex-dono da Reag entrega à PGR proposta de delação premiada.” Poder360, s.d.</li>
+        <li id="ref-22"><span class="ref-index">22.</span> “Ex-dono da Reag propõe delação e cita Banco Master e PCC.” Rádio Itatiaia, s.d.</li>
+        <li id="ref-23"><span class="ref-index">23.</span> “Fundador da Reag confirma Master entre clientes e nega ligação com PCC.” Estadão Conteúdo via InfoMoney, s.d.</li>
+        <li id="ref-24"><span class="ref-index">24.</span> Avaliação dos ativos recebidos do Master pelo BRB (citando Valor Econômico). Let’s Money, s.d.</li>
+        <li id="ref-25"><span class="ref-index">25.</span> Mandl, Carolina; Felix, Diego. “Como Vorcaro desviava dinheiro do Master para familiares, segundo investigações.” Folhapress via Bem Paraná, s.d.</li>
+        <li id="ref-26"><span class="ref-index">26.</span> “Vorcaro tentou encobrir rombo de R$ 777 mi após usar Master para financiar empresas de familiares.” InfoMoney, s.d.</li>
+        <li id="ref-27"><span class="ref-index">27.</span> Rezende, Constança; Marchesini, Lucas. “Cunhado de Vorcaro recebeu R$ 485 milhões de empresa investigada pela PF em caso Master.” Folhapress via TNH1, 21 mar. 2026.</li>
+        <li id="ref-28"><span class="ref-index">28.</span> Transferência de R$ 180 milhões de fundo investigado na Carbono Oculto para a Super Empreendimentos. Folha de Pernambuco, s.d.</li>
+        <li id="ref-29"><span class="ref-index">29.</span> Sobre R$ 2,2 bilhões ocultados após liberação judicial. BP Money, s.d.</li>
+        <li id="ref-30"><span class="ref-index">30.</span> Posicionamento do Ministério Público Federal em SP e resposta da defesa. BP Money, s.d.</li>
+        <li id="ref-31"><span class="ref-index">31.</span> “PF: ex-chefe de supervisão do BC recebeu R$ 500 mil mensais de Vorcaro.” Folhapress via DGABC, s.d.</li>
+        <li id="ref-32"><span class="ref-index">32.</span> “PF aponta pagamentos de até R$ 400 mil por mês a agentes ligados ao caso Vorcaro.” Gazeta do Povo, s.d.</li>
+        <li id="ref-33"><span class="ref-index">33.</span> “Quem é Ciro Nogueira, senador e ex-ministro de Bolsonaro que foi alvo da PF.” CNN Brasil, 7 maio 2026.</li>
+        <li id="ref-34"><span class="ref-index">34.</span> “Master repassou R$ 80 mi a escritório de mulher de Moraes, mostram documentos.” SBT News, s.d.</li>
+        <li id="ref-35"><span class="ref-index">35.</span> “Diálogos obtidos pela PF mostram repasse de R$ 51,9 mi de Vorcaro ao portal Metrópoles.” Estadão Conteúdo via Mercado & Consumo, 16 out. 2026.</li>
+        <li id="ref-36"><span class="ref-index">36.</span> “‘Comprado os caras’: Vorcaro pagou DCM para não criticar Master, diz PF.” Jovem Pan, s.d.</li>
+        <li id="ref-37"><span class="ref-index">37.</span> “Vorcaro ofereceu dinheiro para influenciadores criticarem o BC nas redes, segundo a PF.” Brasil de Fato, 10 jul. 2026.</li>
+        <li id="ref-38"><span class="ref-index">38.</span> Sampaio, Carlos Nathan. “Em delação rejeitada, Vorcaro associa doações a Tarcísio e Bolsonaro a propina.” Tribuna do Planalto, 4 set. 2026.</li>
+        <li id="ref-39"><span class="ref-index">39.</span> “Operação policial contra o crime organizado mira o Banco Genial e esquema ligado a recursos do filme Dark Horse.” Times Brasil, 24 set. 2026.</li>
+        <li id="ref-40"><span class="ref-index">40.</span> Nota oficial da assessoria de Ciro Nogueira. IstoÉ Dinheiro, 7 maio 2026.</li>
+        <li id="ref-41"><span class="ref-index">41.</span> Gayoso, Lucas. “PF encontra contrato de R$ 3 milhões por mês entre Vorcaro e escritório de Viviane de Moraes.” Correio da Manhã, set. 2026.</li>
+        <li id="ref-42"><span class="ref-index">42.</span> Contratos jurídicos totalizando R$ 208 milhões. BP Money, s.d.</li>
+        <li id="ref-43"><span class="ref-index">43.</span> “Entenda o passo a passo da crise no STF.” Revista Oeste, s.d.</li>
+        <li id="ref-44"><span class="ref-index">44.</span> “Augusto Lima, ex-sócio do Master, tem ligações com o PT da Bahia.” Poder360, s.d.</li>
+        <li id="ref-45"><span class="ref-index">45.</span> “PF diz que BRB participou de fraudes em aportes bilionários no Banco Master.” BP Money, s.d.</li>
+        <li id="ref-46"><span class="ref-index">46.</span> Felix, Diego; Moura, Júlia. “Relatório da PF aponta que BRB comprou R$ 17 bi em créditos falsos do Banco Master.” Folhapress via Bahia Notícias, s.d.</li>
+        <li id="ref-47"><span class="ref-index">47.</span> “Saiba quem são os 15 primeiros indiciados pela PF sob suspeita de crimes no Banco Master.” TNH1, 29 out. 2026.</li>
+        <li id="ref-48"><span class="ref-index">48.</span> “‘Não há evidência de que as carteiras do Master eram podres’, diz ex-presidente do BRB.” Revista Oeste, s.d.</li>
+        <li id="ref-49"><span class="ref-index">49.</span> Sotero, Rafael. “Como funcionava esquema entre Ciro Nogueira e Daniel Vorcaro, segundo a PF.” CNN Brasil, 7 maio 2026.</li>
+        <li id="ref-50"><span class="ref-index">50.</span> “Caso Master: veja os nomes e as condutas dos 15 indiciados no relatório da PF.” Sem Pauta News, 29 out. 2026.</li>
+        <li id="ref-51"><span class="ref-index">51.</span> “BC exige provisionamento de mais de R$ 2 bi do BRB por perdas com o Master.” Revista Oeste, s.d.</li>
+        <li id="ref-52"><span class="ref-index">52.</span> Estimativa técnica do Banco Central sobre prejuízos no BRB. Let’s Money, s.d.</li>
+        <li id="ref-53"><span class="ref-index">53.</span> “Fraudes do BRB e Master aconteceram mesmo sob olhar do BC.” Revista Oeste, s.d.</li>
+        <li id="ref-54"><span class="ref-index">54.</span> Côrtes, Gustavo; Sousa, Gabriel de; Ohana, Victor. O Estado de S. Paulo, 16 jan. 2026, p. B2 (via clipping ANFIP).</li>
+        <li id="ref-55"><span class="ref-index">55.</span> “Senador Ciro Nogueira é alvo de busca da PF no caso Master; primo de Vorcaro é preso.” Money Times, 7 maio 2026.</li>
+        <li id="ref-56"><span class="ref-index">56.</span> Quinta fase ostensiva da Operação da PF. Sul21, maio 2026.</li>
+        <li id="ref-57"><span class="ref-index">57.</span> “Vorcaro simulou venda para Fictor para tentar fugir do país, dizem investigadores.” Jornal de Brasília, s.d.</li>
+        <li id="ref-58"><span class="ref-index">58.</span> “‘Sicários’ de Vorcaro presos pela PF formavam ‘milícia privada’.” Times Brasil, 4 mar. 2026.</li>
+        <li id="ref-59"><span class="ref-index">59.</span> Bernardes, Alícia; Rocha, Danandra; Mac Cord, Iago. “PF: pai de Vorcaro chefiava milícia.” Correio Braziliense, 15 maio 2026, p. 3.</li>
+        <li id="ref-60"><span class="ref-index">60.</span> “PF aponta que ‘Sicário’ recebeu R$ 24 milhões de Daniel Vorcaro.” Metrópoles, s.d.</li>
+        <li id="ref-61"><span class="ref-index">61.</span> “Defesa de Vorcaro pede que PF comprove existência da milícia ‘A Turma’.” Jornal Opção, 5 mar. 2026.</li>
+        <li id="ref-62"><span class="ref-index">62.</span> “Saiba quem são os 15 primeiros indiciados pela PF sob suspeita de crimes no Banco Master.” Jornal de Brasília, 29 out. 2026.</li>
+        <li id="ref-63"><span class="ref-index">63.</span> Denúncia da Esh Capital e estrutura societária do Master em 2022. Brazil Journal, s.d.</li>
+        <li id="ref-64"><span class="ref-index">64.</span> “Do Master ao Voiter: entenda disputa judicial que envolve Augusto Lima.” Poder360, s.d.</li>
+        <li id="ref-65"><span class="ref-index">65.</span> “Quem é Nelson Tanure, que ganhou relógio de luxo de Vorcaro.” Jovem Pan, s.d.</li>
+        <li id="ref-66"><span class="ref-index">66.</span> “Augusto Lima, do Banco Pleno, se reuniu 7 vezes com BC em 2025 como CEO do Master.” Estadão Conteúdo via InfoMoney, s.d.</li>
+        <li id="ref-67"><span class="ref-index">67.</span> Rodrigues, Basília. “Caso Master: PGR assina delação com ex-dono da Reag.” SBT News, s.d.</li>
+        <li id="ref-68"><span class="ref-index">68.</span> Freire Neto, Moisés. “Delação de ex-dono da Reag põe R$ 20 bilhões do dinheiro de Vorcaro no radar.” Economic News Brasil, 10 set. 2026.</li>
+        <li id="ref-69"><span class="ref-index">69.</span> “Delação de Mansur, da Reag, ganha pedido de urgência da PGR a Fachin para localizar R$ 20 bilhões de Vorcaro.” Times Brasil, 27 out. 2026.</li>
+        <li id="ref-70"><span class="ref-index">70.</span> Sigilo de 8 anos imposto sobre autos de liquidação do Master. BP Money, s.d.</li>
+        <li id="ref-71"><span class="ref-index">71.</span> Relatório da PF sobre repasse de pelo menos R$ 20 milhões a empresa da família de Toffoli. Metrópoles, fev. 2026.</li>
+        <li id="ref-72"><span class="ref-index">72.</span> “Vorcaro teria sido pressionado por aportes em resort ligado a Toffoli e desembolsado R$ 35 milhões.” Times Brasil, 14 fev. 2026.</li>
+        <li id="ref-73"><span class="ref-index">73.</span> “PF não mostra ao Supremo conteúdo de 52 celulares do caso Master.” Poder360, s.d.</li>
+        <li id="ref-74"><span class="ref-index">74.</span> Grandi, Guilherme; Manfrin, Juliet. “Filho de Nunes Marques teria recebido R$ 500 mil do Master, aponta PF.” Gazeta do Povo, 15 set. 2026.</li>
+        <li id="ref-75"><span class="ref-index">75.</span> “Vorcaro coordenou noitada em triplex para ministro do STF Kassio Nunes Marques, diz revista.” Estadão Conteúdo via O Liberal, 16 out. 2026.</li>
+        <li id="ref-76"><span class="ref-index">76.</span> Lobianco, Bianca. Estadia de Carnaval 2025 atribuída a "KN". Correio da Manhã, 18 set. 2026.</li>
+        <li id="ref-77"><span class="ref-index">77.</span> “Conselho do MPF decide arquivar pedido de apuração sobre relação de Gonet e Vorcaro.” Times Brasil, set. 2026.</li>
+        <li id="ref-78"><span class="ref-index">78.</span> “Mensagem de Gonet para Vorcaro: ‘tomara que tenha charuto e Macallan’.” InfoMoney, set. 2026.</li>
+        <li id="ref-79"><span class="ref-index">79.</span> Inquérito no STF envolvendo Flávio Bolsonaro no caso Dark Horse. O Hoje, 11 set. 2026.</li>
+        <li id="ref-80"><span class="ref-index">80.</span> “Flávio mentiu ao menos 43 vezes sobre elo com Vorcaro.” Aos Fatos, s.d.</li>
+        <li id="ref-81"><span class="ref-index">81.</span> “Nikolas admite contato com Vorcaro, mas nega relação: ‘nunca recebi nenhum tostão’.” Rádio Itatiaia, 3 set. 2026.</li>
+        <li id="ref-82"><span class="ref-index">82.</span> “Banco Master: quem são os dois empresários alvos da operação da PF, soltos pela Justiça.” Mercado & Consumo, 23 nov. 2025.</li>
+        <li id="ref-83"><span class="ref-index">83.</span> “Banco Master: quem são os 15 indiciados pela PF no escândalo.” Revista Fórum, 29 out. 2026.</li>
+        <li id="ref-84"><span class="ref-index">84.</span> Homologação da colaboração de Freixo pelo ministro André Mendonça. Gazeta do Povo, set. 2026.</li>
+        <li id="ref-85"><span class="ref-index">85.</span> Depoimento de Paulo Henrique Costa envolvendo Ibaneis Rocha. Gazeta do Povo, 9 jul. 2026.</li>
+        <li id="ref-86"><span class="ref-index">86.</span> “STJ manda para PGR pedido de investigação sobre governador Ibaneis Rocha e caso Master.” SBT News, 4 fev. 2026.</li>
+        <li id="ref-87"><span class="ref-index">87.</span> Gallo, Gabriela. “Vorcaro volta a negar que Master deu prejuízos financeiros ao BRB.” Correio da Manhã, 15 out. 2026.</li>
+        <li id="ref-88"><span class="ref-index">88.</span> “Vorcaro diz que crise no BRB é culpa de investigação da PF.” SBT News, 16 out. 2026.</li>
+        <li id="ref-89"><span class="ref-index">89.</span> “Justiça barra venda de bens ligados ao Banco Master após indícios de desvios.” Economic News Brasil, 18 mar. 2026.</li>
+        <li id="ref-90"><span class="ref-index">90.</span> Ação judicial da massa liquidanda sobre cobertura de luxo em Miami. Times Brasil, s.d.</li>
+        <li id="ref-91"><span class="ref-index">91.</span> “Exclusivo: Vorcaro obtém liminar nos EUA que suspende investigação sobre mansão de US$ 32 milhões.” SBT News, 22 maio 2026.</li>
+        <li id="ref-92"><span class="ref-index">92.</span> “Perícia contratada por Vorcaro aponta alterações em celular de ex-banqueiro.” CNN Brasil, 29 out. 2026.</li>
+        <li id="ref-93"><span class="ref-index">93.</span> “Especialistas divergem sobre possibilidade de anulação do caso Master.” Rádio Itatiaia, 12 set. 2026.</li>
+        <li id="ref-94"><span class="ref-index">94.</span> “Ministro Edson Fachin retém processos do caso Master no STF e trava investigações.” Gazeta do Povo, 21 out. 2026.</li>
+        <li id="ref-95"><span class="ref-index">95.</span> “Alvo da CVM, liquidante do Master mantém R$ 610 milhões em FIIs travados.” NeoFeed, 21 out. 2026.</li>
+        <li id="ref-96"><span class="ref-index">96.</span> Souza, Amanda. “Banco Master: 18 fundos de previdência tinham investimentos no banco; veja lista.” Times Brasil, 19 nov. 2025.</li>
+        <li id="ref-97"><span class="ref-index">97.</span> Queiroz, Vitória. “Estados e municípios vão arcar com rombo do Master em fundos de previdência.” CNN Brasil, 9 jan. 2026.</li>
+        <li id="ref-98"><span class="ref-index">98.</span> “Cláudio Castro: relembre caso dos aportes bilionários do Rioprevidência no Master.” InfoMoney, 26 maio 2026.</li>
+        <li id="ref-99"><span class="ref-index">99.</span> Muradi, Anna. “Cláudio Castro trocou cúpula do Rioprevidência antes de aportes de R$ 3,6 bilhões no Master, diz PF.” BP Money, 26 maio 2026.</li>
+        <li id="ref-100"><span class="ref-index">100.</span> “Daniel Vorcaro bancou viagens de Cláudio Castro, diz PF.” CNN Brasil, 26 maio 2026.</li>
+        <li id="ref-101"><span class="ref-index">101.</span> “Cláudio Castro agradeceu Vorcaro após jantar de R$ 66 mil em Nova York: ‘experiência incrível’.” Times Brasil, 28 maio 2026.</li>
+        <li id="ref-102"><span class="ref-index">102.</span> “Castro nega relação indevida com Vorcaro e diz que contatos foram institucionais.” InfoMoney, 27 maio 2026.</li>
+        <li id="ref-103"><span class="ref-index">103.</span> “PF: Rioprev investiu no Master para ‘contornar restrições’.” SBT News, maio 2026.</li>
+        <li id="ref-104"><span class="ref-index">104.</span> “Entenda como o Rio investiu R$ 3 bi no Master e para onde foi o dinheiro.” CNN Brasil, maio 2026.</li>
+        <li id="ref-105"><span class="ref-index">105.</span> “Vorcaro discutiu substituir aplicações do Rioprevidência por outros ativos antes da liquidação do Master.” Times Brasil, s.d.</li>
+        <li id="ref-106"><span class="ref-index">106.</span> Ações da Procuradoria-Geral do Estado do Rio para reaver R$ 641 milhões. Gazeta do Povo, jul. 2026.</li>
+        <li id="ref-107"><span class="ref-index">107.</span> “Câmara do DF aprova capitalização do BRB com garantia de imóveis públicos.” Rádio Itatiaia, 3 mar. 2026.</li>
+        <li id="ref-108"><span class="ref-index">108.</span> “FGC antecipa contribuições de bancos para recompor R$ 32,5 bi do rombo deixado pelo Master.” SBT News, 5 mar. 2026.</li>
+        <li id="ref-109"><span class="ref-index">109.</span> “Liquidações de bancos ligados ao Master devem encarecer crédito para o consumidor.” Diario de Pernambuco, 18 fev. 2026.</li>
+        <li id="ref-110"><span class="ref-index">110.</span> “FGC deve começar a pagar investidores com CDBs do Master nesta semana.” InfoMoney, jan. 2026.</li>
+        <li id="ref-111"><span class="ref-index">111.</span> “FGC começa a ressarcir investidores do Banco Master.” Correio da Manhã, jan. 2026.</li>
+        <li id="ref-112"><span class="ref-index">112.</span> “Diretor do BC revela como identificou fraudes do Banco Master e créditos sem valor vendidos ao BRB.” SBT News, s.d.</li>
+        <li id="ref-113"><span class="ref-index">113.</span> Correio da Manhã, 2 fev. 2026, p. 6 (edição impressa).</li>
+        <li id="ref-114"><span class="ref-index">114.</span> DIEESE. “Caso Banco Master: impactos sociais e implicações regulatórias.” Nota Técnica nº 291, 31 mar. 2026 (compilação com dados do IFData/BC).</li>
+        <li id="ref-115"><span class="ref-index">115.</span> Redação Suno. “Banco Master, em negociação com BRB, divulga balanço com lucro de R$ 1 bi em 2024.” Suno Notícias, 2 abr. 2025.</li>
+        <li id="ref-116"><span class="ref-index">116.</span> Lucchesi, Cristiane; Piovesana, Matheus; Alvim, Leda. “Colapso do Banco Master levanta debate sobre papel de plataformas como a XP.” Bloomberg News via Bloomberg Línea, 1 dez. 2025.</li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- Barra de Ação Flutuante no Polegar (Android Ergonomics) -->
+  <div class="floating-bar">
+    <button class="btn-float" onclick="openToc()">
+      <span>☰</span> Sumário
+    </button>
+    <button class="btn-float" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="padding: 10px 12px;">
+      ↑
+    </button>
+  </div>
+
+  <!-- Diálogo / Bottom Sheet para Nota de Rodapé -->
+  <dialog id="sheet-fn">
+    <div class="sheet-header">
+      <span class="sheet-title" id="sheet-fn-title">Nota de Referência</span>
+      <button class="sheet-close" onclick="closeSheet('sheet-fn')">✕</button>
+    </div>
+    <div class="sheet-content" id="sheet-fn-body"></div>
+  </dialog>
+
+  <!-- Diálogo / Bottom Sheet para o Sumário -->
+  <dialog id="sheet-toc">
+    <div class="sheet-header">
+      <span class="sheet-title">Índice do Dossiê</span>
+      <button class="sheet-close" onclick="closeSheet('sheet-toc')">✕</button>
+    </div>
+    <div class="sheet-content">
+      <div class="toc-item"><a href="#cdb" onclick="closeSheet('sheet-toc')">Um CDB que pagava demais</a></div>
+      <div class="toc-item"><a href="#argumento" onclick="closeSheet('sheet-toc')">O argumento em resumo</a></div>
+      <div class="toc-item"><a href="#maquina" onclick="closeSheet('sheet-toc')">A máquina em resumo</a></div>
+      <div class="toc-item"><a href="#atores" onclick="closeSheet('sheet-toc')">Quem importava, e quanto (Atores e Núcleos)</a></div>
+      <div class="toc-item"><a href="#cap-1" onclick="closeSheet('sheet-toc')">1. Captação: alugando o FGC</a></div>
+      <div class="toc-item"><a href="#cap-2" onclick="closeSheet('sheet-toc')">2. Inflando o balanço</a></div>
+      <div class="toc-item"><a href="#cap-3" onclick="closeSheet('sheet-toc')">3. Extração: para a família</a></div>
+      <div class="toc-item"><a href="#cap-4" onclick="closeSheet('sheet-toc')">4. A blindagem institucional</a></div>
+      <div class="toc-item"><a href="#cap-5" onclick="closeSheet('sheet-toc')">5. A saída: BRB e a garantia</a></div>
+      <div class="toc-item"><a href="#previdencia" onclick="closeSheet('sheet-toc')">Fundos públicos de pensão</a></div>
+      <div class="toc-item"><a href="#cap-6" onclick="closeSheet('sheet-toc')">6. Coação: “A Turma”</a></div>
+      <div class="toc-item"><a href="#origens" onclick="closeSheet('sheet-toc')">De onde veio o dinheiro</a></div>
+      <div class="toc-item"><a href="#custos" onclick="closeSheet('sheet-toc')">Quem pagou, e como</a></div>
+      <div class="toc-item"><a href="#divergencias" onclick="closeSheet('sheet-toc')">Onde as leituras divergem</a></div>
+      <div class="toc-item"><a href="#celular" onclick="closeSheet('sheet-toc')">Quanto depende do celular?</a></div>
+      <div class="toc-item"><a href="#aberto" onclick="closeSheet('sheet-toc')">O que não sabemos</a></div>
+      <div class="toc-item"><a href="#metodo" onclick="closeSheet('sheet-toc')">Método</a></div>
+      <div class="toc-item"><a href="#referencias" onclick="closeSheet('sheet-toc')">Referências Completas (1 a 116)</a></div>
+    </div>
+  </dialog>
+
+  <!-- Script Funcional Mínimo -->
+  <script>
+    // Barra de progresso de rolagem
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progress-bar').style.width = scrolled + '%';
+    });
+
+    // Interceptação de links de nota [X] para exibição em Bottom Sheet
+    document.querySelectorAll('a.fn').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const refId = link.getAttribute('data-ref');
+        const refLi = document.getElementById('ref-' + refId);
+        if (refLi) {
+          const fnModal = document.getElementById('sheet-fn');
+          document.getElementById('sheet-fn-title').innerText = 'Referência [' + refId + ']';
+          document.getElementById('sheet-fn-body').innerHTML = '<p>' + refLi.innerHTML + '</p>';
+          fnModal.showModal();
+        }
+      });
+    });
+
+    function openToc() {
+      document.getElementById('sheet-toc').showModal();
+    }
+
+    function closeSheet(id) {
+      document.getElementById(id).close();
+    }
+
+    // Fechar ao clicar no backdrop escurecido
+    document.querySelectorAll('dialog').forEach(d => {
+      d.addEventListener('click', (e) => {
+        const rect = d.getBoundingClientRect();
+        if (e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right) {
+          d.close();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
