@@ -138,6 +138,10 @@ class Dossie:
         self.citacoes = {}       # n -> ids das citações, na ordem do texto
         self.referencias = {}    # n -> texto
         self.linha = 0
+        self.glossario = {}      # id -> (formas, definição); formas = siglas que o texto usa
+        self.termos_regex = None
+        self.marcados = set()    # termos já marcados na seção atual (marca só o primeiro uso)
+        self.usados = set()      # termos marcados em alguma parte da página
 
     # ------------------------------------------------------------ trechos
     def novo_id(self, base):
@@ -165,13 +169,110 @@ class Dossie:
             partes.append(f'<a href="#ref-{n}" id="{cid}">[{n}]</a>')
         return '<sup class="nota">' + ''.join(partes) + '</sup>'
 
-    def inline(self, s):
+    def inline(self, s, termos=False):
         s = html.escape(s, quote=False)
         s = ETIQUETA.sub(lambda m: self.etiqueta(m.group(1), m.group(2)), s)
         s = LINK.sub(self._link, s)
         s = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', s)
         s = re.sub(r'(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])', r'<em>\1</em>', s)
-        return NOTAS.sub(self._notas, s)
+        s = NOTAS.sub(self._notas, s)
+        return self.marcar_termos(s) if termos and self.termos_regex else s
+
+    def marcar_termos(self, s):
+        """Liga ao glossário o primeiro uso de cada sigla na seção (fora de links, notas e etiquetas)."""
+        partes = re.split(r'(<[^>]+>)', s)
+        dentro = 0
+        for k, p in enumerate(partes):
+            if p.startswith('<'):
+                if re.match(r'<(a|sup|span class="etiqueta")[ >]', p):
+                    dentro += 1
+                elif re.match(r'</(a|sup|span)>', p) and dentro:
+                    dentro -= 1
+                continue
+            if dentro or not p:
+                continue
+
+            def troca(m):
+                tid = self.forma_para_id[m.group(1)]
+                if tid in self.marcados:
+                    return m.group(0)
+                self.marcados.add(tid)
+                self.usados.add(tid)
+                return f'<a class="termo" href="#g-{tid}" data-termo="{tid}">{m.group(0)}</a>'
+            partes[k] = self.termos_regex.sub(troca, p)
+        return ''.join(partes)
+
+    def carregar_glossario(self, linhas):
+        """Linhas "SIGLA: definição" ou "SIGLA | OUTRA FORMA: definição"."""
+        for l in linhas:
+            if not l.strip():
+                continue
+            nomes, sep, definicao = l.strip().partition(': ')
+            if not sep:
+                raise ErroTexto(f'a linha "{l}" do glossário precisa ter a forma "SIGLA: definição"')
+            formas = [f.strip() for f in nomes.split('|') if f.strip()]
+            tid = slug(formas[0])
+            if tid in self.glossario:
+                raise ErroTexto(f'"{formas[0]}" aparece duas vezes no glossário')
+            self.glossario[tid] = (formas, definicao)
+        self.forma_para_id = {f: tid for tid, (formas, _) in self.glossario.items() for f in formas}
+        alternativas = sorted(self.forma_para_id, key=len, reverse=True)
+        self.termos_regex = re.compile(r'(?<![\w-])(' + '|'.join(map(re.escape, alternativas)) + r')s?(?![\w-])')
+
+    def bloco_glossario(self):
+        itens = []
+        for tid, (formas, definicao) in self.glossario.items():
+            self.ids.add(f'g-{tid}')
+            itens.append(f'<div id="g-{tid}"><dt>{html.escape(" / ".join(formas), quote=False)}</dt>'
+                         f'<dd>{self.inline(definicao)}</dd></div>')
+        return '<dl class="glossario">\n' + '\n'.join(itens) + '\n</dl>'
+
+    def bloco_fluxo(self, titulo, linhas):
+        """Diagrama em três andares: entradas (com apoios acima delas), o centro e as saídas."""
+        legenda, entradas, centro, saidas, apoio = [], [], None, [], None
+        for l in linhas:
+            if not l.strip():
+                continue
+            m = re.match(r'(apoio|entrada|centro|saida):\s*(.*)$', l.strip())
+            if not m:
+                if entradas or centro or saidas or apoio:
+                    raise ErroTexto(f'perto da linha {self.linha}: no fluxo, a linha "{l}" precisa começar com apoio:, entrada:, centro: ou saida:')
+                legenda.append(l.strip())
+                continue
+            campos = [c.strip() for c in m.group(2).split('|')] + ['', '']
+            caixa = dict(nome=campos[0], desc=campos[1], seta=campos[2])
+            if m.group(1) == 'apoio':
+                apoio = caixa
+            elif m.group(1) == 'entrada':
+                entradas.append((apoio, caixa))
+                apoio = None
+            elif m.group(1) == 'centro':
+                centro = caixa
+            else:
+                saidas.append(caixa)
+        if not centro:
+            raise ErroTexto(f'perto da linha {self.linha}: o fluxo precisa de uma linha "centro:"')
+
+        def desenha(c, classe=''):
+            desc = f'<span>{self.inline(c["desc"])}</span>' if c['desc'] else ''
+            return f'<div class="fluxo-caixa{classe}"><b>{self.inline(c["nome"])}</b>{desc}</div>'
+
+        def seta(texto):
+            return f'<div class="fluxo-seta">{self.inline(texto)}</div>'
+
+        out = [f'<figure class="fluxo">\n<figcaption><strong>{self.inline(titulo)}</strong>'
+               + ''.join(f'<span>{self.inline(x)}</span>' for x in legenda) + '</figcaption>',
+               '<div class="fluxo-entradas">']
+        for ap, c in entradas:
+            partes = [desenha(ap, ' fluxo-apoio'), seta(ap['seta'])] if ap else []
+            partes += [desenha(c), seta(c['seta'])]
+            out.append('<div class="fluxo-coluna">' + ''.join(partes) + '</div>')
+        out += ['</div>', desenha(centro, ' fluxo-centro'), '<div class="fluxo-seta fluxo-ramo"></div>', '<div class="fluxo-saidas">']
+        for c in saidas:
+            rotulo = f'<div class="fluxo-rotulo">{self.inline(c["seta"])}</div>' if c['seta'] else ''
+            out.append('<div class="fluxo-coluna">' + rotulo + desenha(c) + '</div>')
+        out += ['</div>', '</figure>']
+        return '\n'.join(out)
 
     # ------------------------------------------------------------ blocos :::
     def bloco_fichas(self, linhas):
@@ -190,11 +291,11 @@ class Dossie:
                     rotulo, sep, valor = l[2:].partition(': ')
                     if not sep:
                         raise ErroTexto(f'perto da linha {self.linha}: o campo "{l}" precisa ter a forma "- Rótulo: texto"')
-                    partes.append(f'<p class="campo" data-campo="{slug(rotulo)}"><b>{self.inline(rotulo)}:</b> {self.inline(valor)}</p>')
+                    partes.append(f'<p class="campo" data-campo="{slug(rotulo)}"><b>{self.inline(rotulo)}:</b> {self.inline(valor, True)}</p>')
                 else:
-                    partes.append(f'<p>{self.inline(l)}</p>')
+                    partes.append(f'<p>{self.inline(l, True)}</p>')
             atrib = f' data-tom="{tom}"' if tom else ''
-            out.append(f'<article class="ficha" id="{fid}"{atrib}>\n<h4>{self.inline(titulo)}{etiq}</h4>\n'
+            out.append(f'<article class="ficha" id="{fid}"{atrib}>\n<h4>{self.inline(titulo, True)}{etiq}</h4>\n'
                        + '\n'.join(partes) + '\n</article>')
         out.append('</div>')
         return '\n'.join(out)
@@ -203,7 +304,7 @@ class Dossie:
         itens = []
         for g in separar(linhas):
             corpo = ' '.join(g[1:])
-            itens.append(f'<li><strong>{self.inline(g[0])}</strong>' + (f'<p>{self.inline(corpo)}</p>' if corpo else '') + '</li>')
+            itens.append(f'<li><strong>{self.inline(g[0])}</strong>' + (f'<p>{self.inline(corpo, True)}</p>' if corpo else '') + '</li>')
         return '<ol class="esteira">\n' + '\n'.join(itens) + '\n</ol>'
 
     def bloco_barras(self, titulo, linhas):
@@ -232,7 +333,7 @@ class Dossie:
             rotulo, sep, valor = l.lstrip('- ').partition(': ')
             if not sep:
                 raise ErroTexto(f'perto da linha {self.linha}: a linha "{l}" do quadro precisa ter a forma "- Rótulo: texto"')
-            linhas_dl.append(f'<div><dt>{self.inline(rotulo)}</dt><dd>{self.inline(valor)}</dd></div>')
+            linhas_dl.append(f'<div><dt>{self.inline(rotulo)}</dt><dd>{self.inline(valor, True)}</dd></div>')
         return (f'<aside class="quadro" aria-label="{html.escape(texto_puro(titulo))}">\n'
                 f'<p class="quadro-titulo">{self.inline(titulo)}</p>\n<dl>\n' + '\n'.join(linhas_dl) + '\n</dl>\n</aside>')
 
@@ -309,6 +410,12 @@ class Dossie:
         self.fichas_da_secao = []
         indice_pendente = False
 
+        todos = list(blocos(linhas))
+        for b in todos:
+            if b[0] == 'bloco' and b[1] == 'glossario':
+                self.linha = b[-1]
+                self.carregar_glossario(b[3])
+
         def fechar_secao():
             nonlocal secao_aberta, indice_pendente
             if secao_aberta:
@@ -319,8 +426,9 @@ class Dossie:
             secao_aberta, indice_pendente = False, False
             self.subsecao = None
             self.fichas_da_secao = []
+            self.marcados = set()
 
-        for b in blocos(linhas):
+        for b in todos:
             tipo, self.linha = b[0], b[-1]
             if tipo == 'parte':
                 fechar_secao()
@@ -343,13 +451,13 @@ class Dossie:
                 corpo.append(f'<h3 id="{hid}">{self.inline(b[1])}</h3>')
                 self.subsecao = texto_puro(b[1])
             elif tipo == 'paragrafo':
-                corpo.append(f'<p>{self.inline(b[1])}</p>')
+                corpo.append(f'<p>{self.inline(b[1], True)}</p>')
             elif tipo == 'lista':
-                corpo.append('<ul>\n' + '\n'.join(f'<li>{self.inline(x)}</li>' for x in b[1]) + '\n</ul>')
+                corpo.append('<ul>\n' + '\n'.join(f'<li>{self.inline(x, True)}</li>' for x in b[1]) + '\n</ul>')
             elif tipo == 'lista-num':
-                corpo.append('<ol>\n' + '\n'.join(f'<li>{self.inline(x)}</li>' for x in b[1]) + '\n</ol>')
+                corpo.append('<ol>\n' + '\n'.join(f'<li>{self.inline(x, True)}</li>' for x in b[1]) + '\n</ol>')
             elif tipo == 'destaque':
-                corpo.append('<div class="destaque">\n' + '\n'.join(f'<p>{self.inline(x)}</p>' for x in b[1]) + '\n</div>')
+                corpo.append('<div class="destaque">\n' + '\n'.join(f'<p>{self.inline(x, True)}</p>' for x in b[1]) + '\n</div>')
             elif tipo == 'bloco':
                 _, nome, arg, conteudo, _ = b
                 if nome == 'fichas':
@@ -371,9 +479,13 @@ class Dossie:
                     indice_pendente = True
                 elif nome == 'referencias':
                     corpo.append(self.bloco_referencias(conteudo))
+                elif nome == 'glossario':
+                    corpo.append(self.bloco_glossario())
+                elif nome == 'fluxo':
+                    corpo.append(self.bloco_fluxo(arg, conteudo))
                 else:
-                    raise ErroTexto(f'linha {self.linha}: não conheço o bloco ":::{nome}" '
-                                    '(os que existem: fichas, esteira, barras, quadro, indice, referencias)')
+                    raise ErroTexto(f'linha {self.linha}: não conheço o bloco ":::{nome}" (os que existem: '
+                                    'fichas, esteira, barras, quadro, fluxo, indice, glossario, referencias)')
         fechar_secao()
 
         # conferências
@@ -384,6 +496,7 @@ class Dossie:
             if destino not in self.ids:
                 raise ErroTexto(f'linha {linha}: o link "#{destino}" não leva a nenhuma seção, subseção ou ficha')
         nunca = [n for n in self.referencias if n not in self.citacoes]
+        sem_uso = [formas[0] for tid, (formas, _) in self.glossario.items() if tid not in self.usados]
 
         html_corpo = '\n'.join(corpo)
         if self.referencias:
@@ -417,7 +530,8 @@ class Dossie:
             raise ErroTexto('o modelo pede valores que o script não tem: ' + ', '.join(sorted(faltando)))
         pagina = re.sub(r'\{\{(\w+)\}\}', lambda m: valores[m.group(1)], modelo)
         resumo = dict(secoes=sum(len(s) for _, s in sumario), fichas=sum(1 for i in self.ids if i.startswith('ficha-')),
-                      referencias=len(self.referencias), notas=sum(len(u) for u in self.citacoes.values()), nunca=nunca)
+                      referencias=len(self.referencias), notas=sum(len(u) for u in self.citacoes.values()), nunca=nunca,
+                      termos=len(self.glossario), sem_uso=sem_uso)
         return pagina, resumo
 
 
@@ -434,9 +548,11 @@ def main(pastas):
         destino = RAIZ / pasta / 'index.html'
         destino.write_text(pagina, encoding='utf-8')
         print(f'escrito {pasta}/index.html ({len(pagina.encode())} bytes): {r["secoes"]} seções, {r["fichas"]} fichas, '
-              f'{r["notas"]} notas, {r["referencias"]} referências')
+              f'{r["notas"]} notas, {r["referencias"]} referências, {r["termos"]} termos no glossário')
         if r['nunca']:
             print('  aviso: referências que nenhuma nota cita: ' + ', '.join(map(str, r['nunca'])))
+        if r['sem_uso']:
+            print('  aviso: siglas do glossário que não aparecem no texto: ' + ', '.join(r['sem_uso']))
     return 0 if ok else 1
 
 

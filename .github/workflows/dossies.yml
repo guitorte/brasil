@@ -1,0 +1,62 @@
+# Remonta as páginas de texto longo (dossiês, como master/) quando um texto.md muda.
+#
+# Em pull requests, só confere: se o texto tiver um erro (nota sem referência, link sem
+# destino, bloco ::: sem fechar...), a verificação fica vermelha e o registro diz o que corrigir.
+# No main, também grava o index.html refeito e pede ao GitHub Pages que publique de novo
+# (commits feitos pelo próprio workflow não disparam a publicação sozinhos).
+# Também dá para rodar à mão: aba Actions → "Montar dossiês" → Run workflow.
+name: Montar dossiês
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**/texto.md'
+      - 'ferramentas/dossie.py'
+      - 'ferramentas/modelos/dossie.html'
+  pull_request:
+    paths:
+      - '**/texto.md'
+      - 'ferramentas/dossie.py'
+      - 'ferramentas/modelos/dossie.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: dossies-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  montar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Montar as páginas
+        run: python3 ferramentas/dossie.py
+
+      - name: Gravar a página refeita
+        id: gravar
+        if: github.event_name != 'pull_request'
+        run: |
+          git add -A -- '*/index.html'
+          if git diff --cached --quiet; then
+            echo "A página já estava em dia; nada a gravar."
+            echo "mudou=nao" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remonta os dossiês a partir do texto.md"
+          git push
+          echo "mudou=sim" >> "$GITHUB_OUTPUT"
+
+      - name: Pedir nova publicação ao GitHub Pages
+        if: steps.gravar.outputs.mudou == 'sim' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"

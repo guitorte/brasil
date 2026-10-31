@@ -247,6 +247,57 @@ sup.nota a:target, li:target, h3:target, .ficha:target { background: var(--alvo)
 .barra:nth-of-type(4) .barra-trilho span { opacity: .5; }
 .barra:nth-of-type(n+5) .barra-trilho span { opacity: .4; }
 
+/* ------------------------------------------------------------ fluxo (diagrama: entradas → centro → saídas) */
+.fluxo {
+  margin: 1rem 0 1.5rem;
+  padding: .85rem .75rem 1rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  font-size: .85rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.fluxo figcaption { margin-bottom: .9rem; text-align: left; }
+.fluxo figcaption strong { display: block; margin-bottom: .2rem; font-size: .95rem; line-height: 1.4; }
+.fluxo figcaption span { display: block; color: var(--suave); }
+.fluxo-entradas, .fluxo-saidas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: .6rem;
+}
+.fluxo-coluna { display: flex; flex-direction: column; justify-content: flex-end; }
+.fluxo-caixa {
+  padding: .5rem .55rem;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+}
+.fluxo-caixa b { display: block; font-size: .92rem; }
+.fluxo-caixa span { display: block; margin-top: .1rem; color: var(--suave); }
+.fluxo-apoio { border-style: dashed; }
+.fluxo-centro { margin: 0 auto; max-width: 18rem; background: var(--alvo); border: 2px solid var(--link); }
+.fluxo-seta { padding: .15rem .25rem .3rem; color: var(--suave); font-size: .78rem; }
+.fluxo-seta::before { content: "↓"; display: block; color: var(--borda); font-size: 1.15rem; line-height: 1.1; }
+.fluxo-ramo { padding-bottom: 0; }
+.fluxo-saidas { padding-top: .6rem; border-top: 2px solid var(--borda); }
+.fluxo-saidas .fluxo-caixa { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+.fluxo-rotulo { padding: 0 .2rem .3rem; color: var(--suave); font-size: .78rem; }
+
+/* ------------------------------------------------------------ glossário */
+a.termo {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--link);
+  text-decoration-thickness: 2px;
+  text-underline-offset: .2em;
+}
+a.termo:hover { color: var(--link); }
+.glossario { margin: 1rem 0 1.5rem; font-size: .95rem; }
+.glossario > div { padding: .55rem 0; border-bottom: 1px solid var(--linha); scroll-margin-top: .75rem; }
+.glossario > div:target { background: var(--alvo); }
+.glossario dt { font-weight: 700; }
+.glossario dd { margin: .1rem 0 0; }
+
 /* ------------------------------------------------------------ referências */
 .referencias { padding-left: 2.3rem; font-size: .88rem; line-height: 1.5; }
 .referencias li { margin: .45rem 0; overflow-wrap: anywhere; }

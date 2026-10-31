@@ -1,6 +1,6 @@
 ---
 titulo: Golpe com garantia: como funcionava o esquema do Banco Master
-titulo_aba: Alugando a Garantia: Como Funcionava a Máquina do Banco Master
+titulo_aba: Alugando a garantia: como funcionava a máquina do Banco Master
 chapeu: Compilação
 assinatura: 30 de outubro de 2026 · **@guitorte**
 ---
@@ -29,6 +29,8 @@ O guia completo da marcação está em ferramentas/LEIA-ME.md. Resumo:
   :::barras Título ... :::   barras: "rótulo | valor | largura em %"
   :::quadro Título ... :::   quadro-resumo do topo: "- Rótulo: texto"
   :::indice ... :::          atalhos para as fichas da seção (gerado sozinho)
+  :::fluxo Título ... :::    diagrama: linhas apoio:, entrada:, centro:, saida: ("nome | descrição | seta")
+  :::glossario ... :::       siglas, "SIGLA: definição"; o 1º uso em cada seção vira toque
   :::referencias ... :::     lista numerada "1. referência"
 -->
 
@@ -69,31 +71,45 @@ Nenhuma dessas alegações foi julgada em definitivo em tribunal. Em 28 de outub
 
 ## O esquema em resumo {#maquina}
 
-*Poupadores e fundos de pensão injetavam recursos; as perdas recaíram sobre o FGC, o BRB e os orçamentos públicos.*
+<!-- Diagrama traduzido da figura "the Master machine" do original em inglês (.docx). -->
+:::fluxo Poupadores e fundos de pensão injetavam recursos; as perdas recaíram sobre o FGC, o BRB e os orçamentos públicos.
+Funções da máquina conforme alegado pelos investigadores; nada foi julgado em tribunal.
+Toque numa caixa para ir à seção correspondente.
+
+apoio: [FGC](#custos) | pagou R$ 40,6 bi | garantia até R$ 250 mil
+entrada: [Poupadores](#cap-1) | cerca de 800.000 investidores | CDBs até 140% do CDI
+entrada: [Fundos de pensão](#previdencia) | 18 fundos estaduais e municipais | títulos e fundos, sem cobertura do FGC
+centro: Banco Master | controlado por um grupo restrito
+saida: [Blindagem](#cap-4) | agentes públicos, Congresso, advogados, mídia | pagamentos, cerca de R$ 0,4 bi identificados
+saida: [Ativos inflados](#cap-2) | fundos, partes relacionadas, Reag
+saida: [Extração](#cap-3) | empresas da família, Super
+saida: [Saída: BRB](#cap-5) | carteiras questionadas
+saida: [Coação (alegada)](#cap-6) | “A Turma”, milícia privada
+:::
 
 :::esteira
-1. Poupadores do Varejo (~800 mil investidores)
+1. Poupadores do varejo (~800 mil investidores)
 Atraídos por CDBs pagando até 140% do CDI, respaldados pela garantia do FGC até R$ 250 mil por CPF/CNPJ.
 
-2. Fundos de Pensão Públicos (18 RPPS estaduais e municipais)
+2. Fundos de pensão públicos (18 RPPS estaduais e municipais)
 Aportaram em Letras Financeiras e fundos estruturados sem cobertura do FGC, em busca de retorno acima de 130% do CDI.
 
-3. O Núcleo: Banco Master
+3. O núcleo: Banco Master
 Instituição controlada por um grupo restrito, coordenando captação acelerada e operações cruzadas.
 
-4. Ativos Inflados
+4. Ativos inflados
 Circuitos estruturados via gestora Reag, carteiras de precatórios e empresas ligadas a sócios, mantendo papéis acima do valor de face.
 
-5. Extração para Veículos Familiares
+5. Extração para veículos familiares
 Desvios de caixa através de operações com a Super Empreendimentos, fundos (City, Navarra, Astralo 95) e entregas em espécie.
 
-6. A Blindagem (Aproximadamente R$ 0,4 bilhão)
+6. A blindagem (aproximadamente R$ 0,4 bilhão)
 Pagamentos a agentes públicos, parlamentares, bancas de advocacia de influência e campanhas midiáticas para manter o esquema operando.
 
-7. Coação (Alegada)
+7. Coação (alegada)
 Uso de grupo apelidado de "A Turma" para monitoramento e intimidação de desafetos, críticos e jornalistas.
 
-8. A Rota de Saída: O BRB
+8. A rota de saída: o BRB
 Tentativa de transferência de ativos estressados/podres para o Banco de Brasília antes do colapso final.
 :::
 
@@ -112,7 +128,7 @@ A classificação adota o papel funcional documentado, e não grau de culpa, fam
 :::indice
 :::
 
-### Atores Centrais
+### Atores centrais
 
 :::fichas
 Daniel Vorcaro `Central`
@@ -143,15 +159,15 @@ Paulo Henrique Costa (BRB) `Central`
 - Papel atribuído (alegado): Viabilizou a aquisição das carteiras pelo BRB; colocado pela PF no núcleo estratégico com Vorcaro [50]; suspeito de receber entre R$ 140 milhões e R$ 146,5 milhões [49][87].
 - Resposta: Sustenta que as operações não acarretaram prejuízo ao BRB [87].
 
-Henrique Vorcaro e Veículos Familiares `Central`
+Henrique Vorcaro e veículos familiares `Central`
 - Papel atribuído (alegado): Estruturas de desvio patrimonial através das empresas City, Navarra e fundo Astralo 95; R$ 2,2 bilhões teriam sido ocultados de credores [26][29][89].
 - Resposta: Não localizada manifestação nos autos públicos.
 :::
 
-### Atores Secundários
+### Atores secundários
 
 :::fichas
-Ex-Fiscais / Supervisores do Banco Central `Secundário`
+Ex-fiscais / supervisores do Banco Central `Secundário`
 - Papel atribuído (alegado): Recebimento de pagamentos periódicos em troca de informações privilegiadas e proteção institucional, segundo a PF [31].
 - Resposta: Não localizada manifestação pública.
 
@@ -159,19 +175,19 @@ Senador Ciro Nogueira (PP) `Secundário`
 - Papel atribuído (alegado): Repasses mensais sistemáticos; apresentação de emenda legislativa para ampliar o teto do FGC redigida internamente no Master [33][55].
 - Resposta: Rejeita qualquer prática ilícita ou favorecimento indevido [40].
 
-Ibaneis Rocha (então Governador do DF) `Secundário`
+Ibaneis Rocha (então governador do DF) `Secundário`
 - Papel atribuído (alegado): Chefe político do acionista controlador do BRB; Costa afirmou à PF que o governador detinha ciência plena das movimentações; não indiciado [85].
 - Resposta: Declarou total desconhecimento de fraudes até a decretação da liquidação [86].
 
-Cláudio Castro (então Governador do RJ) `Secundário`
+Cláudio Castro (então governador do RJ) `Secundário`
 - Papel atribuído (alegado): Alinhamento político para viabilizar aportes de ~R$ 3 bilhões do Rioprevidência em títulos e fundos ligados ao Master; viagens e jantar em NY pagos por Vorcaro, segundo a PF [99][100][101].
 - Resposta: Nega relacionamento impróprio; alega que os investimentos seguiram critérios técnicos e que não houve custeio pessoal de viagens [102].
 
-Diretores e Gestores do Rioprevidência `Secundário`
+Diretores e gestores do Rioprevidência `Secundário`
 - Papel atribuído (alegado): Aprovação de alocações bilionárias em desconformidade com o histórico conservador da carteira previdenciária, segundo a PF [103].
 - Resposta: A fundação negou irregularidades [98] e informou a recuperação administrativa de R$ 1,4 bilhão [106].
 
-Nelson Tanure `Secundário (Central se provado)`
+Nelson Tanure `Secundário (central se provado)`
 - Papel atribuído (alegado): Suspeita de aportes de capital ocultos via debêntures conversíveis no montante superior a R$ 700 milhões [63].
 - Resposta: Nega enfaticamente qualquer participação acionária direta, indireta ou por debêntures [65].
 
@@ -179,12 +195,12 @@ Nelson Tanure `Secundário (Central se provado)`
 - Papel atribuído (alegado): Ações de inteligência privada, espionagem de críticos e tentativas de coerção física/moral [58].
 - Resposta: A defesa de Vorcaro contesta a existência fática da referida estrutura [61].
 
-Mídia e Influenciadores Digitais `Secundário`
+Mídia e influenciadores digitais `Secundário`
 - Papel atribuído (alegado): Contratação coordenada de ataques institucionais contra diretores do Banco Central; repasse de R$ 51,9 milhões ao portal Metrópoles [35][37].
 - Resposta: Publicitário interrogado confirmou a liquidação de pagamentos a influenciadores [37].
 :::
 
-### Atores Acessórios
+### Atores acessórios
 
 :::fichas
 Escritório Barci de Moraes `Acessório`
@@ -195,11 +211,11 @@ Ministro Dias Toffoli (STF) `Acessório`
 - Papel atribuído (alegado): Aportes e fluxos de R$ 20 a 35 milhões direcionados a empreendimento hoteleiro (Tayayá) no qual empresa familiar possuía participação societária [71][72].
 - Resposta: Nega recebimento de recursos de Vorcaro ou Zettel [71]; ministros da corte classificaram as ilações do relatório como "lixo jurídico" [73].
 
-Ministro Nunes Marques (STF) `Acessório (Secundário se mantido elo com votos)`
+Ministro Nunes Marques (STF) `Acessório (secundário se mantido elo com votos)`
 - Papel atribuído (alegado): Repasse de R$ 6,6 milhões à consultoria que remunerou seu filho; custeio de estadia de Carnaval de R$ 1,45 milhão a "KN"; mensagens sugerindo elo com julgamento de usina ligado a precatórios do Master [74][76].
 - Resposta: Nega ter atuado em causas de interesse do Master ou que seu filho tenha recebido verbas do banco [74]; afirma que jamais solicitou contrapartidas a Vorcaro [75].
 
-Procurador-Geral da República Paulo Gonet `Acessório`
+Procurador-geral da República Paulo Gonet `Acessório`
 - Papel atribuído (alegado): Interlocução social mediada por terceiros; ausência de qualquer indício de vantagens financeiras nos autos [78].
 - Resposta: Nega intimidade pessoal; Conselho Superior do MPF arquivou apuração preliminar por 5 a 4 [77].
 
@@ -207,7 +223,7 @@ Senador Flávio Bolsonaro (PL) `Acessório`
 - Papel atribuído (alegado): Articulação de captação privada para o filme *Dark Horse*; remessa internacional de US$ 12,3 milhões mapeada na Operação Crédito Oculto [84][79].
 - Resposta: Qualifica a captação audiovisual como atividade legítima de patrocínio privado [79].
 
-Campanhas Eleitorais de 2022 `Acessório`
+Campanhas eleitorais de 2022 `Acessório`
 - Papel atribuído (alegado): Aportes classificados como repasses ilícitos de campanha em proposta de delação rejeitada pelo MPF [38].
 - Resposta: Candidatos e legendas citadas rechaçam categoricamente as suspeitas [38].
 
@@ -266,14 +282,14 @@ Em março de 2026, a 1ª Vara de Falências de São Paulo determinou o bloqueio 
 
 Os desembolsos identificados até o momento em favor de autoridades públicas, lideranças políticas, escritórios de advocacia de grande porte e empresas de comunicação totalizam entre **R$ 0,40 bilhão e R$ 0,42 bilhão** — montante equivalente a cerca de 1% do rombo assumido pelo FGC (cálculo discriminado abaixo). O valor monetário representava custo operacional de proteção: as transferências visavam atingir exatamente os centros de decisão que possuíam prerrogativa para frear as operações ou ampliar as fontes do banco.
 
-### Pagamentos e Desembolsos Mapeados
+### Pagamentos e desembolsos mapeados
 
 :::fichas
-Ex-Chefe de Fiscalização do Banco Central `Supervisão|secundario`
+Ex-chefe de fiscalização do Banco Central `Supervisão|secundario`
 - Montante apurado: Pagamentos mensais recorrentes de R$ 500.000.
 - Origem da evidência: Relatório circunstanciado da Polícia Federal [31].
 
-Agentes e Ex-Agentes da Polícia Federal `Inteligência|secundario`
+Agentes e ex-agentes da Polícia Federal `Inteligência|secundario`
 - Montante apurado: Repasses periódicos de até R$ 400.000 mensais.
 - Origem da evidência: Inquéritos da própria Corregedoria e PF [32].
 
@@ -285,11 +301,11 @@ Escritório Barci de Moraes `Advocacia|acessorio`
 - Montante apurado: R$ 80 milhões pactuados em 22 parcelas (fev/2024 a nov/2025).
 - Origem da evidência: Declarações contábeis e fiscais do Banco Master [34].
 
-Estrutura Societária do Tayayá Resort `Judiciário / Família|acessorio`
+Estrutura societária do Tayayá Resort `Judiciário / família|acessorio`
 - Montante apurado: De R$ 20 milhões a R$ 35 milhões.
 - Origem da evidência: Interceptações de diálogos entre Vorcaro e Zettel [71][72].
 
-Consult Consultoria (Ligada ao Filho de Nunes Marques) `Judiciário / Vínculo|acessorio`
+Consult Consultoria (ligada ao filho de Nunes Marques) `Judiciário / Vínculo|acessorio`
 - Montante apurado: R$ 6,6 milhões (ago/2024 a jul/2025).
 - Origem da evidência: Relatórios de Inteligência Financeira do Coaf [74].
 
@@ -297,7 +313,7 @@ Hospedagem de Carnaval 2025 ("KN") `Custeio|acessorio`
 - Montante apurado: Aproximadamente R$ 1,45 milhão.
 - Origem da evidência: Troca de mensagens vinculando a sigla ao ministro [76].
 
-Portal de Notícias Metrópoles `Imprensa|secundario`
+Portal de notícias Metrópoles `Imprensa|secundario`
 - Montante apurado: R$ 51,9 milhões.
 - Origem da evidência: Mensagens apreendidas pela PF e alertas do Coaf [35].
 
@@ -305,23 +321,23 @@ Site Diário do Centro do Mundo (DCM) `Imprensa|secundario`
 - Montante apurado: R$ 50.000 mensais para cessar notas desfavoráveis.
 - Origem da evidência: Relatório de mensagens da PF [36].
 
-Criadores de Conteúdo / Influenciadores `Redes Sociais|secundario`
+Criadores de conteúdo / influenciadores `Redes sociais|secundario`
 - Montante apurado: Propostas de até R$ 2 milhões por pacote.
 - Origem da evidência: Depoimento formal de intermediário de publicidade [37].
 
-Campanhas Eleitorais de 2022 `Eleitoral|acessorio`
+Campanhas eleitorais de 2022 `Eleitoral|acessorio`
 - Montante apurado: R$ 5 milhões oficiais + R$ 10 milhões em espécie.
 - Origem da evidência: Anexo de delação preliminar de Vorcaro [38].
 
-Produção do Filme "Dark Horse" (Biopic de Jair Bolsonaro) `Audiovisual|acessorio`
+Produção do filme "Dark Horse" (biopic de Jair Bolsonaro) `Audiovisual|acessorio`
 - Montante apurado: US$ 12,3 milhões (~R$ 64 milhões).
 - Origem da evidência: Colaboração de Freixo; autos da Operação Crédito Oculto [84][39].
 
-Ingressos para Senador Jaques Wagner (PT) `Cortesias|acessorio`
+Ingressos para senador Jaques Wagner (PT) `Cortesias|acessorio`
 - Montante apurado: R$ 63.300 em ingressos de espetáculos.
 - Origem da evidência: Termo de colaboração de Mansur [21].
 
-Cláudio Castro (Governador do RJ) `Poder Executivo|secundario`
+Cláudio Castro (governador do RJ) `Poder Executivo|secundario`
 - Montante apurado: Despesas de viagens internacionais e jantar em NY de US$ 13.000 (R$ 66 mil).
 - Origem da evidência: Relatórios policiais de interceptação telemática [100][101].
 :::
@@ -332,7 +348,7 @@ Divergências contratuais figuram nos autos: veículos de imprensa apontam contr
 
 A penetração institucional operava também em encontros de hospitalidade. Vorcaro promovia jantares para senadores e deputados — como Ciro Nogueira e o deputado Hugo Motta — em mansão de R$ 36 milhões em Brasília registrada pela Super Empreendimentos (a qual seu gabinete afirmou ter alugado) [27]. O PGR Paulo Gonet figurou em trocas de mensagens informais via terceiros tratando de degustações, sem indício de transferências; o Conselho Nacional do MPF arquivou o caso [77][78].
 
-> **Aritmética dos Gastos de Influência:**
+> **Aritmética dos gastos de influência:**
 >
 > A somatória identifica R$ 140–146,5 mi atribuídos ao ex-presidente do BRB; R$ 80 mi em contratos de advocacia; R$ 64 mi na produção audiovisual; R$ 51,9 mi em portais de mídia; R$ 20–35 mi na estrutura do resort; R$ 18,85 mi bloqueados de liderança partidária; R$ 15 mi em doações eleitorais declaradas/alegadas; R$ 6,6 mi na consultoria e R$ 1,45 mi no Carnaval. Total consolidado: **R$ 0,40 a R$ 0,42 bilhão** (~1% dos R$ 40,6 bilhões pagos pelo FGC). Adicionando-se os R$ 485 milhões cursados por Zettel (com sobreposições parciais), atinge-se cerca de 2% do total.
 
@@ -340,7 +356,7 @@ A penetração institucional operava também em encontros de hospitalidade. Vorc
 
 À medida que a captação de CDBs esfriava em 2024, a estratégia do banco mudou de orientação: em vez de apenas extrair valor, buscou repassar o rombo acumulado a um terceiro com bolsos fundos. A rota de saída desenhada foi o BRB, instituição pública do Distrito Federal.
 
-### Carteiras Simuladas
+### Carteiras simuladas
 
 As transações com o BRB ganharam corpo no segundo semestre de 2024 [45]. Os créditos comercializados derivaram da empresa de fachada Tirreno, fundada em dezembro de 2024 e controlada pelo grupo Cartos [46]. O Master apropriou-se dos recebíveis da Tirreno sem efetuar desembolsos e os revendeu na sequência ao banco estatal [47].
 
@@ -352,23 +368,23 @@ Conforme os autos, a cúpula do BRB foi formalmente alertada pelos órgãos inte
 
 Em oitiva, Costa declarou que o governador Ibaneis Rocha acompanhava passo a passo a saúde financeira da instituição [85]. Ibaneis, que não foi indiciado, reiterou que ignorava as fraudes e atribuiu os atos integralmente à diretoria técnica [86].
 
-### O Swap e o Rombo Efetivo
+### O swap e o rombo efetivo
 
 Com o estrangulamento das operações, aproximadamente R$ 10 bilhões em ativos foram devolvidos ao Master em troca de outros créditos e precatórios, restando R$ 2,6 bilhões inteiramente a descoberto, o que obrigou o Banco Central a exigir provisionamento de 100% pelo BRB [51]. O corpo técnico do BC calcula que a perda final consolidada do BRB ultrapasse R$ 5 bilhões [52]. Os R$ 12,2 bilhões representam a face de negociação, não o prejuízo líquido apurado.
 
-### A Tese da Defesa
+### A tese da defesa
 
 Vorcaro sustenta que as transações não infligiram danos ao patrimônio do BRB, argumentando que entregou ativos reais em substituição com desconto substancial, reivindicando perícia contábil independente [9]. Ele atribui a crise de liquidez do BRB aos desdobramentos açodados das operações ostensivas da PF [88].
 
-### A Tentativa de Fusão
+### A tentativa de fusão
 
 Documentos judiciais evidenciam que a aquisição societária do Master pelo BRB visava diluir as carteiras fictícias no bojo de uma instituição financeira de grande porte [53]. A operação foi vetada pela Diretoria Colegiada do Banco Central no início de setembro de 2025 [54].
 
-### A Própria Garantia: Mudança no FGC
+### A própria garantia: mudança no FGC
 
 A PF revelou que a assessoria do Master redigiu a minuta de uma emenda legislativa para quadruplicar o limite máximo de garantia individual do FGC de R$ 250.000 para R$ 1.000.000 por correntista. O texto foi entregue ao gabinete do senador Ciro Nogueira e protocolado integralmente sem supressões [55]. Em gravações, Vorcaro jactou-se de que a alteração "saiu sob encomenda", com potencial de multiplicar por seis a capacidade de captação do banco [56].
 
-### O Desfecho
+### O desfecho
 
 Vorcaro foi detido pela Polícia Federal na noite de 17 de novembro de 2025 [54]. Investigadores informaram à imprensa que sua aeronave particular preparava decolagem rumo a Malta e que o anúncio formal de venda do controle ao Grupo Fictor foi uma encenação para disfarçar a rota de fuga [57].
 
@@ -379,15 +395,15 @@ Os regimes próprios de previdência forneceram capital sem qualquer garantia em
 Dezoito dos 2.130 fundos de previdência de estados e municípios do país destinaram R$ 1,876 bilhão à compra de Letras Financeiras do Master entre outubro de 2023 e dezembro de 2024 [96]. As maiores exposições envolveram o Rioprevidência do Rio de Janeiro (R$ 970 milhões), o Amapá Previdência (R$ 400 milhões) e a previdência municipal de Maceió (R$ 97 milhões) [96], atraídos por retornos anunciados de 130% do CDI [98].
 
 :::fichas
-Fase 1: Out/2023 a Jul/2024 `Combustível`
+Fase 1: out/2023 a jul/2024 `Combustível`
 - Onde alocaram: Títulos de Letras Financeiras do próprio banco; papéis do Rio com vencimento estendido para 2033–2034 [96][97].
 - Função na máquina: Fornecimento de liquidez sem demanda de resgate por até 10 anos consecutivos.
 
-Fase 2: Dez/2024 a Out/2025 `Depósito de Ativos`
+Fase 2: dez/2024 a out/2025 `Depósito de ativos`
 - Onde alocaram: R$ 2,01 bilhões do Rioprevidência injetados em fundos fechados estruturados sob o mesmo controle, contornando travas do CMN [103].
 - Função na máquina: Estacionamento e absorção de papéis de liquidez duvidosa após a exaustão da captação primária.
 
-Fase 3: Outubro de 2025 `A Manobra BRB`
+Fase 3: outubro de 2025 `A manobra BRB`
 - Onde alocaram: Proposta de permuta das LFs do Rioprevidência por cotas de fundos e direitos creditórios sob lema flagrado: *"Faremos o mesmo em Maceió"* [105].
 - Função na máquina: Despejo emergencial de obrigações das contas do banco para os fundos previdenciários às vésperas da intervenção.
 :::
@@ -424,23 +440,23 @@ Essa camada elucida o *modus operandi* de coação do grupo, embora não altere 
 
 A maior fatia dos recursos do Banco Master originou-se de cidadãos comuns adquirindo CDBs garantidos pelo FGC: aproximadamente dois terços do total de R$ 76 a R$ 86 bilhões mapeados. O BRB respondeu por um quinto; fundos de pensão, patrimônio contábil e dívida subordinada completaram o quadro.
 
-:::barras Participação das Fontes de Recursos (R$ Bilhões)
-Depósitos (Majoritariamente CDBs / FGC) | R$ 49,3–59,7 bi (65–69%) | 68
-Aquisições de Carteira pelo BRB | R$ 17,0 bi (20–22%) | 21
-Patrimônio Líquido Declarado (Dez/24) | R$ 4,7 bi (5–6%) | 6
-Rioprevidência (Fundos Estruturados) | R$ 2,0 bi (2–3%) | 3
-18 Fundos de Pensão (LFs Não Cobertas) | R$ 1,9 bi (2%) | 2.5
-Dívida Subordinada Elegível a Capital | R$ 0,9 bi (1%) | 1.5
+:::barras Participação das fontes de recursos (R$ bilhões)
+Depósitos (majoritariamente CDBs / FGC) | R$ 49,3–59,7 bi (65–69%) | 68
+Aquisições de carteira pelo BRB | R$ 17,0 bi (20–22%) | 21
+Patrimônio líquido declarado (dez/24) | R$ 4,7 bi (5–6%) | 6
+Rioprevidência (fundos estruturados) | R$ 2,0 bi (2–3%) | 3
+18 fundos de pensão (LFs não cobertas) | R$ 1,9 bi (2%) | 2.5
+Dívida subordinada elegível a capital | R$ 0,9 bi (1%) | 1.5
 :::
 
-**Divergência Contábil:** O Master publicou em dezembro de 2024 um volume de funding institucional de R$ 49,3 bilhões e ativo total de R$ 63 bilhões [115]. Os registros compilados pelo DIEESE no IFData do Banco Central registravam volume sensivelmente maior em depósitos [114]. Essa disparidade reflete a consolidação exclusiva do banco versus o ecossistema coligado. Parte das captações decorria de autofinanciamento: empréstimos concedidos a empresas aliadas regressavam à tesouraria para recompor CDBs [17].
+**Divergência contábil:** O Master publicou em dezembro de 2024 um volume de funding institucional de R$ 49,3 bilhões e ativo total de R$ 63 bilhões [115]. Os registros compilados pelo DIEESE no IFData do Banco Central registravam volume sensivelmente maior em depósitos [114]. Essa disparidade reflete a consolidação exclusiva do banco versus o ecossistema coligado. Parte das captações decorria de autofinanciamento: empréstimos concedidos a empresas aliadas regressavam à tesouraria para recompor CDBs [17].
 
-### Os Quatro Motores da Captação
+### Os quatro motores da captação
 
-1. **A Garantia:** A proteção individual de R$ 250.000 do FGC neutralizava o apetite a risco do aplicador. O correntista não precisava atestar a solidez do Master: a aposta era transferida para a blindagem do sistema [3].
-2. **A Taxa:** Rendimentos agressivos de até 140% do CDI em prazos de até cinco anos — frente a ofertas médias de 100% dos grandes bancos de varejo [116].
-3. **A Força de Vendas das Corretoras:** Relatórios de mercado estimam vendas acumuladas de R$ 26 bilhões pela plataforma XP, R$ 6,7 bilhões pelo BTG Pactual e R$ 2,9 bilhões via Easynvest [116]. Agentes autônomos recebiam comissões antecipadas de cerca de 1,5% em papéis de cinco anos, contra 0,6% em emissões curtas. A XP afirmou que o comissionamento médio habitual situa-se em 0,3% ao ano [116].
-4. **O Ritmo de Crescimento:** O volume depositado dobrou anualmente entre 2021 e 2024, acumulando avanço de sete vezes [114]. Cerca de 98% compunha-se de depósitos a prazo, comparado a 56–68% na média do SFN [114].
+1. **A garantia:** A proteção individual de R$ 250.000 do FGC neutralizava o apetite a risco do aplicador. O correntista não precisava atestar a solidez do Master: a aposta era transferida para a blindagem do sistema [3].
+2. **A taxa:** Rendimentos agressivos de até 140% do CDI em prazos de até cinco anos — frente a ofertas médias de 100% dos grandes bancos de varejo [116].
+3. **A força de vendas das corretoras:** Relatórios de mercado estimam vendas acumuladas de R$ 26 bilhões pela plataforma XP, R$ 6,7 bilhões pelo BTG Pactual e R$ 2,9 bilhões via Easynvest [116]. Agentes autônomos recebiam comissões antecipadas de cerca de 1,5% em papéis de cinco anos, contra 0,6% em emissões curtas. A XP afirmou que o comissionamento médio habitual situa-se em 0,3% ao ano [116].
+4. **O ritmo de crescimento:** O volume depositado dobrou anualmente entre 2021 e 2024, acumulando avanço de sete vezes [114]. Cerca de 98% compunha-se de depósitos a prazo, comparado a 56–68% na média do SFN [114].
 
 As fontes alimentaram o sistema em escada sequencial: o varejo sustentou o ciclo inicial de 2021 a 2024 [114]; os fundos públicos ingressaram no final de 2023 [96][103]; e a injeção do BRB surgiu a partir de 2024 para cobrir a esteira de vencimentos das primeiras rodadas de CDBs [46].
 
@@ -455,11 +471,11 @@ Poupadores até R$ 250.000 (~800.000 credores)
 - O que ocorreu: Reembolsados pelo FGC a partir de janeiro de 2026; atualização dos juros cessou formalmente no ato da decretação de liquidação [4][110].
 - Quem paga o prejuízo: Parcialmente ressarcidos, suportando a perda da rentabilidade contratada no período.
 
-Poupadores e Empresas Acima do Teto / Títulos sem Seguro
+Poupadores e empresas acima do teto / títulos sem seguro
 - O que ocorreu: Inscritos na fila de credores quirografários da massa falida, após os créditos trabalhistas e fiscais prioritários [111].
 - Quem paga o prejuízo: Os próprios credores e correntistas.
 
-Cotistas de Fundos Imobiliários Administrados
+Cotistas de fundos imobiliários administrados
 - O que ocorreu: Cerca de R$ 610 milhões bloqueados em três FIIs suspensos para negociação [95].
 - Quem paga o prejuízo: Os próprios cotistas do varejo, aguardando assembleias judiciais.
 
@@ -467,7 +483,7 @@ Clientes do Will Bank e Banco Pleno
 - O que ocorreu: Garantidos e ressarcidos pelo FGC em volumes de R$ 6,3 bilhões e R$ 4,9 bilhões, respectivamente [108].
 - Quem paga o prejuízo: Reembolsados pelo fundo garantidor.
 
-Fundos de Pensão de Servidores Públicos (RPPS)
+Fundos de pensão de servidores públicos (RPPS)
 - O que ocorreu: LFs desprovidas de cobertura do FGC; pela Lei Federal 9.717/1998, déficits atuariais de aposentadoria devem ser cobertos pelo tesouro estadual/municipal [97].
 - Quem paga o prejuízo: Orçamentos públicos de estados e municípios (contribuintes de serviços e cidadãos em geral).
 
@@ -475,11 +491,11 @@ O Distrito Federal (via BRB)
 - O que ocorreu: Provisionamento compulsório de R$ 2,6 bilhões exigido pelo BC [51]; aprovação legislativa de capitalização de até R$ 6,6 bilhões oferecendo 9 imóveis públicos como lastro [107].
 - Quem paga o prejuízo: População e patrimônio imobiliário do Distrito Federal.
 
-Clientes Bancários e Tomadores de Crédito em Geral
+Clientes bancários e tomadores de crédito em geral
 - O que ocorreu: FGC exigiu dos bancos associados a antecipação de cinco anos de contribuições (R$ 32,5 bilhões) para recompor reservas [108].
 - Quem paga o prejuízo: Os bancos do sistema e, por repasse de spread bancário, os tomadores de empréstimos [109].
 
-Pessoas Cujos Nomes Foram Usados em Contratos Falsos
+Pessoas cujos nomes foram usados em contratos falsos
 - O que ocorreu: Emissão de consignados fraudulentos em nome de cidadãos que nunca solicitaram crédito, atingindo professores da Bahia e PMs do DF [112][113].
 - Quem paga o prejuízo: Vítimas lesadas patrimonialmente e moralmente no sistema de crédito.
 :::
@@ -514,7 +530,7 @@ Carteira Credcesta marcada pelo BRB 45% acima da avaliação `Aponta para: B`
 Ruptura definitiva datada pelo Banco Central em nov/2024 `Aponta para: B`
 - Fonte: Nota Técnica do Banco Central [15].
 
-Empresa de fachada Tirreno aberta apenas em dez/2024 `Aponta para: B (Escalada Tardia)`
+Empresa de fachada Tirreno aberta apenas em dez/2024 `Aponta para: B (escalada tardia)`
 - Fonte: Inquérito da Polícia Federal [46].
 
 Vorcaro sustenta entrega de ativos próprios com deságio `Aponta para: B`
@@ -556,28 +572,28 @@ A contestação jurídica promovida pelos advogados em relação aos aparelhos t
 
 Em 29 de outubro de 2026, os defensores protocolaram laudo do perito judicial Marcos Monteiro referente ao telefone apreendido em 17 de novembro de 2025 [92]. O exame apontou que 657 arquivos foram alterados e 436 foram gerados em 18 de novembro de 2025 — poucas horas após o recolhimento do aparelho, enquanto sob custódia da Polícia Federal; no cômputo geral, 999 arquivos teriam sofrido modificações, incluindo as bases de dados do WhatsApp [92]. O laudo atesta que os logs não permitem individualizar quem operou o dispositivo ou se as alterações decorreram de inserção acidental de cabo USB para recarga. A PF requereu dilação de 60 dias para perícia técnica oficial [92].
 
-### Grau de Vulnerabilidade das Provas
+### Grau de vulnerabilidade das provas
 
 :::fichas
-Liquidação Extrajudicial e Pagamentos do FGC `Sem Risco`
+Liquidação extrajudicial e pagamentos do FGC `Sem risco`
 - Base probatória: Atos regulatórios normativos e extratos bancários [4][10].
 
-Aquisição das Carteiras Podres pelo BRB `Quase Nulo`
+Aquisição das carteiras podres pelo BRB `Quase nulo`
 - Base probatória: Auditorias do Banco Central e contratos do BRB [46][48].
 
-Desvios Familiares (City, Navarra, Astralo 95) `Sem Risco`
+Desvios familiares (City, Navarra, Astralo 95) `Sem risco`
 - Base probatória: Balanços da CVM, ações do liquidante e ordens cíveis [26][89].
 
-Pagamentos a Bancas, Metrópoles e Consult `Parcial`
+Pagamentos a bancas, Metrópoles e Consult `Parcial`
 - Base probatória: Relatórios fiscais da Receita e do Coaf (valores seguros; o propósito ilícito depende do celular) [34][35][74].
 
-Repasses Internacionais do Filme "Dark Horse" `Parcial`
+Repasses internacionais do filme "Dark Horse" `Parcial`
 - Base probatória: Delação de Freixo e ordens de câmbio do Coaf [84][80].
 
-Mesadas a Parlamentares, Mensagens a Magistrados e "A Turma" `Alto Risco`
+Mesadas a parlamentares, mensagens a magistrados e "A Turma" `Alto risco`
 - Base probatória: Conversas telemáticas e mensagens de texto nos celulares apreendidos [33][72][76][58].
 
-Aportes dos Fundos de Previdência e Elo Político de Castro `Parcial`
+Aportes dos fundos de previdência e elo político de Castro `Parcial`
 - Base probatória: Balanços do Ministério da Previdência e TCE (valores seguros; o elo com Castro depende das mensagens) [96][98][99].
 :::
 
@@ -587,25 +603,60 @@ Juristas consultados divergem quanto aos impactos de nulidade da prova digital: 
 
 Seis questões centrais pendem de elucidação formal:
 
-- **A Delação Homologada da Reag:** O acordo assinado entre a PGR e João Carlos Mansur carece de julgamento homologatório [67]. Sua alegação de que pode mapear R$ 20 bilhões sob custódia de Vorcaro segue sem confirmação [68]. Em 27 de outubro de 2026, a PGR protocolou requerimento de urgência no STF [69].
-- **A Definição da Relatoria no STF:** Desde 12 de setembro de 2026, a presidência do STF retém os autos do inquérito. O ministro Mendonça segue como relator formal, mas com atos obstados; aguarda-se redistribuição regimental [94].
-- **O Desfecho da Perícia Telefônica:** O acolhimento ou não da tese de quebra da cadeia de custódia dos celulares [92].
-- **Inquéritos Secundários Além do BRB:** O indiciamento inicial concentrou-se estritamente na compra de créditos pelo BRB [8]. Relatórios conclusivos sobre fundos da Reag, Rioprevidência e blindagem política seguem em fase de elaboração.
-- **O Laudo Contábil da Massa Liquidanda:** Apurará o valor de liquidação dos recebíveis. A CVM instaurou processo sancionador contra o liquidante por descumprimento de prazos na convocação de cotistas de FIIs com R$ 610 milhões aplicados [95].
-- **Oferecimento e Recebimento de Denúncias:** A formalização ou arquivamento de ações penais pela PGR perante o plenário da Suprema Corte.
+- **A delação homologada da Reag:** O acordo assinado entre a PGR e João Carlos Mansur carece de julgamento homologatório [67]. Sua alegação de que pode mapear R$ 20 bilhões sob custódia de Vorcaro segue sem confirmação [68]. Em 27 de outubro de 2026, a PGR protocolou requerimento de urgência no STF [69].
+- **A definição da relatoria no STF:** Desde 12 de setembro de 2026, a presidência do STF retém os autos do inquérito. O ministro Mendonça segue como relator formal, mas com atos obstados; aguarda-se redistribuição regimental [94].
+- **O desfecho da perícia telefônica:** O acolhimento ou não da tese de quebra da cadeia de custódia dos celulares [92].
+- **Inquéritos secundários além do BRB:** O indiciamento inicial concentrou-se estritamente na compra de créditos pelo BRB [8]. Relatórios conclusivos sobre fundos da Reag, Rioprevidência e blindagem política seguem em fase de elaboração.
+- **O laudo contábil da massa liquidanda:** Apurará o valor de liquidação dos recebíveis. A CVM instaurou processo sancionador contra o liquidante por descumprimento de prazos na convocação de cotistas de FIIs com R$ 610 milhões aplicados [95].
+- **Oferecimento e recebimento de denúncias:** A formalização ou arquivamento de ações penais pela PGR perante o plenário da Suprema Corte.
 
-> **Limites Documentais da Análise:** O Banco Central decretou sigilo administrativo de oito anos (com vigência até novembro de 2033) sobre os autos da fiscalização do Master [70]. A eventual tramitação da emenda parlamentar do FGC no Congresso Nacional não foi verificada nesta apuração.
+> **Limites documentais da análise:** O Banco Central decretou sigilo administrativo de oito anos (com vigência até novembro de 2033) sobre os autos da fiscalização do Master [70]. A eventual tramitação da emenda parlamentar do FGC no Congresso Nacional não foi verificada nesta apuração.
 
 # Sobre esta compilação
 
 ## Método {#metodo}
 
-- **Fontes Utilizadas:** Reportagens documentadas com base em autos do Banco Central, PF, CVM, Receita Federal, Coaf, administração judicial, decisões do STF e termos preliminares de colaboração premiada, coletadas em 30 e 31 de outubro de 2026. Os autos processuais originais sob segredo de justiça não foram acessados diretamente.
-- **Categorização Analítica:** Classifica-se como *"Estabelecido"* aquilo que deriva de publicação em diários oficiais, decisões regulatórias formais ou convergência documental irrefutável. Considera-se *"Alegado"* o teor de peças investigativas, delações não sentenciadas e relatórios policiais. Todas as manifestações de defesa localizadas foram expressamente reproduzidas.
-- **Concentração Documental:** A maior fatia das conclusões decorre de peças da PF, checadas, sempre que viável, com dados paralelos da Receita, Coaf e CVM.
-- **Status Processual:** Indiciamento policial ou menção em termo de colaboração não equivalem a condenação penal transitada em julgado. Vigora para todos os citados a presunção constitucional de inocência.
+- **Fontes utilizadas:** Reportagens documentadas com base em autos do Banco Central, PF, CVM, Receita Federal, Coaf, administração judicial, decisões do STF e termos preliminares de colaboração premiada, coletadas em 30 e 31 de outubro de 2026. Os autos processuais originais sob segredo de justiça não foram acessados diretamente.
+- **Categorização analítica:** Classifica-se como *"Estabelecido"* aquilo que deriva de publicação em diários oficiais, decisões regulatórias formais ou convergência documental irrefutável. Considera-se *"Alegado"* o teor de peças investigativas, delações não sentenciadas e relatórios policiais. Todas as manifestações de defesa localizadas foram expressamente reproduzidas.
+- **Concentração documental:** A maior fatia das conclusões decorre de peças da PF, checadas, sempre que viável, com dados paralelos da Receita, Coaf e CVM.
+- **Status processual:** Indiciamento policial ou menção em termo de colaboração não equivalem a condenação penal transitada em julgado. Vigora para todos os citados a presunção constitucional de inocência.
 - **Inferência:** A formulação de "fraude de controle", a modelagem em esteira e a consolidação dos dados monetários constituem inferências analíticas do autor a partir das evidências colhidas.
-- **Critério de Exclusão:** Registros pontuais e isolados a respeito da conduta privada de magistrados em confraternizações sociais foram suprimidos por não agregarem relevância à análise dos fluxos monetários.
+- **Critério de exclusão:** Registros pontuais e isolados a respeito da conduta privada de magistrados em confraternizações sociais foram suprimidos por não agregarem relevância à análise dos fluxos monetários.
+
+## Glossário {#glossario}
+
+Siglas usadas no texto. Ao longo da página, o primeiro uso de cada sigla em cada seção vem sublinhado com pontos: toque nele para ver a definição sem sair do lugar. As regras de cobertura do FGC seguem o regulamento do fundo [117]; a definição de CDI segue o glossário da B3 [118].
+
+:::glossario
+BC: Banco Central do Brasil. Regula e fiscaliza os bancos e as demais instituições financeiras do país.
+BRB: Banco de Brasília, banco público controlado pelo Governo do Distrito Federal.
+CDB: Certificado de Depósito Bancário. Título que o banco vende ao investidor para captar dinheiro, com prazo e juros combinados. É um depósito a prazo e, por isso, tem a garantia do FGC, dentro do limite.
+CDI: Certificado de Depósito Interbancário. Título que os bancos usam para emprestar dinheiro uns aos outros, em geral por um dia. A média dos juros dessas operações de um dia, a taxa DI calculada pela B3, é chamada no mercado simplesmente de "CDI" e serve de régua para aplicações: render 140% do CDI é render 1,4 vez essa taxa.
+CMN: Conselho Monetário Nacional. Fixa as regras do sistema financeiro, entre elas os limites para os fundos de previdência de servidores aplicarem seu dinheiro.
+CNPJ: Cadastro Nacional da Pessoa Jurídica, o número de registro das empresas na Receita Federal.
+Coaf: Conselho de Controle de Atividades Financeiras, a unidade de inteligência financeira do país. Recebe avisos de operações suspeitas e produz relatórios para as autoridades.
+CPF: Cadastro de Pessoas Físicas, o número de registro das pessoas na Receita Federal.
+CVM: Comissão de Valores Mobiliários. Regula e fiscaliza o mercado de capitais, incluindo os fundos de investimento.
+DIEESE: Departamento Intersindical de Estatística e Estudos Socioeconômicos, instituto de pesquisa mantido por entidades sindicais.
+FGC: Fundo Garantidor de Créditos. Entidade privada, sustentada pelas instituições associadas, que devolve ao investidor o dinheiro de depósitos, poupança, CDBs e algumas letras quando o banco quebra. O limite é de R$ 250 mil por pessoa (CPF ou CNPJ) em cada instituição ou conglomerado, e de R$ 1 milhão a cada quatro anos, somando todas.
+FII: Fundo de investimento imobiliário. Aplica em imóveis ou em papéis ligados a imóveis; as cotas costumam ser negociadas na bolsa.
+IFData: Relatórios do Banco Central com dados selecionados de cada instituição financeira, como balanço e captação.
+LF: Letra Financeira. Título de dívida de longo prazo emitido por bancos. Não está entre os investimentos cobertos pelo FGC.
+MPF: Ministério Público Federal, o órgão que investiga e acusa crimes na esfera federal.
+PCC: Primeiro Comando da Capital, facção criminosa.
+PF: Polícia Federal.
+PGE: Procuradoria-Geral do Estado, que defende o estado na Justiça; aqui, a do Rio de Janeiro.
+PGR: Procuradoria-Geral da República, a chefia do Ministério Público Federal. É quem acusa, no STF, as autoridades julgadas por esse tribunal.
+PL: Partido Liberal.
+PM: Polícia Militar.
+PP: Progressistas, partido político.
+PT: Partido dos Trabalhadores.
+RPPS: Regime Próprio de Previdência Social. O sistema de aposentadoria dos servidores públicos da União, de um estado ou de um município, com fundo próprio para pagar os benefícios.
+SFN: Sistema Financeiro Nacional, o conjunto de instituições, órgãos e regras do mercado financeiro do país.
+STF: Supremo Tribunal Federal.
+TCE-RJ | TCE: Tribunal de Contas do Estado do Rio de Janeiro. Fiscaliza como o governo estadual e seus órgãos usam o dinheiro público.
+TCU: Tribunal de Contas da União. Fiscaliza o uso do dinheiro público federal.
+:::
 
 ## Referências {#referencias}
 
@@ -728,4 +779,6 @@ Seis questões centrais pendem de elucidação formal:
 114. DIEESE. “Caso Banco Master: impactos sociais e implicações regulatórias.” Nota Técnica nº 291, 31 mar. 2026 (compilação com dados do IFData/BC).
 115. Redação Suno. “Banco Master, em negociação com BRB, divulga balanço com lucro de R$ 1 bi em 2024.” Suno Notícias, 2 abr. 2025.
 116. Lucchesi, Cristiane; Piovesana, Matheus; Alvim, Leda. “Colapso do Banco Master levanta debate sobre papel de plataformas como a XP.” Bloomberg News via Bloomberg Línea, 1 dez. 2025.
+117. Fundo Garantidor de Créditos. Regulamento do FGC (Anexo II à Resolução CMN nº 4.222, de 23 maio 2013), arts. 1º e 2º. Disponível em [fgc.org.br](https://fgc.org.br/documents/d/asset-library-52554/regulamento-fgc). Acesso em 31 out. 2026.
+118. B3. “Taxa DI.” Glossário Bora Investir. Disponível em [borainvestir.b3.com.br](https://borainvestir.b3.com.br/glossario/taxa-di/). Acesso em 31 out. 2026.
 :::
