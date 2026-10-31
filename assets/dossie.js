@@ -36,6 +36,18 @@
     folhaNota.showModal();
   }
 
+  function mostrarTermo(t) {
+    var id = t.getAttribute('href');                     // '#g-fgc'
+    var item = document.getElementById(id.slice(1));
+    if (!item) return;
+    corpoNota.textContent = '';
+    var p = document.createElement('p');
+    p.innerHTML = item.querySelector('dd').innerHTML + ' <a href="' + id + '">ver no glossário</a>';
+    corpoNota.appendChild(p);
+    tituloNota.textContent = item.querySelector('dt').textContent;
+    folhaNota.showModal();
+  }
+
   // Folhas que sobem de baixo (só onde o navegador tem <dialog>).
   if (folhaNota && typeof folhaNota.showModal === 'function') {
     var toc = document.querySelector('#sumario .toc');
@@ -50,10 +62,11 @@
     });
 
     document.addEventListener('click', function (e) {
+      if (e.target.closest('dialog')) return;
       var a = e.target.closest('sup.nota a');
-      if (!a) return;
-      e.preventDefault();
-      mostrarNotas(a.parentNode);
+      if (a) { e.preventDefault(); mostrarNotas(a.parentNode); return; }
+      var t = e.target.closest('a.termo');
+      if (t) { e.preventDefault(); mostrarTermo(t); }
     });
 
     if (botao) botao.addEventListener('click', function (e) {

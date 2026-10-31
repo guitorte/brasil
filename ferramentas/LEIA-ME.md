@@ -47,7 +47,7 @@ python3 ferramentas/dossie.py
 
 | Quero mudar... | Edite | Precisa rodar o script? |
 |---|---|---|
-| um texto, número, nota, ficha ou referência | `master/texto.md` | sim |
+| um texto, número, nota, ficha, referência ou definição do glossário | `master/texto.md` | sim, ou deixe o GitHub rodar (abaixo) |
 | cores, fontes, espaçamentos, aparência das fichas e etiquetas | `assets/dossie.css` | não, vale na hora |
 | a moldura da página (topo, sumário, botões flutuantes) | `ferramentas/modelos/dossie.html` | sim |
 | o comportamento (notas ao toque, sumário que sobe de baixo, seção atual) | `assets/dossie.js` | não |
@@ -92,7 +92,16 @@ Augusto Lima `Central`
 | `:::barras Título` | uma linha por barra: `rótulo \| valor \| largura em %` |
 | `:::quadro Título` | quadro-resumo; o primeiro, antes das seções, vai para o topo da página. Linhas `- Rótulo: texto` |
 | `:::indice` | atalhos para todas as fichas da seção, agrupados pelas subseções. Fica vazio no texto: é montado sozinho |
+| `:::fluxo Título` | diagrama em três andares. Linhas de legenda logo abaixo do título; depois `entrada:`, `centro:` e `saida:`, cada uma `nome \| descrição \| texto da seta`. Uma linha `apoio:` fica acima da `entrada:` seguinte (no Master, o FGC acima dos poupadores). O nome pode ser um link: `[Blindagem](#cap-4)` |
+| `:::glossario` | uma sigla por linha: `FGC: definição`. Formas alternativas com barra: `TCE-RJ \| TCE: definição`. O plural com "s" (CDBs, LFs) é reconhecido sozinho |
 | `:::referencias` | a lista de referências, `1. Autor, "Título", veículo, data.`, em ordem e sem pular números |
+
+## O glossário ao toque
+
+Basta escrever a sigla no texto normalmente. Ao montar, o script procura as siglas do bloco `:::glossario` e transforma o
+**primeiro uso de cada uma em cada seção** num toque (sublinhado com pontos), que abre a definição numa folha. Títulos de
+seção e subseção, notas, etiquetas e referências ficam de fora. Se uma sigla do glossário não aparecer em lugar nenhum,
+o script avisa.
 
 ## O que o script confere
 
@@ -105,6 +114,20 @@ um bloco `:::` não foi fechado. Se uma referência não for citada por nenhuma 
 Em `assets/dossie.css`, procure "O tom vem do texto da etiqueta". Cada linha liga o começo do texto da
 etiqueta (sem acentos, com hífens: "Aponta para: A" vira `aponta-para-a`) a uma das cores definidas no topo
 do arquivo. Etiqueta sem regra fica cinza.
+
+## Montagem automática no GitHub
+
+O arquivo `.github/workflows/dossies.yml` faz o GitHub rodar o script sozinho. Assim dá para editar o `texto.md` direto no
+site do GitHub, até pelo celular, sem rodar nada:
+
+- **num pull request** que mude um `texto.md`, o script só confere. Se houver erro, a verificação fica vermelha e o
+  registro (aba Actions) diz a linha a corrigir;
+- **no `main`**, ele grava o `index.html` refeito num commit próprio ("Remonta os dossiês a partir do texto.md") e pede ao
+  GitHub Pages que publique de novo. Commits feitos pelo próprio workflow não disparam a publicação sozinhos; por isso
+  esse pedido. Se ele falhar, a página refeita fica gravada e sai na próxima publicação;
+- **à mão**: aba Actions → "Montar dossiês" → Run workflow.
+
+Mudanças só no `assets/dossie.css` ou no `assets/dossie.js` não precisam do script e não acionam o workflow.
 
 ## Para criar outro dossiê
 
