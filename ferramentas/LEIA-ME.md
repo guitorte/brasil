@@ -33,3 +33,81 @@ Nos modelos, `{{nome}}` é trocado por um número calculado no script e `/*__DAT
 1. Crie `ferramentas/modelos/<capitulo>.html` a partir de `mundo.html`.
 2. Em `montar.py`, escreva uma função que prepare os dados e os números do capítulo, com as checagens das frases.
 3. Troque o `link` do capítulo em `CAPS` por `<capitulo>/` e mande gravar a página no fim do script.
+
+# Dossiês: páginas de texto longo (`master/`)
+
+A página `master/` não sai dos dados: é um texto longo, com notas e referências. Ela é montada por
+outro script, a partir de um arquivo de texto simples, no visual de enciclopédia/documentação.
+
+```
+python3 ferramentas/dossie.py
+```
+
+## O que mudar, e onde
+
+| Quero mudar... | Edite | Precisa rodar o script? |
+|---|---|---|
+| um texto, número, nota, ficha ou referência | `master/texto.md` | sim |
+| cores, fontes, espaçamentos, aparência das fichas e etiquetas | `assets/dossie.css` | não, vale na hora |
+| a moldura da página (topo, sumário, botões flutuantes) | `ferramentas/modelos/dossie.html` | sim |
+| o comportamento (notas ao toque, sumário que sobe de baixo, seção atual) | `assets/dossie.js` | não |
+
+`master/index.html` é gerado: não edite à mão. O texto original em inglês (`.docx` e `.pdf`) fica ao lado, em `master/`.
+
+## A marcação do `texto.md`
+
+O arquivo começa com um cabeçalho entre linhas `---` (`titulo`, `titulo_aba`, `chapeu`, `assinatura` e,
+se quiser, `descricao`). Depois vem o texto. Comentários `<!-- ... -->` são ignorados.
+
+| Escreva | Vira |
+|---|---|
+| `# Visão geral` | uma parte: agrupa as seções seguintes no sumário |
+| `## CDBs astronômicos {#cdb}` | uma seção; `{#cdb}` é o endereço (`master/#cdb`). Sem ele, o endereço sai do título |
+| `### Atores Centrais` | uma subseção |
+| `**negrito**`, `*itálico*` | ênfase |
+| `[12]` ou `[62][46]` | nota: o número da referência na lista do fim. Ao toque, a referência sobe numa folha |
+| `` `Central` `` | etiqueta colorida. A cor vem do texto; `` `Supervisão\|secundario` `` mostra "Supervisão" com a cor de "secundario" |
+| `[texto](#id)` | link |
+| `- item` / `1. item` | listas |
+| `> texto` | caixa de destaque; uma linha só com `>` separa parágrafos |
+| um parágrafo | linhas seguidas; uma linha em branco separa parágrafos |
+
+Blocos especiais começam com `:::nome` e terminam com uma linha só com `:::`.
+
+```
+:::fichas
+Daniel Vorcaro `Central`
+- Papel atribuído (alegado): Comando geral do esquema, segundo o relatório da PF [62].
+- Resposta: Nega qualquer prática fraudulenta [9].
+
+Augusto Lima `Central`
+- Papel atribuído (alegado): ...
+:::
+```
+
+| Bloco | Conteúdo |
+|---|---|
+| `:::fichas` | fichas separadas por linha em branco. 1ª linha: título e, no fim, uma etiqueta opcional. Linhas `- Rótulo: texto` viram campos; o campo "Resposta" ganha fundo próprio |
+| `:::esteira` | passos em sequência: o título numa linha, o texto na linha seguinte, linha em branco entre passos |
+| `:::barras Título` | uma linha por barra: `rótulo \| valor \| largura em %` |
+| `:::quadro Título` | quadro-resumo; o primeiro, antes das seções, vai para o topo da página. Linhas `- Rótulo: texto` |
+| `:::indice` | atalhos para todas as fichas da seção, agrupados pelas subseções. Fica vazio no texto: é montado sozinho |
+| `:::referencias` | a lista de referências, `1. Autor, "Título", veículo, data.`, em ordem e sem pular números |
+
+## O que o script confere
+
+Antes de gravar, `dossie.py` para com uma mensagem se: uma nota `[n]` não tem a referência `n`; a lista de
+referências está fora de ordem ou pula número; um link `#id` não leva a nenhuma seção, subseção ou ficha;
+um bloco `:::` não foi fechado. Se uma referência não for citada por nenhuma nota, ele grava e avisa.
+
+## Cores das etiquetas
+
+Em `assets/dossie.css`, procure "O tom vem do texto da etiqueta". Cada linha liga o começo do texto da
+etiqueta (sem acentos, com hífens: "Aponta para: A" vira `aponta-para-a`) a uma das cores definidas no topo
+do arquivo. Etiqueta sem regra fica cinza.
+
+## Para criar outro dossiê
+
+1. Crie a pasta, por exemplo `outro/`, com um `outro/texto.md` no mesmo formato.
+2. Acrescente `'outro'` à lista `DOSSIES` no topo de `ferramentas/dossie.py`.
+3. Rode `python3 ferramentas/dossie.py`.

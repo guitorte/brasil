@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>{{titulo_aba}}</title>{{meta_descricao}}
+<link rel="stylesheet" href="{{raiz}}assets/dossie.css">
+</head>
+<body id="top">
+<!-- Página gerada por ferramentas/dossie.py a partir de {{fonte}}. Não edite este arquivo: edite o texto.md e rode o script. -->
+<div class="progresso" aria-hidden="true"><span></span></div>
+<div class="pagina">
+<header class="topo">
+<p class="chapeu">{{chapeu}}</p>
+<h1>{{titulo}}</h1>
+<p class="assinatura">{{assinatura}}</p>
+</header>
+{{quadro}}
+<nav class="sumario" id="sumario" aria-label="Sumário">
+<details open><summary>Sumário</summary>
+{{sumario}}
+</details>
+</nav>
+<main>
+{{corpo}}
+</main>
+</div>
+<div class="acoes">
+<a class="bt-sumario" href="#sumario"><b aria-hidden="true">☰</b><span>Sumário</span></a>
+<a class="bt-topo" href="#top" aria-label="Voltar ao topo">↑</a>
+</div>
+<dialog class="folha" id="folha-nota" aria-labelledby="folha-nota-titulo">
+<div class="folha-dentro">
+<div class="folha-topo"><b id="folha-nota-titulo">Referência</b><form method="dialog"><button aria-label="Fechar">✕</button></form></div>
+<div class="folha-corpo" id="folha-nota-corpo"></div>
+</div>
+</dialog>
+<dialog class="folha" id="folha-sumario" aria-label="Sumário">
+<div class="folha-dentro">
+<div class="folha-topo"><b>Sumário</b><form method="dialog"><button aria-label="Fechar">✕</button></form></div>
+<div class="folha-corpo" id="folha-sumario-corpo"></div>
+</div>
+</dialog>
+<script src="{{raiz}}assets/dossie.js"></script>
+</body>
+</html>
