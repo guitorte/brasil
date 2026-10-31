@@ -1,0 +1,358 @@
+/* Visual dos dossiês: páginas de texto longo no estilo de enciclopédia/documentação.
+   Usado por master/index.html, que é gerado por ferramentas/dossie.py.
+   Para mudar o visual, comece pelas variáveis logo abaixo: cores, fontes e largura. */
+
+:root {
+  --fundo: #ffffff;
+  --texto: #202122;
+  --suave: #54595d;      /* textos secundários: rótulos, datas */
+  --borda: #a2a9b1;
+  --linha: #eaecf0;      /* divisórias leves */
+  --caixa: #f8f9fa;      /* fundo de quadros e caixas */
+  --link: #3366cc;
+  --alvo: #eaf3ff;       /* fundo do trecho para onde um link levou */
+
+  /* cores das etiquetas e das fichas (escolhidas pelo data-tom, mais abaixo) */
+  --vermelho: #b83226;
+  --ambar: #9a5b00;
+  --cinza: #72777d;
+  --verde: #14765c;
+  --azul: #3366cc;
+  --roxo: #6b4ba1;
+
+  --serifa: "Linux Libertine", "Georgia", "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Helvetica, Arial, sans-serif;
+  --largura: 42rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fundo: #101418;
+    --texto: #eaecf0;
+    --suave: #a2a9b1;
+    --borda: #54595d;
+    --linha: #2a2e33;
+    --caixa: #1b1f24;
+    --link: #88a3e8;
+    --alvo: #1f2a3d;
+    --vermelho: #fd7865;
+    --ambar: #e7a74a;
+    --cinza: #a2a9b1;
+    --verde: #5fd0a8;
+    --azul: #88a3e8;
+    --roxo: #b59af0;
+  }
+}
+
+/* ------------------------------------------------------------ base */
+* { box-sizing: border-box; }
+html { font-size: 106.25%; -webkit-text-size-adjust: 100%; }  /* 17 px */
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font: 1rem/1.6 var(--sans);
+  padding-bottom: 5rem;           /* espaço para os botões flutuantes */
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.pagina { max-width: var(--largura); margin: 0 auto; padding: 0 16px; }
+
+/* ------------------------------------------------------------ topo */
+.topo { padding: 1.75rem 0 1rem; border-bottom: 1px solid var(--borda); }
+.chapeu {
+  margin: 0 0 .5rem;
+  font: 600 .75rem/1.2 var(--sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+h1 { margin: 0 0 .6rem; font: 400 1.85rem/1.2 var(--serifa); }
+.assinatura { margin: 0; color: var(--suave); font-size: .9rem; }
+
+/* ------------------------------------------------------------ quadro-resumo (como a infobox da Wikipédia) */
+.quadro {
+  margin: 1.25rem 0;
+  padding: .75rem .9rem .4rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  font-size: .9rem;
+  line-height: 1.45;
+}
+.quadro-titulo { margin: 0 0 .5rem; font-weight: 700; font-size: 1rem; text-align: center; }
+.quadro dl { margin: 0; }
+.quadro dl > div {
+  display: grid;
+  grid-template-columns: minmax(6rem, 31%) 1fr;
+  gap: .75rem;
+  padding: .45rem 0;
+  border-top: 1px solid var(--linha);
+}
+.quadro dt { font-weight: 600; }
+.quadro dd { margin: 0; }
+
+/* ------------------------------------------------------------ sumário */
+.sumario {
+  margin: 1.25rem 0 0;
+  padding: 0 .9rem .5rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  font-size: .95rem;
+  line-height: 1.4;
+}
+.sumario summary { padding: .7rem 0; font-weight: 700; cursor: pointer; }
+.toc, .toc ol { list-style: none; margin: 0; padding: 0; }
+.toc-parte > span {
+  display: block;
+  padding: .8rem 0 .25rem;
+  font: 600 .7rem/1.2 var(--sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+.toc ol, .toc > li:not(.toc-parte) { border-left: 2px solid var(--linha); }
+.toc a { display: block; margin-left: -2px; padding: .3rem 0 .3rem .7rem; border-left: 2px solid transparent; }
+.toc a[aria-current] { border-left-color: var(--link); font-weight: 600; color: var(--texto); }
+
+/* ------------------------------------------------------------ texto */
+.parte {
+  margin: 3rem 0 0;
+  padding-top: .6rem;
+  border-top: 3px double var(--borda);
+  font: 600 .75rem/1.2 var(--sans);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+section, h3, .ficha, .referencias li { scroll-margin-top: .75rem; }
+h2 {
+  margin: 2.25rem 0 .8rem;
+  padding-bottom: .2rem;
+  border-bottom: 1px solid var(--borda);
+  font: 400 1.5rem/1.25 var(--serifa);
+}
+.parte + section > h2 { margin-top: .9rem; }
+h3 { margin: 1.75rem 0 .5rem; font-size: 1.1rem; line-height: 1.35; }
+p { margin: 0 0 .9rem; }
+ul, ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+li { margin: .4rem 0; }
+
+/* notas [12] */
+sup.nota { font-size: .72em; line-height: 0; white-space: nowrap; }
+sup.nota a { padding: .4em .1em; scroll-margin-top: 30vh; }
+sup.nota a:target, li:target, h3:target, .ficha:target { background: var(--alvo); }
+
+/* caixa de destaque (linhas que começam com ">") */
+.destaque {
+  margin: 1.1rem 0;
+  padding: .75rem 1rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--link);
+  font-size: .95rem;
+}
+.destaque p:last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------------------ etiquetas e tons */
+.etiqueta {
+  display: inline-block;
+  padding: .05rem .4rem;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  color: var(--tom, var(--suave));
+  font: 600 .68rem/1.5 var(--sans);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  vertical-align: .12em;
+}
+/* O tom vem do texto da etiqueta (ou do que vem depois da barra: `Texto|tom`). */
+[data-tom^="central"]       { --tom: var(--vermelho); }
+[data-tom^="secundario"]    { --tom: var(--ambar); }
+[data-tom^="acessorio"]     { --tom: var(--cinza); }
+[data-tom="sem-risco"],
+[data-tom="quase-nulo"]     { --tom: var(--verde); }
+[data-tom="parcial"]        { --tom: var(--ambar); }
+[data-tom="alto-risco"]     { --tom: var(--vermelho); }
+[data-tom^="aponta-para-a"] { --tom: var(--azul); }
+[data-tom^="aponta-para-b"] { --tom: var(--roxo); }
+
+/* ------------------------------------------------------------ fichas */
+.fichas { margin: 1rem 0 1.25rem; border-top: 1px solid var(--linha); }
+.ficha {
+  padding: .7rem 0 .7rem .85rem;
+  border-left: 3px solid var(--tom, var(--borda));
+  border-bottom: 1px solid var(--linha);
+}
+.ficha h4 { margin: 0 0 .3rem; font-size: 1rem; line-height: 1.4; }
+.ficha h4 .etiqueta { margin-left: .2rem; }
+.ficha p { margin: .3rem 0 0; font-size: .95rem; }
+.campo b { font-weight: 600; color: var(--suave); }
+.campo[data-campo="resposta"] {
+  margin-top: .5rem;
+  padding: .4rem .6rem;
+  background: var(--caixa);
+  border-radius: 3px;
+}
+
+/* atalhos para as fichas (:::indice) */
+.indice { display: grid; gap: .6rem; margin: 1rem 0 1.5rem; }
+.indice-grupo {
+  padding: .6rem .75rem .7rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--tom, var(--borda));
+}
+.indice-grupo p { margin: 0 0 .2rem; font-weight: 700; font-size: .9rem; }
+.indice-grupo ul { margin: 0; padding: 0; list-style: none; font-size: .92rem; line-height: 1.95; }
+.indice-grupo li { display: inline; margin: 0; }
+.indice-grupo li:not(:last-child)::after { content: " · "; color: var(--suave); font-weight: 700; }
+.indice-grupo a { padding: .3rem 0; }
+
+/* ------------------------------------------------------------ esteira (passos em sequência) */
+.esteira { position: relative; margin: 1rem 0 1.25rem; padding: 0 0 0 1.2rem; list-style: none; }
+.esteira::before {
+  content: "";
+  position: absolute;
+  left: .3rem; top: .7rem; bottom: .9rem;
+  width: 2px;
+  background: var(--borda);
+}
+.esteira li { position: relative; margin: 0 0 .9rem; }
+.esteira li::before {
+  content: "";
+  position: absolute;
+  left: -1.15rem; top: .5rem;
+  width: .6rem; height: .6rem;
+  border-radius: 50%;
+  background: var(--link);
+  box-shadow: 0 0 0 3px var(--fundo);
+}
+.esteira p { margin: .1rem 0 0; color: var(--suave); font-size: .95rem; }
+
+/* ------------------------------------------------------------ barras */
+.barras {
+  margin: 1rem 0 1.25rem;
+  padding: .8rem .9rem .4rem;
+  background: var(--caixa);
+  border: 1px solid var(--borda);
+}
+.barras figcaption { margin-bottom: .6rem; font-weight: 700; font-size: .95rem; }
+.barra { margin: 0 0 .7rem; font-size: .88rem; line-height: 1.35; }
+.barra-rotulo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .1rem .75rem; margin-bottom: .25rem; }
+.barra-rotulo span:last-child { color: var(--suave); font-variant-numeric: tabular-nums; }
+.barra-trilho { height: 10px; overflow: hidden; background: var(--linha); border-radius: 2px; }
+.barra-trilho span { display: block; height: 100%; background: var(--link); }
+.barra:nth-of-type(2) .barra-trilho span { opacity: .8; }
+.barra:nth-of-type(3) .barra-trilho span { opacity: .65; }
+.barra:nth-of-type(4) .barra-trilho span { opacity: .5; }
+.barra:nth-of-type(n+5) .barra-trilho span { opacity: .4; }
+
+/* ------------------------------------------------------------ referências */
+.referencias { padding-left: 2.3rem; font-size: .88rem; line-height: 1.5; }
+.referencias li { margin: .45rem 0; overflow-wrap: anywhere; }
+.ref-volta { margin-right: .15rem; color: var(--suave); font-weight: 600; }
+.ref-volta a { padding: 0 .15rem; }
+
+/* ------------------------------------------------------------ botões flutuantes (ao alcance do polegar) */
+.acoes {
+  position: fixed;
+  left: 12px; right: 12px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 20;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+.acoes a {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: var(--texto);
+  color: var(--fundo);
+  font: 600 .88rem/1.2 var(--sans);
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+  pointer-events: auto;
+}
+.bt-sumario { min-width: 0; max-width: 100%; }
+.bt-sumario span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.bt-topo { justify-content: center; width: 44px; padding: 0 !important; font-size: 1.1rem !important; }
+.bt-topo[hidden] { display: none; }
+
+/* barra de leitura */
+.progresso { position: fixed; top: 0; left: 0; right: 0; z-index: 30; height: 3px; pointer-events: none; }
+.progresso span { display: block; height: 100%; background: var(--link); transform: scaleX(0); transform-origin: 0 50%; }
+
+/* ------------------------------------------------------------ folhas (notas e sumário que sobem de baixo) */
+dialog.folha {
+  width: 100%;
+  max-width: var(--largura);
+  max-height: 85vh;
+  margin: auto auto 0;
+  padding: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  border: 0;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, .3);
+}
+dialog.folha::backdrop { background: rgba(0, 0, 0, .45); }
+.folha-dentro { display: flex; flex-direction: column; max-height: 85vh; }
+.folha-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--linha);
+}
+.folha-topo form { margin: 0; }
+.folha-topo button {
+  min-width: 44px; min-height: 36px;
+  background: var(--caixa);
+  color: var(--texto);
+  border: 1px solid var(--borda);
+  border-radius: 999px;
+  font: 600 .9rem var(--sans);
+  cursor: pointer;
+}
+.folha-corpo { overflow: auto; overscroll-behavior: contain; padding: .5rem 1rem 1.5rem; font-size: .95rem; }
+.folha-corpo p { margin: .6rem 0; }
+.folha-corpo .toc { font-size: .95rem; }
+
+/* ------------------------------------------------------------ tela larga: sumário fixo à esquerda */
+@media (min-width: 64rem) {
+  .pagina {
+    display: grid;
+    grid-template-columns: 16rem minmax(0, var(--largura));
+    grid-template-areas: "sumario topo" "sumario quadro" "sumario main";
+    column-gap: 3rem;
+    align-items: start;
+    max-width: 68rem;
+  }
+  .topo { grid-area: topo; }
+  .quadro-topo { grid-area: quadro; }
+  main { grid-area: main; }
+  .sumario {
+    grid-area: sumario;
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow: auto;
+    margin: 0;
+    padding: 1.25rem 0 2rem;
+    background: none;
+    border: 0;
+  }
+  .bt-sumario { display: none !important; }
+}
+
+/* ------------------------------------------------------------ impressão */
+@media print {
+  .acoes, .progresso, dialog, .sumario { display: none !important; }
+  body { padding: 0; }
+  .pagina { display: block; max-width: none; }
+}
