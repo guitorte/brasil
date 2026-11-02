@@ -1,0 +1,11 @@
+codigo_linha_rtn,despesa,pct_pib_2025,raiz_legal
+2.,Transferências a estados e municípios,4.47,"Constituição, art. 159 (FPE 21,5% e FPM 22,5% da arrecadação do IR e do IPI)"
+4.1,Benefícios previdenciários (INSS),8.06,"Constituição, art. 201; § 2º: nenhum benefício abaixo do salário mínimo"
+4.2,Pessoal e encargos,3.16,"Constituição, art. 37, XV (irredutibilidade) e art. 41 (estabilidade); valores em lei"
+4.3.05,BPC (idosos e pessoas com deficiência pobres),1.0,"Constituição, art. 203, V: um salário mínimo por mês"
+4.3.01,Abono salarial e seguro-desemprego,0.69,"Constituição, art. 239 (financiados pelo PIS/Pasep); regras em lei"
+4.3.10,Complementação da União ao Fundeb,0.47,"Constituição, art. 212-A, V: no mínimo 23% dos fundos"
+4.4.1,"Obrigatórias com controle de fluxo (Bolsa Família, saúde, educação e outras)",2.9,"Em lei; saúde e educação também contam para os pisos dos arts. 198, § 2º, I (15% da RCL) e 212 (18% dos impostos)"
+4.4.2.1,Discricionárias: saúde,0.46,"Contam para o piso do art. 198, § 2º, I"
+4.4.2.2,Discricionárias: educação,0.26,Contam para o piso do art. 212
+4.4.2,"Discricionárias (total, inclui emendas parlamentares)",1.61,"Emendas: Constituição, art. 166, §§ 9º, 11 e 12 (individuais até 2% da RCL; bancada até 1%)"
