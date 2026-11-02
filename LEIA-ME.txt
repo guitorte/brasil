@@ -70,6 +70,18 @@ dados/eleicoes/
   eleitos.csv              um eleito por linha: UF, cargo, nome, partido, federação (2022),
                            coligação e situação na base do TSE
 
+dados/comparacoes/
+  Dados para comparar o Brasil com países que partiram do mesmo lugar e separar o que veio
+  de fora do que dependeu de decisões internas, baixados em 2 de novembro de 2026 pelo
+  script ferramentas/coletar_comparacoes.py (mesmo formato dos outros CSVs). Os pares saem
+  de uma regra fixada antes de olhar resultados: mais de 10 milhões de habitantes e PIB por
+  habitante em PPC entre 2/3 e 1,5 vez o do Brasil em 1995. Traz pobreza, expectativa de
+  vida, mortalidade infantil, homicídios, PISA, informalidade, juros, contas públicas,
+  juros dos EUA, produtividade, eleitos de 1994 a 2014 e emendas parlamentares. O que
+  cada arquivo tem, o que ainda falta e os cuidados para comparar estão em
+  dados/comparacoes/LEIA-ME.md; fonte, unidade e ressalvas de cada série, em
+  dados/comparacoes/fontes_e_indicadores.csv.
+
 fonte-do-painel/
   index.html                 o código da página tal como está guardado no painel do Claude.
                              Só funciona dentro do painel; fora dele, use o index.html da raiz.

@@ -134,3 +134,16 @@ Mudanças só no `assets/dossie.css` ou no `assets/dossie.js` não precisam do s
 1. Crie a pasta, por exemplo `outro/`, com um `outro/texto.md` no mesmo formato.
 2. Acrescente `'outro'` à lista `DOSSIES` no topo de `ferramentas/dossie.py`.
 3. Rode `python3 ferramentas/dossie.py`.
+
+# Coleta dos dados de comparação (`dados/comparacoes/`)
+
+```
+python3 ferramentas/coletar_comparacoes.py            # tudo
+python3 ferramentas/coletar_comparacoes.py resultados # um bloco só (veja a lista no topo do script)
+```
+
+Baixa das fontes oficiais (Banco Mundial, ONU, UNODC, OIT, FMI, Banco Central, Federal Reserve, Penn World
+Table, TSE e CGU) e grava os CSVs em `dados/comparacoes/`, com uma linha por série em
+`fontes_e_indicadores.csv`. Só usa a biblioteca padrão do Python. A regra de seleção dos países de
+comparação fica no topo do script (`ANO_BASE`, `POP_MIN`, `FAIXA`); mude ali e rode de novo para testar
+outra regra. O `dados/comparacoes/LEIA-ME.md` explica cada arquivo e lista o que ainda falta.
