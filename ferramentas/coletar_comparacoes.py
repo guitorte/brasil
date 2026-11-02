@@ -156,6 +156,13 @@ def bloco_pares():
     gravar('pares.csv', ['codigo_pais', 'pais', 'regiao_banco_mundial', 'faixa_renda_atual_banco_mundial',
                          f'populacao_{ANO_BASE}', f'pib_pc_ppc_{ANO_BASE}', 'razao_brasil', 'situacao',
                          'lista_anterior'], linhas)
+    # Série anual de renda e população do universo inteiro: é a base da comparação de crescimento.
+    serie = []
+    for cod, curto in (('NY.GDP.PCAP.PP.KD', 'pib_pc_ppc'), ('SP.POP.TOTL', 'populacao')):
+        serie += [[iso, paises[iso]['nome'], curto, ano, v] for (iso, ano, v) in wb_serie(cod)
+                  if iso in {l[0] for l in linhas}]
+    serie.sort(key=lambda l: (l[2], l[0], l[3]))
+    gravar('renda_universo.csv', ['codigo_pais', 'pais', 'indicador', 'ano', 'valor'], serie)
     m_pop, m_ren = wb_indicador_meta('SP.POP.TOTL'), wb_indicador_meta('NY.GDP.PCAP.PP.KD')
     registrar_fontes([dict(arquivo='pares.csv', fonte=f'Banco Mundial, World Development Indicators (API), {m_ren["fonte"]}',
                            codigo='SP.POP.TOTL; NY.GDP.PCAP.PP.KD', indicador='Regra de seleção dos pares',
@@ -166,7 +173,15 @@ def bloco_pares():
                                  f'{FAIXA[1]:.1f}'.replace('.', ',') + f' vezes o do Brasil em {ANO_BASE}. Regra fixada antes de olhar '
                                  'resultados. Só países que passam no critério de população aparecem na tabela. '
                                  'faixa_renda_atual_banco_mundial é a classificação de hoje, não a de '
-                                 f'{ANO_BASE}.'))])
+                                 f'{ANO_BASE}.')),
+                      dict(arquivo='renda_universo.csv', fonte='Banco Mundial, World Development Indicators (API)',
+                           codigo='NY.GDP.PCAP.PP.KD; SP.POP.TOTL', indicador='PIB por habitante em PPC; população',
+                           unidade='dólares internacionais constantes de 2021; pessoas',
+                           nome_original=f'{m_ren["nome"]}; {m_pop["nome"]}', atualizacao=HOJE,
+                           cobertura_brasil=cobertura([(l[0], l[3], 0) for l in serie if l[2] == 'pib_pc_ppc']),
+                           nota=('Série anual 1990–2025 dos mesmos países de pares.csv. É a base para comparar o '
+                                 'crescimento do Brasil com o dos pares. O Banco Mundial revisa a PPC a cada rodada do '
+                                 'ICP: compare só valores baixados na mesma data.'))])
 
 
 # =============================================================================================
