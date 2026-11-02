@@ -65,7 +65,7 @@ gravar('a2_blocos.csv', ['bloco', 'despesa_primaria_total', 'previdencia', 'pess
 # ------------------------------------------------------------------ A3: raiz legal das maiores linhas, 2025
 print('A3: raiz legal das maiores linhas de despesa, 2025 (classificação própria)')
 RAIZ_LEGAL = [
-    ('2.', 'Transferências a estados e municípios', 'Constituição, art. 159 (FPE 21,5% e FPM 22,5% de 50% do IR e do IPI)'),
+    ('2.', 'Transferências a estados e municípios', 'Constituição, art. 159 (FPE 21,5% e FPM 22,5% da arrecadação do IR e do IPI)'),
     ('4.1', 'Benefícios previdenciários (INSS)', 'Constituição, art. 201; § 2º: nenhum benefício abaixo do salário mínimo'),
     ('4.2', 'Pessoal e encargos', 'Constituição, art. 37, XV (irredutibilidade) e art. 41 (estabilidade); valores em lei'),
     ('4.3.05', 'BPC (idosos e pessoas com deficiência pobres)', 'Constituição, art. 203, V: um salário mínimo por mês'),
