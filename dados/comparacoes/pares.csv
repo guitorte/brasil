@@ -1,0 +1,76 @@
+codigo_pais,pais,regiao_banco_mundial,faixa_renda_atual_banco_mundial,populacao_1995,pib_pc_ppc_1995,razao_brasil,situacao,lista_anterior
+AFG,Afghanistan,"Middle East, North Africa, Afghanistan & Pakistan",Low income,17065836,,,fora: sem PIB por habitante em PPC no ano-base,não
+DZA,Algeria,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,28470191,10588.4,0.781,par pela regra,não
+AGO,Angola,Sub-Saharan Africa ,Lower middle income,13699778,5981.5,0.441,fora: renda fora da faixa,não
+ARG,Argentina,Latin America & Caribbean ,Upper middle income,35070020,20819.5,1.536,fora: renda fora da faixa,sim
+AUS,Australia,East Asia & Pacific,High income,18004882,38653.3,2.853,fora: renda fora da faixa,não
+BGD,Bangladesh,South Asia,Lower middle income,122600370,2351.7,0.174,fora: renda fora da faixa,não
+BLR,Belarus,Europe & Central Asia,Upper middle income,10193831,8061.2,0.595,fora: renda fora da faixa,não
+BEL,Belgium,Europe & Central Asia,High income,10136811,44310.6,3.270,fora: renda fora da faixa,não
+BRA,Brazil,Latin America & Caribbean ,Upper middle income,161735073,13550.4,1.000,referência,sim
+BFA,Burkina Faso,Sub-Saharan Africa ,Low income,10386722,1183.5,0.087,fora: renda fora da faixa,não
+KHM,Cambodia,East Asia & Pacific,Lower middle income,10018497,1672.7,0.123,fora: renda fora da faixa,não
+CMR,Cameroon,Sub-Saharan Africa ,Lower middle income,13058516,3526.5,0.260,fora: renda fora da faixa,não
+CAN,Canada,North America,High income,29302311,41617.7,3.071,fora: renda fora da faixa,não
+CHL,Chile,Latin America & Caribbean ,High income,14527381,14911.6,1.100,par pela regra,sim
+CHN,China,East Asia & Pacific,Upper middle income,1204855000,2807.9,0.207,fora: renda fora da faixa,sim
+COL,Colombia,Latin America & Caribbean ,Upper middle income,35804662,11279.0,0.832,par pela regra,sim
+COD,"Congo, Dem. Rep.",Sub-Saharan Africa ,Low income,44433704,1362.2,0.101,fora: renda fora da faixa,não
+CIV,Cote d'Ivoire,Sub-Saharan Africa ,Lower middle income,14855565,4638.8,0.342,fora: renda fora da faixa,não
+CUB,Cuba,Latin America & Caribbean ,Upper middle income,10925362,,,fora: sem PIB por habitante em PPC no ano-base,não
+CZE,Czechia,Europe & Central Asia,High income,10327253,26869.0,1.983,fora: renda fora da faixa,não
+ECU,Ecuador,Latin America & Caribbean ,Upper middle income,11590514,9525.2,0.703,par pela regra,não
+EGY,"Egypt, Arab Rep.","Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,65652622,8423.6,0.622,fora: renda fora da faixa,não
+ETH,Ethiopia,Sub-Saharan Africa ,Low income,57537335,760.3,0.056,fora: renda fora da faixa,não
+FRA,France,Europe & Central Asia,High income,59541294,40570.7,2.994,fora: renda fora da faixa,não
+DEU,Germany,Europe & Central Asia,High income,81678051,45548.4,3.361,fora: renda fora da faixa,não
+GHA,Ghana,Sub-Saharan Africa ,Lower middle income,17399017,3039.7,0.224,fora: renda fora da faixa,não
+GRC,Greece,Europe & Central Asia,High income,10562153,27646.1,2.040,fora: renda fora da faixa,não
+GTM,Guatemala,Latin America & Caribbean ,Upper middle income,10312996,8195.3,0.605,fora: renda fora da faixa,não
+HUN,Hungary,Europe & Central Asia,High income,10328965,18977.2,1.400,par pela regra,não
+IND,India,South Asia,Lower middle income,960301044,2469.4,0.182,fora: renda fora da faixa,sim
+IDN,Indonesia,East Asia & Pacific,Upper middle income,199888057,6312.9,0.466,fora: renda fora da faixa,sim
+IRN,"Iran, Islamic Rep.","Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,62205567,10465.0,0.772,par pela regra,não
+IRQ,Iraq,"Middle East, North Africa, Afghanistan & Pakistan",Upper middle income,20825860,5969.7,0.441,fora: renda fora da faixa,não
+ITA,Italy,Europe & Central Asia,High income,56844303,45410.1,3.351,fora: renda fora da faixa,não
+JPN,Japan,East Asia & Pacific,High income,125472000,38137.9,2.815,fora: renda fora da faixa,não
+KAZ,Kazakhstan,Europe & Central Asia,Upper middle income,16730536,10600.3,0.782,par pela regra,não
+KEN,Kenya,Sub-Saharan Africa ,Lower middle income,26601751,3890.1,0.287,fora: renda fora da faixa,não
+PRK,"Korea, Dem. People's Rep.",East Asia & Pacific,Low income,22669304,,,fora: sem PIB por habitante em PPC no ano-base,não
+KOR,"Korea, Rep.",East Asia & Pacific,High income,45092991,20697.9,1.527,fora: renda fora da faixa,sim
+MDG,Madagascar,Sub-Saharan Africa ,Low income,14051275,1661.3,0.123,fora: renda fora da faixa,não
+MWI,Malawi,Sub-Saharan Africa ,Low income,10150117,1140.8,0.084,fora: renda fora da faixa,não
+MYS,Malaysia,East Asia & Pacific,Upper middle income,20330599,16568.5,1.223,par pela regra,não
+MLI,Mali,Sub-Saharan Africa ,Low income,10185365,2022.4,0.149,fora: renda fora da faixa,não
+MEX,Mexico,Latin America & Caribbean ,Upper middle income,90862455,17028.1,1.257,par pela regra,sim
+MAR,Morocco,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,26399429,4444.2,0.328,fora: renda fora da faixa,não
+MOZ,Mozambique,Sub-Saharan Africa ,Low income,15960530,525.4,0.039,fora: renda fora da faixa,não
+MMR,Myanmar,East Asia & Pacific,Lower middle income,42605338,962.2,0.071,fora: renda fora da faixa,não
+NPL,Nepal,South Asia,Lower middle income,22245439,2043.6,0.151,fora: renda fora da faixa,não
+NLD,Netherlands,Europe & Central Asia,High income,15459006,46720.3,3.448,fora: renda fora da faixa,não
+NGA,Nigeria,Sub-Saharan Africa ,Lower middle income,110819428,4797.5,0.354,fora: renda fora da faixa,não
+PAK,Pakistan,"Middle East, North Africa, Afghanistan & Pakistan",Lower middle income,134582253,3462.5,0.256,fora: renda fora da faixa,não
+PER,Peru,Latin America & Caribbean ,Upper middle income,24348919,7371.0,0.544,fora: renda fora da faixa,sim
+PHL,Philippines,East Asia & Pacific,Upper middle income,70546246,4477.3,0.330,fora: renda fora da faixa,não
+POL,Poland,Europe & Central Asia,High income,38594998,14227.6,1.050,par pela regra,não
+PRT,Portugal,Europe & Central Asia,High income,10026176,29460.8,2.174,fora: renda fora da faixa,não
+ROU,Romania,Europe & Central Asia,High income,22684270,14863.2,1.097,par pela regra,não
+RUS,Russian Federation,Europe & Central Asia,High income,148375787,18363.7,1.355,par pela regra,sim
+SAU,Saudi Arabia,"Middle East, North Africa, Afghanistan & Pakistan",High income,13289245,60058.3,4.432,fora: renda fora da faixa,não
+ZAF,South Africa,Sub-Saharan Africa ,Upper middle income,44541554,10318.8,0.762,par pela regra,sim
+ESP,Spain,Europe & Central Asia,High income,39724050,33501.7,2.472,fora: renda fora da faixa,não
+LKA,Sri Lanka,South Asia,Upper middle income,17564068,5523.3,0.408,fora: renda fora da faixa,não
+SDN,Sudan,Sub-Saharan Africa ,Low income,24672143,2824.6,0.208,fora: renda fora da faixa,não
+SYR,Syrian Arab Republic,"Middle East, North Africa, Afghanistan & Pakistan",Low income,14616801,7589.4,0.560,fora: renda fora da faixa,não
+TZA,Tanzania,Sub-Saharan Africa ,Lower middle income,30383497,1685.9,0.124,fora: renda fora da faixa,não
+THA,Thailand,East Asia & Pacific,Upper middle income,59098232,11955.2,0.882,par pela regra,não
+TUR,Turkiye,Europe & Central Asia,Upper middle income,61024503,13099.3,0.967,par pela regra,sim
+UGA,Uganda,Sub-Saharan Africa ,Low income,20665667,1288.5,0.095,fora: renda fora da faixa,não
+UKR,Ukraine,Europe & Central Asia,Upper middle income,51665539,10983.0,0.811,par pela regra,não
+GBR,United Kingdom,Europe & Central Asia,High income,58019030,37200.4,2.745,fora: renda fora da faixa,não
+USA,United States,North America,High income,266278000,47227.0,3.485,fora: renda fora da faixa,sim
+UZB,Uzbekistan,Europe & Central Asia,Lower middle income,22917589,3070.5,0.227,fora: renda fora da faixa,não
+VEN,"Venezuela, RB",Latin America & Caribbean ,Lower middle income,22193821,,,fora: sem PIB por habitante em PPC no ano-base,não
+VNM,Viet Nam,East Asia & Pacific,Upper middle income,72049940,3328.2,0.246,fora: renda fora da faixa,não
+YEM,"Yemen, Rep.","Middle East, North Africa, Afghanistan & Pakistan",Low income,16740058,,,fora: sem PIB por habitante em PPC no ano-base,não
+ZWE,Zimbabwe,Sub-Saharan Africa ,Lower middle income,10974599,5964.6,0.440,fora: renda fora da faixa,não
