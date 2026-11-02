@@ -1,0 +1,6 @@
+termo,coeficiente,erro_padrao,t
+constante,0.012,0.583,0.02
+crescimento_pc_mundo,0.622,0.259,2.4
+variacao_commodities_nao_energia_real_log_pct,0.123,0.053,2.32
+R2,0.452,,
+observacoes,29,,
