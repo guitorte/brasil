@@ -11,6 +11,7 @@ Blocos (sem argumento, roda todos, nesta ordem):
   governos     quem ocupou a Presidência e o Banco Central
   congresso    eleitos por partido para deputado federal e senador, 1994–2014 (TSE)
   emendas      emendas parlamentares ao orçamento federal (Portal da Transparência)
+  estrutura    investimento em % do PIB e peso das commodities nas exportações (Banco Mundial)
 
 Cada arquivo gravado ganha uma linha em dados/comparacoes/fontes_e_indicadores.csv, com a fonte,
 o código original, a unidade, a data da coleta e notas. Só usa a biblioteca padrão do Python.
@@ -498,7 +499,7 @@ def bloco_alavancas():
 # 4. MARÉ — o que vem de fora
 # =============================================================================================
 
-FRED = {'FEDFUNDS': 'juros_basicos_eua', 'GS10': 'titulo_10_anos_eua'}
+FRED = {'FEDFUNDS': 'juros_basicos_eua', 'GS10': 'titulo_10_anos_eua', 'CPIAUCSL': 'inflacao_eua_indice'}
 
 
 def bloco_mare():
@@ -511,11 +512,14 @@ def bloco_mare():
             if r[cod] not in ('', '.') and data >= '1990':
                 linhas.append([curto, cod, data[:7], float(r[cod])])
         fontes.append(dict(arquivo='mare.csv', fonte='Federal Reserve, série H.15, distribuída pelo FRED (Fed de St. Louis)',
-                           codigo=cod, indicador=curto, unidade='% ao ano',
-                           nome_original=('Federal Funds Effective Rate' if cod == 'FEDFUNDS'
-                                          else 'Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity'),
+                           codigo=cod, indicador=curto,
+                           unidade='índice, 1982–84 = 100, com ajuste sazonal' if cod == 'CPIAUCSL' else '% ao ano',
+                           nome_original={'FEDFUNDS': 'Federal Funds Effective Rate',
+                                          'GS10': 'Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity',
+                                          'CPIAUCSL': 'Consumer Price Index for All Urban Consumers: All Items'}[cod],
                            atualizacao=HOJE, cobertura_brasil='não se aplica',
-                           nota=('Média mensal. O FRED reproduz sem alteração a série H.15 da Junta do Federal Reserve. '
+                           nota=('Média mensal. O FRED reproduz sem alteração a série H.15 da Junta do Federal Reserve '
+                                 '(juros) e o índice de preços ao consumidor do Bureau of Labor Statistics (CPIAUCSL). '
                                  'Crescimento mundial e preços de commodities já estão em dados/mundo/.')))
     gravar('mare.csv', ['serie', 'codigo', 'mes', 'valor'], linhas)
     registrar_fontes(fontes)
@@ -682,9 +686,37 @@ def bloco_emendas():
                                  'calcular a fatia do orçamento direcionada por emendas.'))])
 
 
+# =============================================================================================
+# 8. ESTRUTURA — investimento e peso das commodities nas exportações
+# =============================================================================================
+
+ESTRUTURA = {'NE.GDI.TOTL.ZS': 'investimento_pct_pib', 'TX.VAL.FOOD.ZS.UN': 'export_alimentos_pct',
+             'TX.VAL.AGRI.ZS.UN': 'export_materias_primas_agricolas_pct', 'TX.VAL.FUEL.ZS.UN': 'export_combustiveis_pct',
+             'TX.VAL.MMTL.ZS.UN': 'export_minerios_metais_pct'}
+
+
+def bloco_estrutura():
+    print('estrutura: investimento e pauta de exportação (Banco Mundial)')
+    uni = universo()
+    linhas, fontes = [], []
+    for cod, curto in ESTRUTURA.items():
+        serie = [(i, a, v) for (i, a, v) in wb_serie(cod) if i in uni]
+        linhas += [[i, uni[i], curto, a, v] for (i, a, v) in serie]
+        m = wb_indicador_meta(cod)
+        fontes.append(dict(arquivo='estrutura.csv', fonte=f'Banco Mundial, World Development Indicators (API); {m["fonte"]}',
+                           codigo=cod, indicador=curto, unidade='% do PIB' if cod.startswith('NE.') else
+                           '% das exportações de mercadorias', nome_original=m['nome'], atualizacao=HOJE,
+                           cobertura_brasil=cobertura(serie),
+                           nota=('As quatro séries de exportação somadas dão o peso das commodities na pauta. '
+                                 'Formação bruta de capital inclui variação de estoques.')))
+    linhas.sort(key=lambda l: (l[2], l[0], l[3]))
+    gravar('estrutura.csv', ['codigo_pais', 'pais', 'indicador', 'ano', 'valor'], linhas)
+    registrar_fontes(fontes)
+
+
 BLOCOS = collections.OrderedDict(pares=bloco_pares, resultados=bloco_resultados, alavancas=bloco_alavancas,
                                  mare=bloco_mare, produtividade=bloco_produtividade, congresso=bloco_congresso,
-                                 emendas=bloco_emendas)
+                                 emendas=bloco_emendas, estrutura=bloco_estrutura)
 
 if __name__ == '__main__':
     pedidos = sys.argv[1:] or list(BLOCOS)
