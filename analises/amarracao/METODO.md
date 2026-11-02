@@ -35,4 +35,9 @@ no fim, com o motivo.
 
 ## Mudanças depois de ver os resultados
 
-(nenhuma até agora)
+- Acrescentada a tabela A4 (salário mínimo real contra despesa previdenciária), depois de ler o relatório da
+  IFI (RAF 100, maio de 2025), que aponta os reajustes reais do salário mínimo como pressão sobre a despesa
+  obrigatória, e de conferir no texto da Constituição que nenhum benefício previdenciário e nenhum BPC pode
+  ficar abaixo do salário mínimo (arts. 201, § 2º, e 203, V). A tabela foi calculada depois dessa leitura.
+- Acrescentadas linhas de detalhe do RTN (BPC, abono e seguro-desemprego, complementação ao Fundeb,
+  discricionárias de saúde e educação) para a tabela de raiz legal (A3).

@@ -12,6 +12,7 @@ Blocos (sem argumento, roda todos, nesta ordem):
   congresso    eleitos por partido para deputado federal e senador, 1994–2014 (TSE)
   emendas      emendas parlamentares ao orçamento federal (Portal da Transparência)
   estrutura    investimento em % do PIB e peso das commodities nas exportações (Banco Mundial)
+  orcamento    despesa obrigatória e discricionária do governo central (Tesouro Nacional)
 
 Cada arquivo gravado ganha uma linha em dados/comparacoes/fontes_e_indicadores.csv, com a fonte,
 o código original, a unidade, a data da coleta e notas. Só usa a biblioteca padrão do Python.
@@ -714,9 +715,53 @@ def bloco_estrutura():
     registrar_fontes(fontes)
 
 
+# =============================================================================================
+# 9. ORÇAMENTO — despesa obrigatória e discricionária do governo central (Tesouro Nacional)
+# =============================================================================================
+
+RTN_PACOTE = 'ab56485b-9c40-4efb-8563-9ce3e1973c4b'  # Resultado do Tesouro Nacional — Série Histórica
+RTN_LINHAS = ('1.', '2.', '3.', '4.', '4.1', '4.2', '4.3', '4.4', '4.4.1', '4.4.2', '4.4.2.1', '4.4.2.2', '4.4.2.3',
+              '4.4.2.4', '4.4.2.5', '4.4.2.6', '4.4.2.7', '4.4.2.8', '4.4.2.9', '4.3.05', '4.3.10', '4.3.01', '9.')
+
+
+def bloco_orcamento():
+    print('orçamento: Resultado do Tesouro Nacional (série histórica)')
+    pacote = json.loads(baixar('https://www.tesourotransparente.gov.br/ckan/api/3/action/package_show?id=' + RTN_PACOTE))
+    recurso = next(r for r in pacote['result']['resources'] if 'Mensal' in r['name'] and r.get('format') == 'XLSX')
+    conteudo = baixar(recurso['url'])
+    linhas = []
+    for aba, filtro in (('2.2-A', RTN_LINHAS), ('2.3-A', ('1.',))):
+        cab = None
+        for l in ler_xlsx(conteudo, aba):
+            if l and l[0] in ('Discriminação',) or (l and str(l[0]).startswith('Investimento por Grupo')):
+                cab = l
+                continue
+            if cab is None or not l or not l[0]:
+                continue
+            codigo = str(l[0]).strip().split()[0]
+            if codigo not in filtro:
+                continue
+            nome = ' '.join(str(l[0]).split()[1:]).strip(' -')
+            for ano, v in zip(cab[1:], l[1:]):
+                if isinstance(v, float) and ano is not None:
+                    linhas.append([aba, codigo, nome, int(float(ano)), round(v * 100, 4)])
+    gravar('orcamento_governo_central.csv', ['tabela_rtn', 'codigo_linha', 'linha', 'ano', 'pct_pib'], linhas)
+    registrar_fontes([dict(arquivo='orcamento_governo_central.csv',
+                           fonte=f'Tesouro Nacional, Resultado do Tesouro Nacional — Série Histórica ({recurso["url"].rsplit("/", 1)[-1]})',
+                           codigo='tabelas 2.2-A e 2.3-A', indicador='Receita, transferências e despesa primária do governo central',
+                           unidade='% do PIB', nome_original='Resultado Primário do Governo Central - Anual - % do PIB; '
+                                                             'Investimento do Governo Central - Anual - % do PIB',
+                           atualizacao=HOJE, cobertura_brasil='1997–2025 (despesa); 2008–2025 (investimento)',
+                           nota=('Governo central (Tesouro, Previdência e Banco Central), critério de pagamento efetivo. '
+                                 'A separação entre obrigatórias com controle de fluxo (4.4.1) e discricionárias (4.4.2) só '
+                                 'existe a partir de 2008; antes, a linha 4.4 junta as duas. Na tabela 2.3-A, a linha 1. é o '
+                                 'investimento total. A classificação de cada despesa segue a regra vigente em cada ano.'))])
+
+
 BLOCOS = collections.OrderedDict(pares=bloco_pares, resultados=bloco_resultados, alavancas=bloco_alavancas,
                                  mare=bloco_mare, produtividade=bloco_produtividade, congresso=bloco_congresso,
-                                 emendas=bloco_emendas, estrutura=bloco_estrutura)
+                                 emendas=bloco_emendas, estrutura=bloco_estrutura,
+                                 orcamento=bloco_orcamento)
 
 if __name__ == '__main__':
     pedidos = sys.argv[1:] or list(BLOCOS)
